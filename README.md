@@ -6,8 +6,7 @@
 - [ ] Create an ER diagram of the database
 - [ ] Write Create table scripts [script](/src/main/resources/db/migration/V1__create_products.sql)
 
-- [ ] ER Diagram: !(https://iili.io/HtJPsG2.png)
-## Project Setup
+- [ ] ER Diagram:  ![enter image description here](https://iili.io/HtJPsG2.png)## Project Setup
 
 - [ ] Create a new Java project
 - [ ] Set up a MySQL database
@@ -537,4 +536,3 @@ C -- Valid --> D(Argument Passed to TypeDAO)
 D --> E(Set is_active = false in Database)  
 C -- Invalid --> F(Validation Exception)  
 ```
-# demoapp-corejava-template
