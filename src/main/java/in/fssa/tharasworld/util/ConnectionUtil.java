@@ -1,4 +1,4 @@
-package in.fwsa.demoapp.util;
+package in.fssa.tharasworld.util;
 
 public class ConnectionUtil {
 
