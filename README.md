@@ -4,7 +4,7 @@
 ## Database Design
 
 - [ ] Create an ER diagram of the database
-- [ ] Write Create table scripts [script](/src/main/resources/db/migration/V1__create_products.sql)
+- [ ] Write Create table scripts [script](/src/main/resources/db/migration/V1__create_users.sql)
 
 - [ ] ER Diagram:  ![enter image description here](https://iili.io/HtJPsG2.png)## Project Setup
 
