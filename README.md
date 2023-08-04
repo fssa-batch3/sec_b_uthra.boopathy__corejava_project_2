@@ -4,9 +4,9 @@
 ## Database Design
 
 - [ ] Create an ER diagram of the database
-- [ ] Write Create table scripts [script](path/to/sql/file)
+- [ ] Write Create table scripts [/src/main/resources/db/migration/V1__create_products.sql](path/to/sql/file)
 
-- [ ] ER Diagram: https://iili.io/HtJPsG2.png
+- [ ] ER Diagram: [https://iili.io/HtJPsG2.png]
 ## Project Setup
 
 - [ ] Create a new Java project
