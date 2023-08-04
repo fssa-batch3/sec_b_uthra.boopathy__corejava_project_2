@@ -6,7 +6,7 @@
 - [ ] Create an ER diagram of the database
 - [ ] Write Create table scripts [script](path/to/sql/file)
 
-- [ ] ER Diagram:  https://freeimage.host/i/HtJPsG2 
+- [ ] ER Diagram:  [https://freeimage.host/i/HtJPsG2 ](https://iili.io/HtJPsG2.png)
 ## Project Setup
 
 - [ ] Create a new Java project
