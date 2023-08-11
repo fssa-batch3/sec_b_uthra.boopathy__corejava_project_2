@@ -1,3 +1,4 @@
+
 package in.fssa.tharasworld.model;
 
 import java.time.LocalDate;
@@ -110,7 +111,7 @@ public abstract class User implements Comparable<User>{
 				return -1;
 			}
 			
-		}
+		} 
 		
 	}
 	

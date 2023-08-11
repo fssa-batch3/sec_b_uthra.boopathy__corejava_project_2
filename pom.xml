@@ -51,6 +51,11 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>in.uthraboopathy</groupId>
+			<artifactId>tharasworld</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 
