@@ -12,12 +12,21 @@ public class ConnectionUtil {
 
 public static Connection getConnection() {
 		
-		Dotenv env = Dotenv.load();
-		
-		String url = env.get("DATABASE_HOSTNAME");
-		String username = env.get("DATABASE_USERNAME");
-		String password = env.get("DATABASE_PASSWORD");
-		
+	 String url;
+     String username;
+     String password;
+
+     if (System.getenv("CI") != null) {
+         url = System.getenv("DATABASE_HOSTNAME");
+         username = System.getenv("DATABASE_USERNAME");
+         password = System.getenv("DATABASE_PASSWORD");
+     } else {
+         Dotenv env = Dotenv.load();
+         url = env.get("DATABASE_HOSTNAME");
+         username = env.get("DATABASE_USERNAME");
+         password = env.get("DATABASE_PASSWORD");
+     }
+		 
 		Connection connection = null;
 
 		

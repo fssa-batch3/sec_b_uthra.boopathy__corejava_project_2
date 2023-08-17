@@ -13,6 +13,8 @@ public class ProductDetailDTO {
 	private int typeId;
 	private boolean isActive;
 	
+	List<Price> listOfPrices;
+	
 	
 	public int getPdtId() {
 		return pdtId;
@@ -69,7 +71,5 @@ public class ProductDetailDTO {
 	public void setListOfPrices(List<Price> listOfPrices) {
 		this.listOfPrices = listOfPrices;
 	}
-
-	List<Price> listOfPrices;
 	
 }

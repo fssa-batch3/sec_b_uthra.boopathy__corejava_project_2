@@ -3,16 +3,14 @@ package in.fssa.tharasworld.dao;
 import java.sql.*;
 import java.util.*;
 
-import in.fssa.tharasworld.entity.ProductEntity;
-import in.fssa.tharasworld.interfaces.CategoryInterface;
+import in.fssa.tharasworld.dto.ProductDetailDTO;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
-public class ProductDAO implements CategoryInterface<ProductEntity>{
+public class ProductDAO {
 
-	@Override
-	public Set<ProductEntity> findAll() {
+	public Set<ProductDetailDTO> findAll() {
 		
-		Set<ProductEntity> productList = new HashSet<>();
+		Set<ProductDetailDTO> productList = new HashSet<>();
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -27,7 +25,7 @@ public class ProductDAO implements CategoryInterface<ProductEntity>{
 			
 			while(rs.next()) {
 				
-				ProductEntity product = new ProductEntity();
+				ProductDetailDTO product = new ProductDetailDTO();
 				product.setPdtId(rs.getInt("pdt_id"));
 				product.setName(rs.getString("name"));
 				product.setDescription(rs.getString("description"));
@@ -59,8 +57,7 @@ public class ProductDAO implements CategoryInterface<ProductEntity>{
 			
 	}
 
-	@Override
-	public void create(ProductEntity newProduct) {
+	public int create(ProductDetailDTO newProduct) {
 
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -79,7 +76,9 @@ public class ProductDAO implements CategoryInterface<ProductEntity>{
 			
 			System.out.println("Product  has been created successfully");
 			
-		//	return productId
+			int productId;
+			
+			return productId = newProduct.getPdtId();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
