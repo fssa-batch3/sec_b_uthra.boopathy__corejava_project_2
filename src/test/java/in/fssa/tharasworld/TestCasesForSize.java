@@ -22,8 +22,8 @@ public class TestCasesForSize {
 			SizeService sizeService = new SizeService();
 			
 			SizeEntity newSize = new SizeEntity();
-			newSize.setSizeName("XL");
-		
+			newSize.setSizeName("XXL");
+		 
 			
 			assertDoesNotThrow(()->{
 				sizeService.create(newSize);
