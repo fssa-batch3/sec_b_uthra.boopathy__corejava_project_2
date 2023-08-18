@@ -14,6 +14,12 @@ public class UserValidator {
 	private static final String EMAIL_PATTERN = "^[a-zA-Z0-9]+([a-zA-Z0-9_+\\-\\. ]*[a-zA-Z0-9]+)?@[a-zA-Z0-9]+([a-zA-Z0-9\\-\\.]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
 	private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
 	
+	/**
+	 * 
+	 * @param user
+	 * @throws ValidationException
+	 */
+	
 	public static void validate(UserEntity user) throws ValidationException {
 
 		if (user == null) { 
@@ -27,6 +33,12 @@ public class UserValidator {
 			validateAge(user.getAge());
 		}
 		
+	/**
+	 * 
+	 * @param phoneNumber
+	 * @throws ValidationException
+	 */
+	
 		private static void validatePhoneNumber(long phoneNumber) throws ValidationException{
 			
 			String phno = String.valueOf(phoneNumber);
@@ -71,6 +83,12 @@ public class UserValidator {
 	
 		}
 		
+		/**
+		 * 
+		 * @param name
+		 * @throws ValidationException
+		 */
+		
 		public static void validateName(String name) throws ValidationException {
 			
 			StringUtil.rejectIfInvalidString(name, "Name");
@@ -80,6 +98,12 @@ public class UserValidator {
 			}
 		
 		}
+		
+		/**
+		 * 
+		 * @param email
+		 * @throws ValidationException
+		 */
 		
 		public static void validateEmail(String email) throws ValidationException {
 			
@@ -121,6 +145,12 @@ public class UserValidator {
 		
 		}
 		
+		/**
+		 * 
+		 * @param password
+		 * @throws ValidationException
+		 */
+		
 		public static void validatePassword(String password) throws ValidationException {
 			
 			StringUtil.rejectIfInvalidString(password, "Password");
@@ -135,6 +165,12 @@ public class UserValidator {
 		
 		
 		}
+		
+		/**
+		 * 
+		 * @param age
+		 * @throws ValidationException
+		 */
 		
 		private static void validateAge(int age) throws ValidationException{
 			

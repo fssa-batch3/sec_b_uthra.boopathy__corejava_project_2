@@ -10,6 +10,11 @@ import in.fssa.tharasworld.validator.CategoryValidator;
 
 public class CategoryService {
 	
+	
+	/**
+	 *  
+	 * @return
+	 */
 	public Set<CategoryEntity> findAll() { 
 		
 		CategoryDAO categoryDao = new CategoryDAO();
@@ -24,6 +29,12 @@ public class CategoryService {
 		
 	}
 
+	/**
+	 * 
+	 * @param newCategory
+	 * @throws Exception
+	 */
+	
 	public void create(CategoryEntity newCategory) throws Exception {
 		
 		CategoryValidator.validate(newCategory);
@@ -32,6 +43,13 @@ public class CategoryService {
 		categorydao.create(newCategory);
 		
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param updatedCategory
+	 * @throws Exception
+	 */
 	
 	public void update(int id, CategoryEntity updatedCategory) throws Exception {
 		
@@ -45,6 +63,12 @@ public class CategoryService {
 		categorydao.update(id, updatedCategory);
 		
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @throws Exception
+	 */
 	
 	public void delete(int id) throws Exception {
 		

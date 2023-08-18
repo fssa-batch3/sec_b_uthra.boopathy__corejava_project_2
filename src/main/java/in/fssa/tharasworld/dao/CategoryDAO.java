@@ -9,6 +9,10 @@ import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
 public class CategoryDAO implements CategoryInterface<CategoryEntity>{
+	
+	/**
+	 * @return
+	 */
 
 	@Override
 	public Set<CategoryEntity> findAll() {
@@ -56,6 +60,10 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		
 		
 	}
+	
+	/**
+	 * @param newCategory
+	 */
 
 	@Override
 	public void create(CategoryEntity newCategory) {
@@ -91,6 +99,10 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		
 		
 	}
+	
+	/**
+	 * @param id updatedCategory
+	 */
 
 	@Override
 	public void update(int id, CategoryEntity updatedCategory) {
@@ -133,6 +145,10 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	    }
 		
 	}
+	
+	/**
+	 * @param id
+	 */
 
 	@Override
 	public void delete(int id) {
@@ -168,6 +184,12 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		}
 		
 	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @throws ValidationException
+	 */
 	
 	public static void checkCategoryExist (String name) throws ValidationException {
 		

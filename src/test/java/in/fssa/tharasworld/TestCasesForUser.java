@@ -34,7 +34,7 @@ public class TestCasesForUser {
 		assertDoesNotThrow(()->{ 
 			userService.create(newUser);
 		});
-	
+	 
 	}
 	 
 	//// TEST FOR INVALID INPUT

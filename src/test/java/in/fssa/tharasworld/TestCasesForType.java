@@ -24,7 +24,7 @@ public class TestCasesForType {
 				
 				TypeEntity newType = new TypeEntity();
 				newType.setTypeName("Saree");
-				newType.setCateId(1);
+				newType.setCateId(3);
 			
 				
 				assertDoesNotThrow(()->{
@@ -152,12 +152,12 @@ public class TestCasesForType {
 				////TEST FOR TYPE NAME ALREADY EXISTS
 			
 				@Test 
-				public void testCreateUserWithCategoryNameAlredyExists() {
+				public void testCreateUserWithTypeNameAlredyExists() {
 						
 					TypeService typeService = new TypeService();
 					
 					TypeEntity newType = new TypeEntity();
-					newType.setTypeName("Saree");
+					newType.setTypeName("Chudi");
 					newType.setCateId(1);
 						
 					Exception exception = assertThrows(ValidationException.class, () -> {

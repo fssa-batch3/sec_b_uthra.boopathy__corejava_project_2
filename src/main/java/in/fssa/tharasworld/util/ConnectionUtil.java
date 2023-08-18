@@ -9,67 +9,82 @@ import java.sql.SQLException;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
+	
+	/**
+	 * 
+	 * @return
+	 */
 
-public static Connection getConnection() {
-		
-	 String url;
-     String username;
-     String password;
+	public static Connection getConnection() {
 
-     if (System.getenv("CI") != null) {
-         url = System.getenv("DATABASE_HOSTNAME");
-         username = System.getenv("DATABASE_USERNAME");
-         password = System.getenv("DATABASE_PASSWORD");
-     } else {
-         Dotenv env = Dotenv.load();
-         url = env.get("DATABASE_HOSTNAME");
-         username = env.get("DATABASE_USERNAME");
-         password = env.get("DATABASE_PASSWORD");
-     }
-		 
+		String url;
+		String username;
+		String password;
+
+		if (System.getenv("CI") != null) {
+			url = System.getenv("DATABASE_HOSTNAME");
+			username = System.getenv("DATABASE_USERNAME");
+			password = System.getenv("DATABASE_PASSWORD");
+		} else {
+			Dotenv env = Dotenv.load();
+			url = env.get("DATABASE_HOSTNAME");
+			username = env.get("DATABASE_USERNAME");
+			password = env.get("DATABASE_PASSWORD");
+		}
+
 		Connection connection = null;
 
-		
-		try { 
+		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection(url, username, password); 
-			
-			
-			 
-		} catch(Exception e) {
+			connection = DriverManager.getConnection(url, username, password);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		return connection;
 	}
+
+	/**
+	 * 
+	 * @param connection
+	 * @param ps
+	 */
 	
 	public static void close(Connection connection, PreparedStatement ps) {
 		try {
-			if(ps != null) {
+			if (ps != null) {
 				ps.close();
 			}
-			if(connection != null) {
+			if (connection != null) {
 				connection.close();
 			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		} 
-	}
-	
-	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
-		try {
-			if(rs != null) {
-				rs.close();
-			}
-			if(ps != null) {
-				ps.close();
-			}
-			if(connection != null) {
-				connection.close();
-			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * 
+	 * @param connection
+	 * @param ps
+	 * @param rs
+	 */
+
+	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (ps != null) {
+				ps.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

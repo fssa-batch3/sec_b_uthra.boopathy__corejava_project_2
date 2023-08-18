@@ -7,9 +7,14 @@ import in.fssa.tharasworld.entity.SizeEntity;
 import in.fssa.tharasworld.validator.SizeValidator;
 
 public class SizeService {
+	
+	/**
+	 * 
+	 * @return
+	 */
 
-public Set<SizeEntity> findAll() {
-		
+	public Set<SizeEntity> findAll() {
+
 		SizeDAO userDao = new SizeDAO();
 		
 		Set<SizeEntity> sizeList = userDao.findAll();
@@ -21,6 +26,12 @@ public Set<SizeEntity> findAll() {
 		return sizeList; 
 		
 	}
+	
+	/**
+	 * 
+	 * @param newSize
+	 * @throws Exception
+	 */
 
 	public void create(SizeEntity newSize) throws Exception {
 		

@@ -12,6 +12,10 @@ import in.fssa.tharasworld.interfaces.UserInterface;
 
 
 public class UserDAO implements UserInterface<UserEntity>{
+	
+	/**
+	 * @return
+	 */
 	  
 	@Override 
 	public Set<UserEntity> findAll() {
@@ -62,6 +66,10 @@ public class UserDAO implements UserInterface<UserEntity>{
 		return userList;
 		
 	}
+	
+	/**
+	 * @param newUser
+	 */
 
 	@Override
 	public void create(UserEntity newuser) {
@@ -102,6 +110,10 @@ public class UserDAO implements UserInterface<UserEntity>{
 
 		
 	}
+	
+	/**
+	 * @param id, updateduser
+	 */
 
 	@Override
 	public void update(int id, UserEntity updatedUser) {
@@ -160,6 +172,10 @@ public class UserDAO implements UserInterface<UserEntity>{
 		    }
 		    
 		}
+	
+	/**
+	 * @param id
+	 */
 		
 
 	@Override
@@ -195,6 +211,10 @@ public class UserDAO implements UserInterface<UserEntity>{
 		}
 		
 	}
+	
+	/**
+	 * @param id
+	 */
 
 	@Override
 	public UserEntity findById(int id) {

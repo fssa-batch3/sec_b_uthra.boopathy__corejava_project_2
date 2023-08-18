@@ -11,6 +11,12 @@ import in.fssa.tharasworld.util.ConnectionUtil;
 public class SizeValidator {
 	
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
+	
+	/**
+	 * 
+	 * @param size
+	 * @throws ValidationException
+	 */
 
 	public static void validate(SizeEntity size) throws ValidationException {
 		

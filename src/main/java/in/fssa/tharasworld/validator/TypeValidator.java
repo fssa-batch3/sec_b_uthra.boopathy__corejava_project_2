@@ -11,6 +11,12 @@ import in.fssa.tharasworld.util.*;
 public class TypeValidator {
 
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
+	
+	/**
+	 * 
+	 * @param type
+	 * @throws ValidationException
+	 */
 
 	public static void validate(TypeEntity type) throws ValidationException {
 
@@ -24,13 +30,15 @@ public class TypeValidator {
 			throw new ValidationException("Type name doesn't match the pattern");
 		}
 
+		TypeDAO typedao = new TypeDAO();
+		typedao.checkTypeExist(type.getTypeName());
+		
 		if(type.getCateId()<=0) {
 			
 			throw new ValidationException("Invalid category id");
 			
 		}
 				
-		TypeDAO typedao = new TypeDAO();
 		typedao.checkCategoryIdExists(type.getCateId());
 		
 			

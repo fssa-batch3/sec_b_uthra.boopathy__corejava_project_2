@@ -11,6 +11,11 @@ import in.fssa.tharasworld.entity.SizeEntity;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
 public class SizeDAO { 
+	
+	/**
+	 * 
+	 * @return
+	 */
 
 	 
 	public Set<SizeEntity> findAll() {
@@ -58,6 +63,11 @@ public class SizeDAO {
 		
 	}
 
+	
+	/**
+	 * 
+	 * @param newSize
+	 */
 	
 	public void create(SizeEntity newSize) {
 		

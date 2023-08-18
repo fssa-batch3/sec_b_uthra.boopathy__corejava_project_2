@@ -11,6 +11,12 @@ import in.fssa.tharasworld.util.*;
 public class CategoryValidator {
 	
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
+	
+	/**
+	 * 
+	 * @param category
+	 * @throws ValidationException
+	 */
 
 	public static void validate(CategoryEntity category) throws ValidationException {
 

@@ -9,6 +9,11 @@ import in.fssa.tharasworld.validator.UserValidator;
 
 public class UserService {
 	
+	/**
+	 * 
+	 * @return
+	 */
+	
 	public Set<UserEntity> findAll() {
 		
 		UserDAO userDao = new UserDAO();
@@ -22,6 +27,12 @@ public class UserService {
 		return userList; 
 		 
 	}
+	
+	/**
+	 * 
+	 * @param newUser
+	 * @throws Exception
+	 */
 
 	public void create(UserEntity newUser) throws Exception {
 		
@@ -32,6 +43,13 @@ public class UserService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param updatedUser
+	 * @throws Exception
+	 */
+	
 	public void update(int id, UserEntity updatedUser) throws Exception {
 		
 		UserValidator.validate(updatedUser);
@@ -40,6 +58,12 @@ public class UserService {
 		userdao.update(id, updatedUser);
 		
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @throws Exception
+	 */
 	
 	public void delete(int id) throws Exception {
 		
@@ -51,6 +75,12 @@ public class UserService {
 		userdao.delete(id);
 		
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	
 	public UserEntity findById(int id) {
 		
