@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.regex.Pattern;
 
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.dao.CategoryDAO;
 import in.fssa.tharasworld.entity.CategoryEntity;
 import in.fssa.tharasworld.util.*;
 
@@ -23,45 +24,8 @@ public class CategoryValidator {
 			throw new ValidationException("Category name doesn't match the pattern");
 		}
 		
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		//CategoryEntity cate = null;
-		
-		try {
-			
-			String query = "SELECT * FROM categories WHERE is_active=1 AND cate_name = ?";
-			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
-			
-			ps.setString(1, category.getCateName());
-			
-			rs = ps.executeQuery();
-			
-			if(rs.next()) {
-				
-				throw new ValidationException("This category name is already exists");
-				
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
-			
-		} finally {
-			
-			ConnectionUtil.close(con, ps, rs);
-			
-		}
-		
+		CategoryDAO categorydao = new CategoryDAO();
+		categorydao.checkCategoryExist(category.getCateName());
 			
 		}
 		

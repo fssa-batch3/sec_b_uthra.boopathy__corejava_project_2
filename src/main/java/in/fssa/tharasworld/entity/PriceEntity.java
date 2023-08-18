@@ -1,5 +1,7 @@
 package in.fssa.tharasworld.entity;
 
-public class PriceEntity {
+import in.fssa.tharasworld.model.Price;
+
+public class PriceEntity extends Price{
 
 }

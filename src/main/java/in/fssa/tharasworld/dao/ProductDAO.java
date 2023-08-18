@@ -26,6 +26,7 @@ public class ProductDAO {
 			while(rs.next()) {
 				
 				ProductDetailDTO product = new ProductDetailDTO();
+				
 				product.setPdtId(rs.getInt("pdt_id"));
 				product.setName(rs.getString("name"));
 				product.setDescription(rs.getString("description"));
@@ -97,8 +98,7 @@ public class ProductDAO {
 		
 	}
 
-	@Override
-	public void update(int id, ProductEntity updatedProduct) {
+	public void update(int id, ProductDetailDTO updatedProduct) {
 
 		Connection conn = null;
 	    PreparedStatement ps = null;
@@ -153,11 +153,8 @@ public class ProductDAO {
 	    
 	    }
 	    
-
-		
 	}
 
-	@Override
 	public void delete(int id) {
 
 		Connection con = null;
@@ -187,8 +184,7 @@ public class ProductDAO {
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
-		}
-		
+		}		
 		
 	}
 

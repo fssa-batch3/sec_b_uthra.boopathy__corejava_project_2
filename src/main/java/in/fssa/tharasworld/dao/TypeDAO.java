@@ -9,6 +9,7 @@ import java.util.Set;
 
 import in.fssa.tharasworld.interfaces.CategoryInterface;
 import in.fssa.tharasworld.entity.TypeEntity;
+import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
 public class TypeDAO implements CategoryInterface<TypeEntity>{
@@ -171,6 +172,82 @@ public class TypeDAO implements CategoryInterface<TypeEntity>{
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
+		}
+		
+	}
+	
+	public void checkTypeExist (String name) throws ValidationException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			String query = "SELECT * FROM types WHERE is_active=1 AND name = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, name);
+			
+			rs = ps.executeQuery();
+			
+			if(!rs.next()) {
+				
+				throw new ValidationException("This type name is already exists");
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e);
+			
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+
+		
+	}
+	
+	public static void checkCategoryIdExists(int id) throws ValidationException {
+		
+		
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		//CategoryEntity cate = null;
+		
+		try {
+			
+			String query = "SELECT * FROM categories WHERE is_active=1 AND cate_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, id);
+			
+			rs = ps.executeQuery();
+			
+			if(!rs.next()) {
+				
+				throw new ValidationException("Category does not exists");
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e);
+			
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
 		}
 		
 	}

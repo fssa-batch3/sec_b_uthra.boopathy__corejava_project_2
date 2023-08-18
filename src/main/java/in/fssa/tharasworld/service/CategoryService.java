@@ -10,7 +10,7 @@ import in.fssa.tharasworld.validator.CategoryValidator;
 
 public class CategoryService {
 	
-	public Set<CategoryEntity> findAll() {
+	public Set<CategoryEntity> findAll() { 
 		
 		CategoryDAO categoryDao = new CategoryDAO();
 		

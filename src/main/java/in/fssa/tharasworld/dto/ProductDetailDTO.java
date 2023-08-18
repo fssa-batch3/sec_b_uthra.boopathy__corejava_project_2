@@ -2,7 +2,7 @@ package in.fssa.tharasworld.dto;
 
 import java.util.List;
 
-import in.fssa.tharasworld.model.Price;
+import in.fssa.tharasworld.entity.PriceEntity;
 
 public class ProductDetailDTO {
 
@@ -13,7 +13,7 @@ public class ProductDetailDTO {
 	private int typeId;
 	private boolean isActive;
 	
-	List<Price> listOfPrices;
+	List<PriceEntity> listOfPrices;
 	
 	
 	public int getPdtId() {
@@ -64,11 +64,11 @@ public class ProductDetailDTO {
 		this.isActive = isActive;
 	}
 	
-	public List<Price> getListOfPrices() {
+	public List<PriceEntity> getListOfPrices() {
 		return listOfPrices;
 	}
 
-	public void setListOfPrices(List<Price> listOfPrices) {
+	public void setListOfPrices(List<PriceEntity> listOfPrices) {
 		this.listOfPrices = listOfPrices;
 	}
 	

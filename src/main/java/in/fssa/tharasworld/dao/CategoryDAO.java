@@ -1,16 +1,11 @@
  package in.fssa.tharasworld.dao;
  
-import java.sql.Connection; 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.*;
+import java.util.*;
 
 import in.fssa.tharasworld.interfaces.CategoryInterface;
 import in.fssa.tharasworld.entity.CategoryEntity;
+import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
 public class CategoryDAO implements CategoryInterface<CategoryEntity>{
@@ -170,6 +165,49 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
+		}
+		
+	}
+	
+	public static void checkCategoryExist (String name) throws ValidationException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		//CategoryEntity cate = null;
+		
+		try {
+			
+			String query = "SELECT * FROM categories WHERE is_active=1 AND cate_name = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, name);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				
+				throw new ValidationException("This category name is already exists");
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e);
+			
+		} catch (RuntimeException er) {
+			
+			er.printStackTrace();
+			System.out.println(er.getMessage());
+			throw new RuntimeException(er);
+			
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
 		}
 		
 	}
