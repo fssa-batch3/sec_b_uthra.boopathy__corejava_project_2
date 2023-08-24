@@ -1,15 +1,17 @@
 package in.fssa.tharasworld.validator;
 
 import in.fssa.tharasworld.entity.PriceEntity;
+import in.fssa.tharasworld.dao.*;
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 
 public class PriceValidator {
 	
 	public static void validate (PriceEntity price) throws ValidationException {
 		
-		if(price == null) {
+		if(price == null || "".equals(price)) {
 			
-			throw new ValidationException("Price cannot be null");
+			throw new ValidationException("Price cannot be null or empty");
 			
 		}
 		
@@ -41,7 +43,7 @@ public class PriceValidator {
 		
 		if (price <= 0) {
 			
-			throw new ValidationException("Invalid actual price");
+			throw new ValidationException("Invalid current price");
 			
 		}
 		
@@ -63,12 +65,29 @@ public class PriceValidator {
 			
 		}
 		
-		String disInString = String.valueOf(discount);
-		
-		if(disInString.length() >= 3) {
+		if(discount >= 100) {
 			
 			throw new ValidationException("Discount must be less than 100");
 			
+		}
+		
+	}
+	
+	public static void validatePriceExists (int id) throws ValidationException, PersistenceException {
+		
+		if(id<=0) {
+			throw new ValidationException("Invalid id");
+		}
+		
+		PriceDAO pricedao = new PriceDAO();
+		pricedao.checkPriceExists(id);
+		
+	}
+	
+	public static void validateId(int id) throws ValidationException {
+		
+		if(id<=0) {
+			throw new ValidationException("Invalid id");
 		}
 		
 	}

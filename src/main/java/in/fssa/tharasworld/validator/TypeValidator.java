@@ -3,6 +3,7 @@ package in.fssa.tharasworld.validator;
 import java.sql.*;
 import java.util.regex.Pattern;
 
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.dao.TypeDAO;
 import in.fssa.tharasworld.entity.TypeEntity;
@@ -16,12 +17,19 @@ public class TypeValidator {
 	 * 
 	 * @param type
 	 * @throws ValidationException
+	 * @throws PersistenceException 
 	 */
 
-	public static void validate(TypeEntity type) throws ValidationException {
+	public static void validate(TypeEntity type) throws ValidationException, PersistenceException {
 
 		if (type == null) {
 			throw new ValidationException("Invalid type input");
+		}
+		
+		if(type.getCateId()<=0) {
+			
+			throw new ValidationException("Invalid category id");
+			
 		}
 		
 		StringUtil.rejectIfInvalidString(type.getTypeName(), "Type name");
@@ -29,17 +37,12 @@ public class TypeValidator {
 		if (!Pattern.matches(NAME_PATTERN, type.getTypeName())) {
 			throw new ValidationException("Type name doesn't match the pattern");
 		}
-
-		TypeDAO typedao = new TypeDAO();
-		typedao.checkTypeExist(type.getTypeName());
-		
-		if(type.getCateId()<=0) {
-			
-			throw new ValidationException("Invalid category id");
-			
-		}
 				
+		TypeDAO typedao = new TypeDAO();
+
 		typedao.checkCategoryIdExists(type.getCateId());
+
+		typedao.checkTypeExistWithName(type.getTypeName());
 		
 			
 	}

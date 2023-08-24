@@ -5,6 +5,7 @@ import java.util.*;
 
 import in.fssa.tharasworld.interfaces.CategoryInterface;
 import in.fssa.tharasworld.entity.CategoryEntity;
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
@@ -12,10 +13,11 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	
 	/**
 	 * @return
-	 */
+	 * @throws PersistenceException 
+	 */ 
 
 	@Override
-	public Set<CategoryEntity> findAll() {
+	public Set<CategoryEntity> findAll() throws PersistenceException {
 	
 		Set<CategoryEntity> categoryList = new HashSet<>();
 		
@@ -44,13 +46,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -63,10 +59,11 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	
 	/**
 	 * @param newCategory
+	 * @throws PersistenceException 
 	 */
 
 	@Override
-	public void create(CategoryEntity newCategory) {
+	public void create(CategoryEntity newCategory) throws PersistenceException {
 
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -85,13 +82,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(connection, ps);
@@ -105,7 +96,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	 */
 
 	@Override
-	public void update(int id, CategoryEntity updatedCategory) {
+	public void update(int id, CategoryEntity updatedCategory) throws PersistenceException {
 
 
 	    Connection con = null;
@@ -117,7 +108,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	    	
 	    	con = ConnectionUtil.getConnection();
 	    	ps = con.prepareStatement(query);
-	    	
+	    	 
 	        ps.setString(1, updatedCategory.getCateName());
 	        
 	        ps.setInt(2, id);
@@ -130,15 +121,9 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	       
 	    	e.printStackTrace();
 	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e);
+	        throw new PersistenceException(e.getMessage());
 	   
-	    } catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
-			
-		} finally {
+	    } finally {
 	   
 	    	ConnectionUtil.close(con, ps);
 	    
@@ -151,7 +136,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	 */
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -171,14 +156,8 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistenceException(e.getMessage());
 		
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
-			
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
@@ -191,7 +170,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	 * @throws ValidationException
 	 */
 	
-	public static void checkCategoryExist (String name) throws ValidationException {
+	public static void checkCategoryExist (String name) throws PersistenceException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -210,7 +189,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 			if(rs.next()) {
 				
-				throw new ValidationException("This category name is already exists");
+				throw new PersistenceException("This category name is already exists");
 				
 			}
 			
@@ -218,13 +197,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			

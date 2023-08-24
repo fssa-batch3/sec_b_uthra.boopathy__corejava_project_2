@@ -3,7 +3,9 @@ package in.fssa.tharasworld.validator;
 import java.sql.*;
 import java.util.regex.Pattern;
 
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.dao.UserDAO;
 import in.fssa.tharasworld.entity.UserEntity;
 import in.fssa.tharasworld.util.StringUtil;
 import in.fssa.tharasworld.util.ConnectionUtil;
@@ -24,14 +26,15 @@ public class UserValidator {
 
 		if (user == null) { 
 			throw new ValidationException("Invalid user input");
-		} 
+		}  
 			
 			validateName(user.getName());
 			validateEmail(user.getEmail());
 			validatePassword(user.getPassword()); 
 			validatePhoneNumber(user.getPhoneNumber());
 			validateAge(user.getAge());
-		}
+			
+		} 
 		
 	/**
 	 * 
@@ -50,36 +53,6 @@ public class UserValidator {
 			if(phoneNumber <= 6000000000l || phoneNumber >= 9999999999l) {
 				throw new ValidationException("Invalid phone number");
 			} 
-			
-			Connection con = null;
-			PreparedStatement ps = null;
-			ResultSet rs = null;
-			
-			UserEntity user= null;
-			
-			try {
-				
-				String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
-				con = ConnectionUtil.getConnection();
-				ps = con.prepareStatement(query);
-				ps.setLong(1, phoneNumber);
-				rs = ps.executeQuery();
-				
-				while(rs.next()) {
-					throw new ValidationException("This user is already exist");
-				}
-			
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				System.out.println(e.getMessage());
-				throw new RuntimeException(e);
-			
-			} finally {
-				
-				ConnectionUtil.close(con, ps, rs);
-				
-			}
 	
 		}
 		
@@ -111,38 +84,43 @@ public class UserValidator {
 			
 			if (!Pattern.matches(EMAIL_PATTERN, email)) {
 				throw new ValidationException("Email doesn't match the pattern");
-			}
-			
-			Connection con = null;
-			PreparedStatement ps = null;
-			ResultSet rs = null;
-			
-			UserEntity user= null;
-			
-			try {
-				
-				String query = "SELECT * FROM users WHERE is_active=1 AND email=?";
-				con = ConnectionUtil.getConnection();
-				ps = con.prepareStatement(query);
-				ps.setString(1, email);
-				rs = ps.executeQuery();
-				
-				while(rs.next()) {
-					throw new ValidationException("This user is already exist");
-				}
-			
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				System.out.println(e.getMessage());
-				throw new RuntimeException(e);
-			
-			} finally {
-				
-				ConnectionUtil.close(con, ps, rs);
-				
-			}
+			}			
 		
+		}
+		
+		public static void CheckUserExists(String email) throws ValidationException, PersistenceException {
+			
+			UserDAO userdao = new UserDAO();
+			userdao.checkUserExists(email);
+			
+		}
+		
+		public static void CheckUserExistsWithPhoneNumber(long phoneNumber) throws ValidationException, PersistenceException {
+			
+			UserDAO userdao = new UserDAO();
+			userdao.checkUserExistsWithPhoneNumber(phoneNumber);
+			
+		}
+		
+		public static void CheckUserExistsWithId(int id) throws ValidationException, PersistenceException {
+			
+			UserDAO userdao = new UserDAO();
+			userdao.checkUserExistsWithId(id);
+			
+		}
+		
+		public static void CheckUserExistsForUpdate(String email) throws ValidationException, PersistenceException {
+			
+			UserDAO userdao = new UserDAO();
+			userdao.checkUserExistsForUpdate(email);
+			
+		}
+		
+		public static void CheckUserExistsWithPhoneNumberForUpdate(long phoneNumber) throws ValidationException, PersistenceException {
+			
+			UserDAO userdao = new UserDAO();
+			userdao.checkUserExistsWithPhoneNumberForUpdate(phoneNumber);
+			
 		}
 		
 		/**

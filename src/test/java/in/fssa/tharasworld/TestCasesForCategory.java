@@ -1,6 +1,7 @@
 package in.fssa.tharasworld;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,21 +9,37 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.entity.CategoryEntity;
 import in.fssa.tharasworld.service.CategoryService;
 
 public class TestCasesForCategory {
+	
+	 private String generateRandomString(int length) {
+	        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	        StringBuilder randomString = new StringBuilder();
+	        java.util.Random random = new java.util.Random();
+
+	        for (int i = 0; i < length; i++) {
+	            int index = random.nextInt(characters.length());
+	            randomString.append(characters.charAt(index));
+	        }
+
+	        return randomString.toString();
+	    }
 
 	///  TEST FOR VALID INPUT TO CREATE CATEGORY
 	
 		@Test
-		public void testCreateCategoryWithValidInput() {
+		void testCreateCategoryWithValidInput() {
 			
 			CategoryService categoryService = new CategoryService();
 			
 			CategoryEntity newCategory = new CategoryEntity();
-			newCategory.setCateName("Dress");
+			
+			String random = generateRandomString(7);
+			newCategory.setCateName(random);
 		
 			
 			assertDoesNotThrow(()->{
@@ -34,7 +51,7 @@ public class TestCasesForCategory {
 		//// TEST FOR INVALID INPUT
 		
 		@Test
-		public void testCreateCategoryWithInvalidInput() {
+		void testCreateCategoryWithInvalidInput() {
 			
 			CategoryService categoryService = new CategoryService();
 			Exception exception = assertThrows(ValidationException.class, () -> {
@@ -43,13 +60,13 @@ public class TestCasesForCategory {
 			String exceptedMessage = "Invalid category input";
 			String actualMessage = exception.getMessage();
 			
-			assertTrue(exceptedMessage.equals(actualMessage));
+			assertEquals(exceptedMessage,actualMessage);
 		}
 		
 		//// TEST FOR CATEGORY WITH NULL
 		
 		@Test 
-		public void testCreateCategoryWithCategoryNameNull() {
+		void testCreateCategoryWithCategoryNameNull() {
 			
 			CategoryService categoryService = new CategoryService();
 			
@@ -62,13 +79,13 @@ public class TestCasesForCategory {
 			String exceptedMessage = "Category name cannot be null or empty";
 			String actualMessage = exception.getMessage();
 			
-			assertTrue(exceptedMessage.equals(actualMessage));
+			assertEquals(exceptedMessage,actualMessage);
 		}
 		
 		//// TEST FOR CATEGORY WITH EMPTY STRING
 		
 		@Test 
-		public void testCreateCategoryWithCategoryNameEmpty() {
+		void testCreateCategoryWithCategoryNameEmpty() {
 			
 			CategoryService categoryService = new CategoryService();
 			
@@ -81,13 +98,13 @@ public class TestCasesForCategory {
 			String exceptedMessage = "Category name cannot be null or empty";
 			String actualMessage = exception.getMessage();
 			
-			assertTrue(exceptedMessage.equals(actualMessage));
+			assertEquals(exceptedMessage,actualMessage);
 		}
 		
 		////TEST FOR CATEGORY NAME WITH PATTERN	
 		
 		@Test 
-		public void testCreateCategoryWithNamePattern() {
+		void testCreateCategoryWithNamePattern() {
 				
 			CategoryService categoryService = new CategoryService();
 			
@@ -100,13 +117,13 @@ public class TestCasesForCategory {
 			String exceptedMessage = "Category name doesn't match the pattern";
 			String actualMessage = exception.getMessage();
 				
-			assertTrue(exceptedMessage.equals(actualMessage));
+			assertEquals(exceptedMessage,actualMessage);
 		}
 		
 			////TEST FOR CATEGORY NAME ALREADY EXISTS
 		
 			@Test 
-			public void testCreateCategoryWithCategoryNameAlredyExists() {
+			void testCreateCategoryWithCategoryNameAlredyExists() {
 					
 				CategoryService categoryService = new CategoryService();
 				
@@ -119,18 +136,18 @@ public class TestCasesForCategory {
 				String exceptedMessage = "This category name is already exists";
 				String actualMessage = exception.getMessage();
 					
-				assertTrue(exceptedMessage.equals(actualMessage));
+				assertEquals(exceptedMessage,actualMessage);
 			}
 			
 			//// TEST FOR UPDATE CATEGORY
 			
 			@Test
-			public void testUpdateCategory() {
+			void testUpdateCategory() {
 
 				CategoryService categoryService = new CategoryService();
 				
 				CategoryEntity updatedCategory = new CategoryEntity();
-				updatedCategory.setCateName("Accessories");
+				updatedCategory.setCateName("Dresses");
 				
 				assertDoesNotThrow(() -> {
 					categoryService.update(1, updatedCategory);
@@ -141,21 +158,26 @@ public class TestCasesForCategory {
 			//// TEST FOR DELETE CATEGORY
 			
 			@Test
-			public void deleteCategory() throws Exception {
+			void deleteCategory() throws Exception {
 				
 				CategoryService categoryService = new CategoryService();
-				
-				categoryService.delete(1);
+				assertDoesNotThrow(() -> {
+					categoryService.delete(1);
+				});
 				
 			}
 		
 		//// TEST FOR GET ALL CATEGORY
 			
 			@Test
-			public void getAllCategories() {
+			public void getAllCategories() throws ServiceException {
+				
 				CategoryService categoryService = new CategoryService();
-				Set<CategoryEntity> categoryList = categoryService.findAll();
-				System.out.println(categoryList);
+				assertDoesNotThrow(() -> {
+					Set<CategoryEntity> categoryList = categoryService.findAll();
+					System.out.println(categoryList);
+				});
+				
 			}
 	
 }

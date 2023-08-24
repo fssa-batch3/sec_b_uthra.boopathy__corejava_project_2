@@ -1,29 +1,48 @@
 package in.fssa.tharasworld;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.entity.TypeEntity;
 import in.fssa.tharasworld.service.TypeService;
 
 public class TestCasesForType {
+	
+	
+	private String generateRandomString(int length) {
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder randomString = new StringBuilder();
+        java.util.Random random = new java.util.Random();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            randomString.append(characters.charAt(index));
+        }
+
+        return randomString.toString();
+    }
 
 	
 	///  TEST FOR VALID INPUT TO CREATE TYPE
 	
 			@Test
-			public void testCreateTypeWithValidInput() {
+			void testCreateTypeWithValidInput() {
 				
 				TypeService typeService = new TypeService();
 				
 				TypeEntity newType = new TypeEntity();
-				newType.setTypeName("Saree");
+				
+				String random= generateRandomString(6);
+				newType.setTypeName(random);
 				newType.setCateId(3);
 			
 				
@@ -36,7 +55,7 @@ public class TestCasesForType {
 			//// TEST FOR INVALID INPUT
 			
 			@Test
-			public void testCreateTypeWithInvalidInput() {
+			void testCreateTypeWithInvalidInput() {
 				
 				TypeService typeService = new TypeService();
 				Exception exception = assertThrows(ValidationException.class, () -> {
@@ -45,13 +64,13 @@ public class TestCasesForType {
 				String exceptedMessage = "Invalid type input";
 				String actualMessage = exception.getMessage();
 				
-				assertTrue(exceptedMessage.equals(actualMessage));
+				assertEquals(exceptedMessage,actualMessage);
 			}
 			
 			//// TEST FOR CATEGORY ID WITH 0
 			
 			@Test 
-			public void testCreateTypeWithCategoryIdZero() {
+			void testCreateTypeWithCategoryIdZero() {
 				
 				TypeService typeService = new TypeService();
 				
@@ -65,13 +84,13 @@ public class TestCasesForType {
 				String exceptedMessage = "Invalid category id";
 				String actualMessage = exception.getMessage();
 				
-				assertTrue(exceptedMessage.equals(actualMessage));
+				assertEquals(exceptedMessage,actualMessage);
 			}
 			
 			//// TEST FOR CATEGORY DOESNOT EXISTS
 			
 			@Test 
-			public void testCreateTypeWithCategoryDoesnotExists() {
+			void testCreateTypeWithCategoryDoesnotExists() {
 				
 				TypeService typeService = new TypeService();
 				
@@ -85,13 +104,13 @@ public class TestCasesForType {
 				String exceptedMessage = "Category does not exists";
 				String actualMessage = exception.getMessage();
 				
-				assertTrue(exceptedMessage.equals(actualMessage));
+				assertEquals(exceptedMessage,actualMessage);
 			}
 			
 			//// TEST FOR TYPE NAME WITH NULL
 			
 			@Test 
-			public void testCreateTypeWithTypeNameNull() {
+			void testCreateTypeWithTypeNameNull() {
 				
 				TypeService typeService = new TypeService();
 				
@@ -105,14 +124,14 @@ public class TestCasesForType {
 				String exceptedMessage = "Type name cannot be null or empty";
 				String actualMessage = exception.getMessage();
 				
-				assertTrue(exceptedMessage.equals(actualMessage));
+				assertEquals(exceptedMessage,actualMessage);
 			}
 
 			
 			//// TEST FOR TYPE NAME WITH NULL
 			
 			@Test 
-			public void testCreateTypeWithTypeNameEmpty() {
+			void testCreateTypeWithTypeNameEmpty() {
 						
 					TypeService typeService = new TypeService();
 				
@@ -126,13 +145,13 @@ public class TestCasesForType {
 					String exceptedMessage = "Type name cannot be null or empty";
 					String actualMessage = exception.getMessage();
 						
-					assertTrue(exceptedMessage.equals(actualMessage));
+					assertEquals(exceptedMessage,actualMessage);
 				}
 			
 			////TEST FOR TYPE NAME WITH PATTERN	
 			
 			@Test 
-			public void testCreateTypeWithTypeNamePattern() {
+			void testCreateTypeWithTypeNamePattern() {
 					
 				TypeService typeService = new TypeService();
 				
@@ -146,19 +165,19 @@ public class TestCasesForType {
 				String exceptedMessage = "Type name doesn't match the pattern";
 				String actualMessage = exception.getMessage();
 					
-				assertTrue(exceptedMessage.equals(actualMessage));
+				assertEquals(exceptedMessage,actualMessage);
 			}
 			
 				////TEST FOR TYPE NAME ALREADY EXISTS
 			
 				@Test 
-				public void testCreateUserWithTypeNameAlredyExists() {
+				void testCreateTypeWithTypeNameAlredyExists() {
 						
 					TypeService typeService = new TypeService();
 					
 					TypeEntity newType = new TypeEntity();
-					newType.setTypeName("Chudi");
-					newType.setCateId(1);
+					newType.setTypeName("Saree");
+					newType.setCateId(3);
 						
 					Exception exception = assertThrows(ValidationException.class, () -> {
 						typeService.create(newType);
@@ -166,14 +185,14 @@ public class TestCasesForType {
 					String exceptedMessage = "This type name is already exists";
 					String actualMessage = exception.getMessage();
 						
-					assertTrue(exceptedMessage.equals(actualMessage));
+					assertEquals(exceptedMessage,actualMessage);
 				}
 
 				
 				//// TEST FOR UPDATE TYPE
 				
 				@Test
-				public void testUpdateType() {
+				void testUpdateType() {
 
 					TypeService typeService = new TypeService();
 					
@@ -190,21 +209,26 @@ public class TestCasesForType {
 				//// TEST FOR DELETE CATEGORY
 				
 				@Test
-				public void deleteType() throws Exception {
+				void deleteType() throws Exception {
 					
 					TypeService typeService = new TypeService();
-					
-					typeService.delete(1);
+					assertDoesNotThrow(() -> {
+						typeService.delete(1);
+					});
 					
 				}
 				
 			//// TEST FOR GET ALL TYPES
 				
 				@Test
-				public void getAllTypes() {
+				public void getAllTypes() throws ServiceException {
+					
 					TypeService typeService = new TypeService();
-					Set<TypeEntity> typeList = typeService.findAll();
-					System.out.println(typeList);
+					assertDoesNotThrow(() -> {
+						Set<TypeEntity> typeList = typeService.findAll();
+						System.out.println(typeList);
+					});
+					
 				}
 			
 	

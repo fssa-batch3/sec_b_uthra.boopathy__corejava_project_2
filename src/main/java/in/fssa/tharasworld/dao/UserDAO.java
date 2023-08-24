@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 import in.fssa.tharasworld.entity.UserEntity;
+import in.fssa.tharasworld.exception.PersistenceException;
+import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 import in.fssa.tharasworld.interfaces.UserInterface;
 
@@ -18,7 +20,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	 */
 	  
 	@Override 
-	public Set<UserEntity> findAll() {
+	public Set<UserEntity> findAll() throws PersistenceException {
 		
 		Set<UserEntity> userList = new HashSet<>();
 		
@@ -51,13 +53,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -72,7 +68,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	 */
 
 	@Override
-	public void create(UserEntity newuser) {
+	public void create(UserEntity newuser) throws PersistenceException {
 		
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -96,13 +92,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(connection, ps);
@@ -116,7 +106,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	 */
 
 	@Override
-	public void update(int id, UserEntity updatedUser) {
+	public void update(int id, UserEntity updatedUser) throws PersistenceException {
 		
 		    Connection conn = null;
 		    PreparedStatement ps = null;
@@ -157,15 +147,9 @@ public class UserDAO implements UserInterface<UserEntity>{
 		       
 		    	e.printStackTrace();
 		        System.out.println(e.getMessage());
-		        throw new RuntimeException(e);
+		        throw new PersistenceException(e.getMessage());
 		   
-		    } catch (RuntimeException er) {
-				
-				er.printStackTrace();
-				System.out.println(er.getMessage());
-				throw new RuntimeException(er);
-				
-			} finally {
+		    } finally {
 		   
 		    	ConnectionUtil.close(conn, ps);
 		    
@@ -179,7 +163,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -198,14 +182,8 @@ public class UserDAO implements UserInterface<UserEntity>{
 			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistenceException(e.getMessage());
 		
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
-			
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
@@ -217,7 +195,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	 */
 
 	@Override
-	public UserEntity findById(int id) {
+	public UserEntity findById(int id) throws PersistenceException {
 
 		Connection con = null; 
 		PreparedStatement ps = null;
@@ -249,15 +227,9 @@ public class UserDAO implements UserInterface<UserEntity>{
 		       
 	    	e.printStackTrace();
 	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e);
+	        throw new PersistenceException(e.getMessage());
 	   
-	    } catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
-			
-		} finally {
+	    } finally {
 	   
 	    	ConnectionUtil.close(con, ps, rs);
 	   
@@ -267,5 +239,175 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 	}
 
+	public void checkUserExists(String email) throws PersistenceException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		UserEntity user= null;
+		
+		try {
+			
+			String query = "SELECT * FROM users WHERE is_active=1 AND email=?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				throw new PersistenceException("This user is already exist");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+		
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+		
+	}
 	
+	public void checkUserExistsForUpdate(String email) throws PersistenceException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		UserEntity user= null;
+		
+		try {
+			
+			String query = "SELECT * FROM users WHERE is_active=1 AND email=?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			while(!rs.next()) {
+				throw new PersistenceException("User does not exist");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+		
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+		
+	}
+	
+	public void checkUserExistsWithId(int id) throws PersistenceException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		UserEntity user= null;
+		
+		try {
+			
+			String query = "SELECT user_id FROM users WHERE is_active=1 AND user_id=?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			
+			while(!rs.next()) {
+				throw new PersistenceException("User does not exist");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+		
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+		
+	}
+	
+	public void checkUserExistsWithPhoneNumberForUpdate(long phoneNumber) throws PersistenceException {
+	
+	Connection con = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	UserEntity user= null;
+	
+	try {
+		
+		String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
+		con = ConnectionUtil.getConnection();
+		ps = con.prepareStatement(query);
+		ps.setLong(1, phoneNumber);
+		rs = ps.executeQuery();
+		
+		while(!rs.next()) {
+			throw new PersistenceException("User does not exist");
+		}
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+		System.out.println(e.getMessage());
+		throw new PersistenceException(e.getMessage());
+	
+	} finally {
+		
+		ConnectionUtil.close(con, ps, rs);
+		
+	}
+	
+	}
+	
+	public void checkUserExistsWithPhoneNumber(long phoneNumber) throws PersistenceException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		UserEntity user= null;
+		
+		try {
+			
+			String query = "SELECT phone_number FROM users WHERE is_active=1 AND phone_number=?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setLong(1, phoneNumber);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				throw new PersistenceException("This user is already exist");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+		
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+		
+	}
 }
+	
+	

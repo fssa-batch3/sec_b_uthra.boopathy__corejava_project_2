@@ -4,6 +4,8 @@ import java.util.Set;
 
 import in.fssa.tharasworld.dao.CategoryDAO;
 import in.fssa.tharasworld.entity.CategoryEntity;
+import in.fssa.tharasworld.exception.PersistenceException;
+import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.validator.CategoryValidator;
 
@@ -14,15 +16,22 @@ public class CategoryService {
 	/**
 	 *  
 	 * @return
+	 * @throws ServiceException 
 	 */
-	public Set<CategoryEntity> findAll() { 
+	public Set<CategoryEntity> findAll() throws ServiceException { 
 		
-		CategoryDAO categoryDao = new CategoryDAO();
-		
-		Set<CategoryEntity> CategoryList = categoryDao.findAll();
-		
-		for(CategoryEntity cate:CategoryList) {
-			System.out.println(cate);
+		Set<CategoryEntity> CategoryList;
+		try {
+			CategoryDAO categoryDao = new CategoryDAO();
+			
+			CategoryList = categoryDao.findAll();
+			
+			for(CategoryEntity cate:CategoryList) {
+				System.out.println(cate);
+			}
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
 		}
 				
 		return CategoryList; 
@@ -32,15 +41,21 @@ public class CategoryService {
 	/**
 	 * 
 	 * @param newCategory
+	 * @throws ValidationException 
 	 * @throws Exception
 	 */
 	
-	public void create(CategoryEntity newCategory) throws Exception {
+	public void create(CategoryEntity newCategory) throws ServiceException, ValidationException {
 		
-		CategoryValidator.validate(newCategory);
-		
-		CategoryDAO categorydao = new CategoryDAO();
-		categorydao.create(newCategory);
+		try {
+			CategoryValidator.validate(newCategory);
+			
+			CategoryDAO categorydao = new CategoryDAO();
+			categorydao.create(newCategory);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ValidationException(e.getMessage());
+		}
 		
 	}
 	
@@ -51,16 +66,19 @@ public class CategoryService {
 	 * @throws Exception
 	 */
 	
-	public void update(int id, CategoryEntity updatedCategory) throws Exception {
+	public void update(int id, CategoryEntity updatedCategory) throws ServiceException, ValidationException {
 		
-		if(id==0) {
-			throw new ValidationException("Invalid id");
+		try {
+			CategoryValidator.validateId(id);
+			
+			CategoryValidator.validate(updatedCategory);
+			
+			CategoryDAO categorydao = new CategoryDAO();
+			categorydao.update(id, updatedCategory);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
 		}
-		
-		CategoryValidator.validate(updatedCategory);
-		
-		CategoryDAO categorydao = new CategoryDAO();
-		categorydao.update(id, updatedCategory);
 		
 	}
 	
@@ -70,14 +88,18 @@ public class CategoryService {
 	 * @throws Exception
 	 */
 	
-	public void delete(int id) throws Exception {
+	public void delete(int id) throws ServiceException, ValidationException {
 		
-		if(id==0) {
-			throw new ValidationException("Invalid id");
+		try {
+			
+			CategoryValidator.validateId(id);
+			
+			CategoryDAO categorydao = new CategoryDAO();
+			categorydao.delete(id);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
 		}
-		
-		CategoryDAO categorydao = new CategoryDAO();
-		categorydao.delete(id);
 		
 	}
 

@@ -1,46 +1,80 @@
 package in.fssa.tharasworld;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import in.fssa.tharasworld.entity.UserEntity;
 import in.fssa.tharasworld.service.UserService;
+import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 
 public class TestCasesForUser {
 	
 	
-	///  TEST FOR VALID INPUT TO CREATE USER
+	////  GENERATE AUTOMATIC STRING FOR EMAIL
 	
-	@Test
-	public void testCreateUserWithValidInput() {
-		
-		UserService userService = new UserService();
-		
-		UserEntity newUser = new UserEntity();
-		newUser.setName("Thamim");
-		newUser.setEmail("thamim@gmail.com");
-		newUser.setPhoneNumber(7418822895l);
-		newUser.setPassword("Thamim@12");
-		newUser.setRole("Buyer");
-		newUser.setAge(18);
-	
-		 
-		assertDoesNotThrow(()->{ 
-			userService.create(newUser);
-		});
+	 private String generateRandomString(int length) {
+	        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	        StringBuilder randomString = new StringBuilder();
+	        java.util.Random random = new java.util.Random();
+
+	        for (int i = 0; i < length; i++) {
+	            int index = random.nextInt(characters.length());
+	            randomString.append(characters.charAt(index));
+	        } 
+
+	        return randomString.toString();
+	    }
 	 
-	}
+	 //// GENERATE AUTOMATIC LONG FOR PHONE NUMBER
+	 
+	 private long generateRandomPhoneNumber(int length) {
+	        java.util.Random random = new java.util.Random();
+
+	        // Define the range for the random phone number
+	        long minPhoneNumber = 600_000_0000L; // Replace with the desired minimum value
+	        long maxPhoneNumber = 999_999_9999L; // Replace with the desired maximum value
+
+	        // Generate a random long number within the specified range
+	        long phoneNumber = minPhoneNumber + (long) (random.nextDouble() * (maxPhoneNumber - minPhoneNumber + 1));
+
+	        return phoneNumber;
+	    }
+	   
+	 @Test
+	    void testCreateUserWithValidInput() {
+	        UserService userService = new UserService();
+
+	        UserEntity newUser = new UserEntity();
+
+	        newUser.setName("Ramya");
+
+	        String randomString = generateRandomString(8);
+	        newUser.setEmail(randomString + "@gmail.com");
+
+	        long randomPhoneNumber = generateRandomPhoneNumber(10);
+	        newUser.setPhoneNumber(randomPhoneNumber);
+
+	        newUser.setPassword("Thamim@12");
+	        newUser.setRole("Buyer");
+	        newUser.setAge(18);
+
+	        assertDoesNotThrow(() -> {
+	            userService.create(newUser);
+	        });
+	    }
 	 
 	//// TEST FOR INVALID INPUT
 	  
 	@Test
-	public void testCreateUserWithInvalidInput() {
+	void testCreateUserWithInvalidInput() {
 		
 		UserService userService = new UserService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -49,13 +83,13 @@ public class TestCasesForUser {
 		String exceptedMessage = "Invalid user input";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(exceptedMessage.equals(actualMessage));
+		assertEquals(exceptedMessage,actualMessage);
 	}
 	
 	//// TEST FOR EMAIL WITH NULL
 	
 	@Test 
-	public void testCreateUserWithEmailNull() {
+	void testCreateUserWithEmailNull() {
 		
 		UserService userService = new UserService();
 		
@@ -73,13 +107,13 @@ public class TestCasesForUser {
 		String exceptedMessage = "Email cannot be null or empty";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(exceptedMessage.equals(actualMessage));
+		assertEquals(exceptedMessage,actualMessage);
 	}
 	
 	//// TEST FOR EMAIL WITH EMPTY STRING
 	
 	@Test 
-	public void testCreateUserWithEmailEmpty() {
+	void testCreateUserWithEmailEmpty() {
 		
 		UserService userService = new UserService();
 		
@@ -97,12 +131,12 @@ public class TestCasesForUser {
 		String exceptedMessage = "Email cannot be null or empty";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(exceptedMessage.equals(actualMessage));
+		assertEquals(exceptedMessage,actualMessage);
 	}
 	
 	////TEST FOR EMAIL WITH PATTERN	
 	@Test 
-	public void testCreateUserWithEmailPattern() {
+	void testCreateUserWithEmailPattern() {
 			
 		UserService userService = new UserService();
 			
@@ -120,13 +154,13 @@ public class TestCasesForUser {
 		String exceptedMessage = "Email doesn't match the pattern";
 		String actualMessage = exception.getMessage();
 			
-		assertTrue(exceptedMessage.equals(actualMessage));
+		assertEquals(exceptedMessage,actualMessage);
 	}
 	
 	////TEST FOR EMAIL WITH ALREADY EXISTS	
 	
 	@Test 
-	public void testCreateUserWithEmailExists() {
+	void testCreateUserWithEmailExists() {
 			
 		UserService userService = new UserService();
 			
@@ -144,14 +178,14 @@ public class TestCasesForUser {
 		String exceptedMessage = "This user is already exist";
 		String actualMessage = exception.getMessage();
 			
-		assertTrue(exceptedMessage.equals(actualMessage));
+		assertEquals(exceptedMessage,actualMessage);
 	}
 	
 	
 	/// TEST FOR PASSWORD WITH NULL
 	
 	@Test
-	public void testCreateUserWithPasswordNull() {
+	void testCreateUserWithPasswordNull() {
 		
 		UserService userService = new UserService();
 		
@@ -170,13 +204,13 @@ public class TestCasesForUser {
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	//// TEST FOR PASSWORD WITH EMPTY STRING
 
 	@Test
-	public void testCreateUserWithPasswordEmpty() {
+	void testCreateUserWithPasswordEmpty() {
 		
 		UserService userService = new UserService();
 	
@@ -195,13 +229,13 @@ public class TestCasesForUser {
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	////TEST FOR PASSWORD WITH PASSWORD LENGTH 
 
 	@Test
-	public void testCreateUserWithPasswordLength() {
+	void testCreateUserWithPasswordLength() {
 		
 		UserService userService = new UserService();
 	
@@ -220,7 +254,7 @@ public class TestCasesForUser {
 		String expectedMessage = "Password must contain atleast 8 characters";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	
@@ -246,13 +280,13 @@ public class TestCasesForUser {
 		String expectedMessage = "Password doesn't match the pattern";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	//// TEST FOR NAME WITH NULL
 
 	@Test
-	public void testCreateUserWithNameNull() {
+	void testCreateUserWithNameNull() {
 		
 		UserService userService = new UserService();
 		
@@ -271,13 +305,13 @@ public class TestCasesForUser {
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	//// TEST FOR NAME WITH EMPTY STRING
 
 	@Test
-	public void testCreateUserWithNameEmpty() {
+	void testCreateUserWithNameEmpty() {
 		UserService userService = new UserService();
 		UserEntity newUser = new UserEntity();
 
@@ -294,13 +328,13 @@ public class TestCasesForUser {
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	////TEST FOR NAME WITH PATTERN
 
 	@Test
-	public void testCreateUserWithNamePattern() {
+	void testCreateUserWithNamePattern() {
 		UserService userService = new UserService();
 		UserEntity newUser = new UserEntity();
 
@@ -317,13 +351,13 @@ public class TestCasesForUser {
 		String expectedMessage = "Name doesn't match the pattern";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	//// TEST FOR PHONE NUMBER WITH 0
 	
 	@Test
-	public void testCreateUserWithPhoneNumber () {
+	void testCreateUserWithPhoneNumber () {
 		
 		UserService userService = new UserService();
 		
@@ -342,14 +376,14 @@ public class TestCasesForUser {
 		String expectedMessage = "Invalid phone number";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 		
 	}
 	
 	//// TEST FOR PHONE NUMBER WITH LENGHT
 	
 	@Test
-	public void testCreateUserWithPhoneNumberLength () {
+	void testCreateUserWithPhoneNumberLength () {
 		
 		UserService userService = new UserService();
 		
@@ -368,7 +402,7 @@ public class TestCasesForUser {
 		String expectedMessage = "Invalid phone number";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 		
 	}
 	
@@ -394,7 +428,7 @@ public class TestCasesForUser {
 		String expectedMessage = "Invalid phone number";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 		
 	}
 	
@@ -405,28 +439,30 @@ public class TestCasesForUser {
 			
 		UserService userService = new UserService();
 			
-		UserEntity newUser = new UserEntity();
-		newUser.setName("Uthra");
-		newUser.setEmail("uthra12@gmail.com");
-		newUser.setPhoneNumber(7908946112l);
-		newUser.setPassword("Uthra@12");
-		newUser.setRole("Buyer");
-		newUser.setAge(18);
-			
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.create(newUser);
-		});
-		String exceptedMessage = "This user is already exist";
-		String actualMessage = exception.getMessage();
-			
-		assertTrue(exceptedMessage.equals(actualMessage));
+		 UserEntity newUser = new UserEntity();
+	        newUser.setName("Uthra");
+	        String randomString = generateRandomString(8);
+	        newUser.setEmail("cbuhs435@gmail.com");
+	        newUser.setPhoneNumber(9340697100l); // Same phone number as existing user
+	        newUser.setPassword("Uthra@12");
+	        newUser.setRole("Buyer");
+	        newUser.setAge(18);
+
+	        Exception exception = assertThrows(ValidationException.class, () -> {
+	            userService.create(newUser);
+	        });
+
+	        String expectedMessage = "This user is already exist";
+	        String actualMessage = exception.getMessage();
+
+	        assertEquals(expectedMessage, actualMessage);
 	}
 	
 	
 	////TEST FOR AGE
 	
 	@Test
-	public void testCreateUserWithInvalidAge () {
+	void testCreateUserWithInvalidAge () {
 		
 		UserService userService = new UserService();
 		
@@ -437,7 +473,7 @@ public class TestCasesForUser {
 		newUser.setPhoneNumber(9321674598l);
 		newUser.setPassword("Uthra@12");
 		newUser.setRole("Buyer");
-		newUser.setAge(-54);
+		newUser.setAge(5);
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userService.create(newUser);
@@ -446,41 +482,51 @@ public class TestCasesForUser {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
-		
+		assertEquals(expectedMessage,actualMessage);
+		 
 	}
 	
 	//// TEST FOR GET ALL USERS
 	
 	@Test
-	public void getAllUsers() {
+	void getAllUsers() throws ServiceException {
+		
 		UserService userService = new UserService();
-		Set<UserEntity> userList = userService.findAll();
-		System.out.println(userList);
+		assertDoesNotThrow (() -> {
+			Set<UserEntity> userList = userService.findAll();
+			System.out.println(userList);
+		});
+		
 	}
 	
 	//// TEST FOR GET USER BY ID
 	
 	@Test
-	public void getById() {
+	public void getById() throws ServiceException, ValidationException {
+		
 		UserService userService = new UserService();
-		UserEntity userList = userService.findById(2);
-		System.out.println(userList);
+		
+		assertDoesNotThrow (() -> {
+			UserEntity userList = userService.findById(2);
+			System.out.println(userList);
+		});
+		
 	}
 	
 	//// TEST FOR UPDATE USER
 	
 	@Test
-	public void testUpdateUser() {
+	void testUpdateUser() {
 
 		UserService userService = new UserService();
 		
 		UserEntity updateUser = new UserEntity();
 		
 		updateUser.setName("UthraKannan");
-		updateUser.setEmail("uthra@gmail.com");
+		updateUser.setEmail("uthra12@gmail.com");
 		updateUser.setPhoneNumber(7908946112l);
 		updateUser.setPassword("Ramya@12");
+		updateUser.setAge(18);
 		
 		assertDoesNotThrow(() -> {
 			userService.update(1, updateUser);
@@ -491,11 +537,12 @@ public class TestCasesForUser {
 	//// TEST FOR DELETE USER
 	
 	@Test
-	public void deleteUser() throws Exception {
+	void deleteUser() throws ServiceException, ValidationException {
 		
 		UserService userService = new UserService();
-		
-		userService.delete(1);
+		assertDoesNotThrow ( () -> {
+			userService.delete(10);
+		});
 		
 	}
 	

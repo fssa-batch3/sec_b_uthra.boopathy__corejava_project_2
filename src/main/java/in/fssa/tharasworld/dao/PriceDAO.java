@@ -4,11 +4,19 @@ import java.sql.*;
 import java.util.*;
 
 import in.fssa.tharasworld.entity.PriceEntity;
+import in.fssa.tharasworld.exception.PersistenceException;
+import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
 public class PriceDAO {
 	
-	public void create(PriceEntity newPrice, int pdtId) {
+	/**
+	 * 
+	 * @param newPrice
+	 * @param pdtId
+	 */
+	
+	public void create(PriceEntity newPrice, int pdtId) throws PersistenceException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -23,7 +31,7 @@ public class PriceDAO {
 			ps.setInt(1, pdtId);
 			ps.setDouble(2, newPrice.getActualPrice());
 			ps.setDouble(3, newPrice.getCurrentPrice());
-			ps.setDouble(3, newPrice.getDiscount());
+			ps.setDouble(4, newPrice.getDiscount());
 			ps.setDouble(5, newPrice.getSizeId());
 			
 			ps.executeUpdate();
@@ -31,22 +39,21 @@ public class PriceDAO {
 		} catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
 
-		
 	}
 	
-	public void update (int id, PriceEntity updatePrice) {
+	/**
+	 * 
+	 * @param id
+	 * @param updatePrice
+	 */
+	
+	public void update (int id, PriceEntity updatePrice) throws PersistenceException {
 		
 		Connection conn = null;
 	    PreparedStatement ps = null;
@@ -87,15 +94,9 @@ public class PriceDAO {
 	       
 	    	e.printStackTrace();
 	        System.out.println(e.getMessage());
-	        throw new RuntimeException(e);
+	        throw new PersistenceException(e.getMessage());
 	   
-	    } catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
-			
-		} finally {
+	    } finally {
 	   
 	    	ConnectionUtil.close(conn, ps);
 	    
@@ -104,7 +105,12 @@ public class PriceDAO {
 		
 	}
 	
-	public void delete(int priceId) {
+	/**
+	 * 
+	 * @param priceId
+	 */
+	
+	public void delete(int priceId) throws PersistenceException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -121,13 +127,7 @@ public class PriceDAO {
 		} catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -135,7 +135,13 @@ public class PriceDAO {
 		
 	}
 	
-	public List<PriceEntity> findByProductId(int pdtId) {
+	/**
+	 * 
+	 * @param pdtId
+	 * @return
+	 */
+	
+	public List<PriceEntity> findByProductId(int pdtId) throws PersistenceException {
 		
 		List<PriceEntity> prices = new ArrayList<>();
 		
@@ -172,13 +178,7 @@ public class PriceDAO {
 		} catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -189,7 +189,12 @@ public class PriceDAO {
 		
 	}
 	
-public Set<PriceEntity> findAllPrices() {
+	/**
+	 * 
+	 * @return
+	 */
+	
+	public Set<PriceEntity> findAllPrices() throws PersistenceException {
 		
 		Set<PriceEntity> prices = new HashSet<>();
 		
@@ -224,13 +229,7 @@ public Set<PriceEntity> findAllPrices() {
 		} catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -238,6 +237,34 @@ public Set<PriceEntity> findAllPrices() {
 
 		
 		return prices;
+		
+	}
+	
+	public static void checkPriceExists (int id) throws PersistenceException{
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			String query = "SELECT id FROM prices WHERE is_active = 1 AND price_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			 
+			if(!rs.next()) {
+				throw new PersistenceException("Price id does not exists");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
 		
 	}
 

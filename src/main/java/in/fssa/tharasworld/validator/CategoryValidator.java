@@ -3,6 +3,7 @@ package in.fssa.tharasworld.validator;
 import java.sql.*;
 import java.util.regex.Pattern;
 
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.dao.CategoryDAO;
 import in.fssa.tharasworld.entity.CategoryEntity;
@@ -16,9 +17,10 @@ public class CategoryValidator {
 	 * 
 	 * @param category
 	 * @throws ValidationException
+	 * @throws PersistenceException 
 	 */
 
-	public static void validate(CategoryEntity category) throws ValidationException {
+	public static void validate(CategoryEntity category) throws ValidationException, PersistenceException {
 
 		if (category == null) {
 			throw new ValidationException("Invalid category input");
@@ -34,6 +36,14 @@ public class CategoryValidator {
 		categorydao.checkCategoryExist(category.getCateName());
 			
 		}
+	
+	public static void validateId(int id) throws ValidationException {
+		
+		if(id<=0) {
+			throw new ValidationException("Invalid id");
+		}
+		
+	}
 		
 	}
 	

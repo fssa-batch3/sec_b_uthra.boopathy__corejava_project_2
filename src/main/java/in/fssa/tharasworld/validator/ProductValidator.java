@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 import in.fssa.tharasworld.dto.ProductDetailDTO;
 import in.fssa.tharasworld.entity.PriceEntity;
+import in.fssa.tharasworld.dao.*;
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.*;
 
@@ -13,7 +15,7 @@ public class ProductValidator {
 	
 	private static final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
 
-	public static void validate(ProductDetailDTO product) throws ValidationException {
+	public static void validate(ProductDetailDTO product) throws ValidationException, PersistenceException {
 
 		if (product == null) {
 			throw new ValidationException("Invalid product input");
@@ -35,7 +37,7 @@ public class ProductValidator {
 	
 	}
 	
-	public static void validateTypeId(int id) throws ValidationException {
+	public static void validateTypeId(int id) throws ValidationException, PersistenceException {
 		
 		if(id <= 0) {
 			
@@ -43,35 +45,9 @@ public class ProductValidator {
 			
 		}
 		
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		TypeDAO type = new TypeDAO();
+		type.checkTypeExistWithId(id);
 		
-		
-		try {
-			
-			String query = "SELECT * FROM types WHERE is_active=1 AND type_id=?";
-			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				throw new ValidationException("Type id does not exists");
-			}
-		
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		
-		} finally {
-			
-			ConnectionUtil.close(con, ps, rs);
-			
-		}
-	
 	}
 	
 	public static void validateDescription(String description) throws ValidationException {
@@ -95,7 +71,7 @@ public class ProductValidator {
 		
 	}
 	
-	public static void validateProductId(int id) throws ValidationException {
+	public static void validateProductId(int id) throws ValidationException, PersistenceException {
 		
 		if(id <= 0) {
 			
@@ -103,38 +79,8 @@ public class ProductValidator {
 			
 		}
 		
-		Connection con = null;
-		PreparedStatement ps = null;
-		 ResultSet rs = null;
-		 
-		 try {
-			 
-			 String query = "SELECT * FROM products WHERE is_active = 1 AND pdt_id = ?";
-			 
-			 con = ConnectionUtil.getConnection();
-			 ps = con.prepareStatement(query);
-			 
-			 ps.setInt(1, id);
-			 
-			 rs = ps.executeQuery();
-			 
-			 if(!rs.next()) {
-				 
-				 throw new ValidationException("Product does not exixts");
-				 
-			 }
-			 
-		 } catch (SQLException e) {
-				
-				e.printStackTrace();
-				System.out.println(e.getMessage());
-				throw new RuntimeException(e);
-			
-			} finally {
-				
-				ConnectionUtil.close(con, ps, rs);
-				
-			}		
+		ProductDAO pdt = new ProductDAO();
+		pdt.checkProductExists(id);
 	
 	}
 	
@@ -152,5 +98,12 @@ public class ProductValidator {
 		
 	}
 
+	public static void validateId(int id) throws ValidationException {
+		
+		if(id<=0) {
+			throw new ValidationException("Invalid id");
+		}
+		
+	}
 	
 }

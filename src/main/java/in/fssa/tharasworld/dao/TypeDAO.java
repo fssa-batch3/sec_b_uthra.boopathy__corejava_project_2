@@ -9,6 +9,7 @@ import java.util.Set;
 
 import in.fssa.tharasworld.interfaces.CategoryInterface;
 import in.fssa.tharasworld.entity.TypeEntity;
+import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
@@ -19,13 +20,13 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 */
 
 	@Override
-	public Set<TypeEntity> findAll() {
+	public Set<TypeEntity> findAll() throws PersistenceException {
 
 		Set<TypeEntity> typeList = new HashSet<>();
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
+		ResultSet rs = null; 
 
 		try {
 
@@ -49,13 +50,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
-
-		} catch (RuntimeException er) {
-
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -72,7 +67,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 */
 	
 	@Override
-	public void create(TypeEntity newType) {
+	public void create(TypeEntity newType) throws PersistenceException{
 
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -92,13 +87,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
-
-		} catch (RuntimeException er) {
-
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 
 		} finally {
 			ConnectionUtil.close(connection, ps);
@@ -111,7 +100,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 */
 
 	@Override
-	public void update(int id, TypeEntity updatedType) {
+	public void update(int id, TypeEntity updatedType) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -135,13 +124,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-
-		} catch (RuntimeException er) {
-
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 
 		} finally {
 
@@ -156,7 +139,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 */
 	
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -176,13 +159,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-
-		} catch (RuntimeException er) {
-
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -196,7 +173,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 * @throws ValidationException
 	 */
 
-	public void checkTypeExist(String name) throws ValidationException {
+	public void checkTypeExistWithName(String name) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -212,9 +189,9 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			rs = ps.executeQuery();
 
-			if (!rs.next()) {
+			if (rs.next()) {
 
-				throw new ValidationException("This type name is already exists");
+				throw new PersistenceException("This type name is already exists");
 
 			}
 
@@ -222,7 +199,49 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistenceException(e.getMessage());
+
+		} finally {
+
+			ConnectionUtil.close(con, ps, rs);
+
+		}
+
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @throws ValidationException
+	 */
+	
+	public void checkTypeExistWithId(int id) throws PersistenceException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			String query = "SELECT type_id FROM types WHERE is_active=1 AND type_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, id);
+
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+
+				throw new PersistenceException("Type id does not exists");
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
 
 		} finally {
 
@@ -238,12 +257,11 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 * @throws ValidationException
 	 */
 
-	public static void checkCategoryIdExists(int id) throws ValidationException {
+	public static void checkCategoryIdExists(int id) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		// CategoryEntity cate = null;
 
 		try {
 
@@ -257,7 +275,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			if (!rs.next()) {
 
-				throw new ValidationException("Category does not exists");
+				throw new PersistenceException("Category does not exists");
 
 			}
 
@@ -265,7 +283,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
+			throw new PersistenceException(e.getMessage());
 
 		} finally {
 

@@ -3,8 +3,11 @@ package in.fssa.tharasworld.service;
 import java.util.Set;
 
 import in.fssa.tharasworld.dao.TypeDAO;
+import in.fssa.tharasworld.exception.PersistenceException;
+import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.entity.TypeEntity;
+import in.fssa.tharasworld.validator.CategoryValidator;
 import in.fssa.tharasworld.validator.TypeValidator;
  
 public class TypeService {
@@ -14,14 +17,23 @@ public class TypeService {
 	 * @return
 	 */
 
-	public Set<TypeEntity> findAll() {
+	public Set<TypeEntity> findAll() throws ServiceException {
 		
-		TypeDAO typeDao = new TypeDAO();
 		
-		Set<TypeEntity> typeList = typeDao.findAll();
 		
-		for(TypeEntity type:typeList) {
-			System.out.println(type);
+		Set<TypeEntity> typeList = null;
+		
+		try {
+			TypeDAO typeDao = new TypeDAO();
+			
+			typeList = typeDao.findAll();
+			
+			for(TypeEntity type:typeList) {
+				System.out.println(type);
+			}
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
 		}
 				
 		return typeList; 
@@ -34,12 +46,17 @@ public class TypeService {
 	 * @throws Exception
 	 */
 
-	public void create(TypeEntity newType) throws Exception {
+	public void create(TypeEntity newType) throws ServiceException, ValidationException {
 		
-		TypeValidator.validate(newType);
-		
-		TypeDAO typedao = new TypeDAO();
-		typedao.create(newType);
+		try {
+			TypeValidator.validate(newType);
+			
+			TypeDAO typedao = new TypeDAO();
+			typedao.create(newType);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ValidationException(e.getMessage());
+		}
 		
 	}
 	/**
@@ -49,12 +66,19 @@ public class TypeService {
 	 * @throws Exception
 	 */
 	
-	public void update(int id, TypeEntity updatedType) throws Exception {
+	public void update(int id, TypeEntity updatedType) throws ServiceException, ValidationException {
 		
-		TypeValidator.validate(updatedType);
-		
-		TypeDAO typedao = new TypeDAO();
-		typedao.update(id, updatedType);
+		try {
+			
+			CategoryValidator.validateId(id);
+			TypeValidator.validate(updatedType);
+			
+			TypeDAO typedao = new TypeDAO();
+			typedao.update(id, updatedType);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
 		
 	}
 	
@@ -64,14 +88,18 @@ public class TypeService {
 	 * @throws Exception
 	 */
 	
-	public void delete(int id) throws Exception {
+	public void delete(int id) throws ServiceException, ValidationException {
 		
-		if(id==0) {
-			throw new ValidationException("Invalid id");
+		try {
+			
+			CategoryValidator.validateId(id);
+			
+			TypeDAO typedao = new TypeDAO();
+			typedao.delete(id);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
 		}
-		
-		TypeDAO typedao = new TypeDAO();
-		typedao.delete(id);
 		
 	}
 	

@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import in.fssa.tharasworld.entity.SizeEntity;
+import in.fssa.tharasworld.exception.PersistenceException;
+import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 
 public class SizeDAO { 
@@ -18,7 +20,7 @@ public class SizeDAO {
 	 */
 
 	 
-	public Set<SizeEntity> findAll() {
+	public Set<SizeEntity> findAll() throws PersistenceException {
 		
 		Set<SizeEntity> sizeList = new HashSet<>();
 		
@@ -47,13 +49,7 @@ public class SizeDAO {
 			
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -69,7 +65,7 @@ public class SizeDAO {
 	 * @param newSize
 	 */
 	
-	public void create(SizeEntity newSize) {
+	public void create(SizeEntity newSize) throws PersistenceException {
 		
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -88,18 +84,49 @@ public class SizeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new RuntimeException();
-			
-		} catch (RuntimeException er) {
-			
-			er.printStackTrace();
-			System.out.println(er.getMessage());
-			throw new RuntimeException(er);
+			throw new PersistenceException(e.getMessage());
 			
 		} finally {
 			ConnectionUtil.close(connection, ps);
 		}
 
+		
+	}
+	
+	public void checkSizeNameExists (String name) throws PersistenceException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		SizeEntity catefory = null;
+		
+		try {
+			
+			String query = "SELECT * FROM sizes WHERE is_active=1 AND size_name = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, name);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				
+				throw new PersistenceException("This size is already exists");
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
 		
 	}
 	
