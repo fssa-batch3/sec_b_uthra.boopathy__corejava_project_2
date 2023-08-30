@@ -22,8 +22,14 @@ public class ProductValidator {
 		}
 		
 		validateName(product.getName());
+		
 		validateDescription(product.getDescription());
-		validateTypeId(product.getTypeId()); 
+		
+		validateSellerId(product.getSellerId());
+		
+		validateTypeId(product.getTypeId());
+		
+		validatePriceList(product.getListOfPrices());
 			
 	}
 	
@@ -32,16 +38,27 @@ public class ProductValidator {
 		StringUtil.rejectIfInvalidString(name, "Product name");
 		
 		if (!Pattern.matches(NAME_PATTERN, name)) {
-			throw new ValidationException("Name doesn't match the pattern");
+			throw new ValidationException("Product name doesn't match the pattern");
 		}
 	
+	}
+	
+	public static void validateSellerId(int id) throws ValidationException, PersistenceException {
+		
+		if(id<=0) {
+			throw new ValidationException("Seller id connot be zero or in negative");
+		}
+		
+		UserDAO userDAO = new UserDAO();
+		userDAO.checkUserIsSeller(id);
+		
 	}
 	
 	public static void validateTypeId(int id) throws ValidationException, PersistenceException {
 		
 		if(id <= 0) {
 			
-			throw new ValidationException("Invalid id");
+			throw new ValidationException("Type id cannot be zero or in negative");
 			
 		}
 		
@@ -54,37 +71,26 @@ public class ProductValidator {
 		
 		StringUtil.rejectIfInvalidString(description, "Description");
 		
-	
 	}
 	
 	
 	//////      PRICE VALIDATION            //////////
 
-	
-	public static void validatePriceList (ProductDetailDTO product) throws ValidationException {
-		
-		if (product == null) {
-			throw new ValidationException("Invalid product input");
-		}
-		
-		validatePriceList(product.getListOfPrices());
-		
-	}
-	
+
 	public static void validateProductId(int id) throws ValidationException, PersistenceException {
 		
 		if(id <= 0) {
 			
-			throw new ValidationException("Invalid product id");
+			throw new ValidationException("Product id cannot be zero or in negative");
 			
 		}
 		
 		ProductDAO pdt = new ProductDAO();
-		pdt.checkProductExists(id);
+		pdt.checkProductExist(id);
 	
 	}
 	
-	public static void validatePriceList (List<PriceEntity> price) throws ValidationException {
+	public static void validatePriceList (List<PriceEntity> price) throws ValidationException, PersistenceException {
 		
 		if (price.isEmpty() || price == null) {
 
@@ -98,10 +104,10 @@ public class ProductValidator {
 		
 	}
 
-	public static void validateId(int id) throws ValidationException {
+	public static void validatePriceId(int id) throws ValidationException {
 		
 		if(id<=0) {
-			throw new ValidationException("Invalid id");
+			throw new ValidationException("Invalid price id");
 		}
 		
 	}

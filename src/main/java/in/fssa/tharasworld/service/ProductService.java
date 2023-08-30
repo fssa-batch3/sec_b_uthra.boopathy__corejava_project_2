@@ -10,7 +10,9 @@ import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.entity.PriceEntity;
 import in.fssa.tharasworld.entity.ProductEntity;
+import in.fssa.tharasworld.validator.CategoryValidator;
 import in.fssa.tharasworld.validator.ProductValidator;
+import in.fssa.tharasworld.validator.TypeValidator;
 
 public class ProductService {
 
@@ -62,8 +64,6 @@ public class ProductService {
 			for (PriceEntity newPrice : newProduct.getListOfPrices()) {
 				pricedao.create(newPrice, id);
 			}
-		} catch (ValidationException e) {
-			e.printStackTrace();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -75,6 +75,7 @@ public class ProductService {
 	 * 
 	 * @param id
 	 * @param updatedProduct
+	 * @throws ValidationException 
 	 * @throws Exception
 	 */
 
@@ -82,19 +83,15 @@ public class ProductService {
 
 		try {
 
-			ProductValidator.validateId(id);
+			ProductValidator.validateProductId(id);
 
 			ProductDAO productdao = new ProductDAO();
-
-			productdao.checkProductExists(id);
 
 			ProductValidator.validateName(updatedProduct.getName());
 			ProductValidator.validateDescription(updatedProduct.getDescription());
 			ProductValidator.validateTypeId(updatedProduct.getTypeId());
 
 			productdao.update(id, updatedProduct);
-		} catch (ValidationException e) {
-			e.printStackTrace();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -112,14 +109,11 @@ public class ProductService {
 
 		try {
 
-			ProductValidator.validateId(id);
+			ProductValidator.validateProductId(id);
 
 			ProductDAO productdao = new ProductDAO();
 
-			productdao.checkProductExists(id);
 			productdao.delete(id);
-		} catch (ValidationException e) {
-			e.printStackTrace();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -140,7 +134,7 @@ public class ProductService {
 		
 		try {
 			
-			ProductValidator.validateId(id);
+			CategoryValidator.validateId(id);
 			
 			ProductDAO productdao = new ProductDAO();
 
@@ -177,7 +171,7 @@ public class ProductService {
 				
 		try {
 			
-			ProductValidator.validateId(id);
+			TypeValidator.validateTypeId(id);
 			
 			ProductDAO productdao = new ProductDAO();
 			PriceDAO pricedao = new PriceDAO();
@@ -213,7 +207,7 @@ public class ProductService {
 				
 			try {
 				
-				ProductValidator.validateId(id);
+				ProductValidator.validateProductId(id);
 				
 				ProductDAO productdao = new ProductDAO();
 				PriceDAO pricedao = new PriceDAO();

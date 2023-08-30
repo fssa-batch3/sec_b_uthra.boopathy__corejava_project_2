@@ -102,7 +102,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	}
 	
 	/**
-	 * @param id, updateduser
+	 *  @param id, updatedUser
 	 */
 
 	@Override
@@ -239,7 +239,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 	}
 
-	public void checkUserExists(String email) throws PersistenceException {
+	public void checkUserExists(String email) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -256,7 +256,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				throw new PersistenceException("This user is already exist");
+				throw new ValidationException("This user is already exist");
 			}
 		
 		} catch (SQLException e) {
@@ -273,7 +273,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 	}
 	
-	public void checkUserExistsForUpdate(String email) throws PersistenceException {
+	public void checkUserExistsForUpdate(String email) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -290,7 +290,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			rs = ps.executeQuery();
 			
 			while(!rs.next()) {
-				throw new PersistenceException("User does not exist");
+				throw new ValidationException("User does not exist");
 			}
 		
 		} catch (SQLException e) {
@@ -307,7 +307,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 	}
 	
-	public void checkUserExistsWithId(int id) throws PersistenceException {
+	public void checkUserExistsWithId(int id) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -324,7 +324,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			rs = ps.executeQuery();
 			
 			while(!rs.next()) {
-				throw new PersistenceException("User does not exist");
+				throw new ValidationException("User does not exist");
 			}
 		
 		} catch (SQLException e) {
@@ -341,7 +341,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 	}
 	
-	public void checkUserExistsWithPhoneNumberForUpdate(long phoneNumber) throws PersistenceException {
+	public void checkUserExistsWithPhoneNumberForUpdate(long phoneNumber) throws PersistenceException, ValidationException {
 	
 	Connection con = null;
 	PreparedStatement ps = null;
@@ -358,7 +358,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		rs = ps.executeQuery();
 		
 		while(!rs.next()) {
-			throw new PersistenceException("User does not exist");
+			throw new ValidationException("User does not exist");
 		}
 	
 	} catch (SQLException e) {
@@ -375,7 +375,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	
 	}
 	
-	public void checkUserExistsWithPhoneNumber(long phoneNumber) throws PersistenceException {
+	public void checkUserExistsWithPhoneNumber(long phoneNumber) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -392,7 +392,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				throw new PersistenceException("This user is already exist");
+				throw new ValidationException("This user is already exist");
 			}
 		
 		} catch (SQLException e) {
@@ -408,6 +408,47 @@ public class UserDAO implements UserInterface<UserEntity>{
 		}
 		
 	}
+	
+	public void checkUserIsSeller(int id) throws PersistenceException, ValidationException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		UserEntity user= null;
+		
+		try {
+			
+			String query = "SELECT role FROM users WHERE is_active=1 AND user_id=?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				user = new UserEntity();
+				user.setRole(rs.getString("role"));
+				
+			}
+			
+			if("buyer".equalsIgnoreCase(user.getRole())) {
+				throw new ValidationException("Seller does not exist");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+		
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+		
+	}
+	
 }
 	
 	

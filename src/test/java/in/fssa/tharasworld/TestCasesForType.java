@@ -43,7 +43,7 @@ public class TestCasesForType {
 				
 				String random= generateRandomString(6);
 				newType.setTypeName(random);
-				newType.setCateId(3);
+				newType.setCateId(5);
 			
 				
 				assertDoesNotThrow(()->{
@@ -81,7 +81,7 @@ public class TestCasesForType {
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					typeService.create(newType);
 				});
-				String exceptedMessage = "Invalid category id";
+				String exceptedMessage = "Category id cannot be zero or in negative";
 				String actualMessage = exception.getMessage();
 				
 				assertEquals(exceptedMessage,actualMessage);
@@ -96,7 +96,7 @@ public class TestCasesForType {
 				
 				TypeEntity newType = new TypeEntity();
 				newType.setTypeName("Chudi");
-				newType.setCateId(11);
+				newType.setCateId(21);
 				
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					typeService.create(newType);
@@ -116,7 +116,7 @@ public class TestCasesForType {
 				
 				TypeEntity newType = new TypeEntity();
 				newType.setTypeName(null);
-				newType.setCateId(1);
+				newType.setCateId(8);
 				
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					typeService.create(newType);
@@ -137,7 +137,7 @@ public class TestCasesForType {
 				
 					TypeEntity newType = new TypeEntity();
 					newType.setTypeName("");
-					newType.setCateId(1);
+					newType.setCateId(5);
 						
 					Exception exception = assertThrows(ValidationException.class, () -> {
 						typeService.create(newType);
@@ -157,7 +157,7 @@ public class TestCasesForType {
 				
 				TypeEntity newType = new TypeEntity();
 				newType.setTypeName("1234");
-				newType.setCateId(1);
+				newType.setCateId(5);
 					
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					typeService.create(newType);
@@ -176,8 +176,8 @@ public class TestCasesForType {
 					TypeService typeService = new TypeService();
 					
 					TypeEntity newType = new TypeEntity();
-					newType.setTypeName("Saree");
-					newType.setCateId(3);
+					newType.setTypeName("weieIC");
+					newType.setCateId(5);
 						
 					Exception exception = assertThrows(ValidationException.class, () -> {
 						typeService.create(newType);
@@ -198,26 +198,26 @@ public class TestCasesForType {
 					
 					TypeEntity updatedType = new TypeEntity();
 					updatedType.setTypeName("Croptop");
-					updatedType.setCateId(3);
+					updatedType.setCateId(5);
 					
 					assertDoesNotThrow(() -> {
-						typeService.update(1, updatedType);
+						typeService.update(10, updatedType);
 					});
 					
 				}
 				
-				//// TEST FOR DELETE CATEGORY
+				//// TEST FOR DELETE TYPE
 				
 				@Test
 				void deleteType() throws Exception {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(1);
+						typeService.delete(11);
 					});
 					
 				}
-				
+//				
 			//// TEST FOR GET ALL TYPES
 				
 				@Test

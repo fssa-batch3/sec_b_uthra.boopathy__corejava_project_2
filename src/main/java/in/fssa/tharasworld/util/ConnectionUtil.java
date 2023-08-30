@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import io.github.cdimascio.dotenv.Dotenv;
+//import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
 	
@@ -21,21 +21,29 @@ public class ConnectionUtil {
 		String username;
 		String password;
 
-		if (System.getenv("CI") != null) {
-			url = System.getenv("DATABASE_HOSTNAME");
-			username = System.getenv("DATABASE_USERNAME");
-			password = System.getenv("DATABASE_PASSWORD");
-		} else {
-			Dotenv env = Dotenv.load();
-			url = env.get("DATABASE_HOSTNAME");
-			username = env.get("DATABASE_USERNAME");
-			password = env.get("DATABASE_PASSWORD");
+//		if (System.getenv("CI") != null) {
+//			url = System.getenv("DATABASE_HOSTNAME");
+//			username = System.getenv("DATABASE_USERNAME");
+//			password = System.getenv("DATABASE_PASSWORD");
+//		} else {
+////			Dotenv env = Dotenv.load();
+////			url = env.get("DATABASE_HOSTNAME");
+////			username = env.get("DATABASE_USERNAME");
+////			password = env.get("DATABASE_PASSWORD");
+		
+		/////  local
+		
+		url = "jdbc:mysql://localhost:3306/project";
+		username = "root"; 
+		password = "Uthra#1210";
 			
+			////  planet scale 
+////			
 //			url = "jdbc:mysql://164.52.216.41:3306/uthra_boopathy_corejava_project";
 //			username = "JkVbyMzZf0g6"; 
 //			password = "a7ff4f4c-8f26-4206-bbf6-883b7398c257";
-		}
- 
+//		}
+// 
 		Connection connection = null;
 
 		try {

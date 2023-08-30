@@ -42,4 +42,11 @@ public class SizeValidator {
 			
 		}
 	
+	public static void checkSizeExistsWithId(int id) throws ValidationException, PersistenceException {
+		
+		SizeDAO sizeDAO = new SizeDAO();
+		sizeDAO.checkSizeExistWithId(id);
+		
+	}
+	
 }

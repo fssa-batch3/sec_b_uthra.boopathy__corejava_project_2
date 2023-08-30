@@ -9,6 +9,7 @@ import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.entity.TypeEntity;
 import in.fssa.tharasworld.validator.CategoryValidator;
 import in.fssa.tharasworld.validator.TypeValidator;
+import in.fssa.tharasworld.validator.UserValidator;
  
 public class TypeService {
 	
@@ -70,7 +71,7 @@ public class TypeService {
 		
 		try {
 			
-			CategoryValidator.validateId(id);
+			TypeValidator.validateTypeId(id);
 			TypeValidator.validate(updatedType);
 			
 			TypeDAO typedao = new TypeDAO();
@@ -92,7 +93,7 @@ public class TypeService {
 		
 		try {
 			
-			CategoryValidator.validateId(id);
+			TypeValidator.validateTypeId(id);
 			
 			TypeDAO typedao = new TypeDAO();
 			typedao.delete(id);

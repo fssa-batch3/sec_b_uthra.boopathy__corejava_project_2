@@ -173,7 +173,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 * @throws ValidationException
 	 */
 
-	public void checkTypeExistWithName(String name) throws PersistenceException {
+	public void checkTypeExistWithName(String name) throws PersistenceException, ValidationException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -191,7 +191,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			if (rs.next()) {
 
-				throw new PersistenceException("This type name is already exists");
+				throw new ValidationException("This type name is already exists");
 
 			}
 
@@ -213,9 +213,10 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 * 
 	 * @param name
 	 * @throws ValidationException
+	 * @throws PersistenceException 
 	 */
 	
-	public void checkTypeExistWithId(int id) throws PersistenceException {
+	public void checkTypeExistWithId(int id) throws ValidationException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -233,7 +234,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			if (!rs.next()) {
 
-				throw new PersistenceException("Type id does not exists");
+				throw new ValidationException("Type id does not exists");
 
 			}
 
@@ -257,7 +258,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	 * @throws ValidationException
 	 */
 
-	public static void checkCategoryIdExists(int id) throws PersistenceException {
+	public static void checkCategoryIdExists(int id) throws PersistenceException, ValidationException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -275,7 +276,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			if (!rs.next()) {
 
-				throw new PersistenceException("Category does not exists");
+				throw new ValidationException("Category does not exists");
 
 			}
 

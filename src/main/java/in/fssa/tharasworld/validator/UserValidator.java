@@ -104,6 +104,10 @@ public class UserValidator {
 		
 		public static void CheckUserExistsWithId(int id) throws ValidationException, PersistenceException {
 			
+			if(id<=0) {
+				throw new ValidationException("Invalid user id");
+			}
+			
 			UserDAO userdao = new UserDAO();
 			userdao.checkUserExistsWithId(id);
 			
@@ -150,7 +154,7 @@ public class UserValidator {
 		 * @throws ValidationException
 		 */
 		
-		private static void validateAge(int age) throws ValidationException{
+		public static void validateAge(int age) throws ValidationException{
 			
 			String ages = String.valueOf(age);
 			

@@ -170,7 +170,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	 * @throws ValidationException
 	 */
 	
-	public static void checkCategoryExist (String name) throws PersistenceException {
+	public static void checkCategoryExist (String name) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -189,7 +189,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 			if(rs.next()) {
 				
-				throw new PersistenceException("This category name is already exists");
+				throw new ValidationException("This category name is already exists");
 				
 			}
 			
@@ -205,6 +205,41 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 		}
 		
+	}
+	
+	public static void checkCategoryExistWithId (int id) throws PersistenceException, ValidationException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		//CategoryEntity cate = null;
+		
+		try {
+			
+			String query = "SELECT cate_id FROM categories WHERE is_active=1 AND cate_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, id);
+			
+			rs = ps.executeQuery();
+			
+			if(!rs.next()) {
+				throw new ValidationException("Category does not exists");
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
 	}
 	
 }

@@ -52,13 +52,11 @@ public class PriceService {
 
 			PriceValidator.validate(price);
 
-			ProductValidator.validateProductId(id);
+//			ProductValidator.validateProductId(id);
 
 			PriceDAO priceDAO = new PriceDAO();
 
 			priceDAO.update(id, price);
-		} catch (ValidationException e) {
-			e.printStackTrace();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -69,14 +67,10 @@ public class PriceService {
 
 		try {
 			PriceValidator.validateId(id);
-			
-			PriceValidator.validatePriceExists(id);
-			
+						
 			PriceDAO priceDAO = new PriceDAO();
 
 			priceDAO.delete(id);
-		} catch (ValidationException e) {
-			e.printStackTrace();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());

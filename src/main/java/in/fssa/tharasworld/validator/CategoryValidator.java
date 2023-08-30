@@ -37,12 +37,14 @@ public class CategoryValidator {
 			
 		}
 	
-	public static void validateId(int id) throws ValidationException {
+	public static void validateId(int id) throws ValidationException, PersistenceException {
 		
 		if(id<=0) {
-			throw new ValidationException("Invalid id");
+			throw new ValidationException("Category id cannot be zero or in negative");
 		}
 		
+		CategoryDAO categoryDAO = new CategoryDAO();
+		categoryDAO.checkCategoryExistWithId(id);
 	}
 		
 	}

@@ -7,7 +7,7 @@ import in.fssa.tharasworld.exception.ValidationException;
 
 public class PriceValidator {
 	
-	public static void validate (PriceEntity price) throws ValidationException {
+	public static void validate (PriceEntity price) throws ValidationException, PersistenceException {
 		
 		if(price == null || "".equals(price)) {
 			
@@ -15,9 +15,23 @@ public class PriceValidator {
 			
 		}
 		
+		validateSizeId(price.getSizeId());
+		
 		validateActualPrice(price.getActualPrice());
+		
 		validateCurrentPrice(price.getCurrentPrice());
+		
 		validateDiscount(price.getDiscount());
+		
+	}
+	
+	public static void validateSizeId(int id) throws ValidationException, PersistenceException {
+		
+		if(id<=0) {
+			throw new ValidationException("Size id cannot be zero or in negative");
+		}
+		
+		SizeValidator.checkSizeExistsWithId(id);
 		
 	}
 	
@@ -25,13 +39,12 @@ public class PriceValidator {
 		
 		if (price <= 0) {
 			
-			throw new ValidationException("Invalid actual price");
+			throw new ValidationException("Actual price connot be zero or in negative");
 			
 		}
 		
-		String disInString = String.valueOf(price);
 		
-		if(disInString.length() > 6) {
+		if(price >= 100000) {
 			
 			throw new ValidationException("Actual price must be less than 1 lakh");
 			
@@ -43,13 +56,11 @@ public class PriceValidator {
 		
 		if (price <= 0) {
 			
-			throw new ValidationException("Invalid current price");
+			throw new ValidationException("Current price connot be zero or in negative");
 			
 		}
-		
-		String disInString = String.valueOf(price);
-		
-		if(disInString.length() > 6) {
+				
+		if(price >= 100000) {
 			
 			throw new ValidationException("Current price must be less than 1 lakh");
 			
@@ -73,6 +84,8 @@ public class PriceValidator {
 		
 	}
 	
+	
+	
 	public static void validatePriceExists (int id) throws ValidationException, PersistenceException {
 		
 		if(id<=0) {
@@ -84,12 +97,14 @@ public class PriceValidator {
 		
 	}
 	
-	public static void validateId(int id) throws ValidationException {
+	public static void validateId(int id) throws ValidationException, PersistenceException {
 		
 		if(id<=0) {
-			throw new ValidationException("Invalid id");
+			throw new ValidationException("Price id cannot be zero or in negative");
 		}
 		
+		PriceDAO priceDAo = new PriceDAO();
+		PriceDAO.checkPriceExists(id);
 	}
 
 }

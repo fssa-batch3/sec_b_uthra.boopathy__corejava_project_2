@@ -77,6 +77,11 @@ public class PriceDAO {
 	            queryBuilder.append("discount = ?, ");
 	            values.add(updatePrice.getDiscount());
 	        }
+	        
+	        if (updatePrice.getSizeId() > 0) {
+	            queryBuilder.append("size_id = ?, ");
+	            values.add(updatePrice.getSizeId());
+	        }
 	       
 	        queryBuilder.setLength(queryBuilder.length() - 2);
 	        queryBuilder.append(" WHERE is_active = 1 AND price_id = ?");
@@ -240,7 +245,7 @@ public class PriceDAO {
 		
 	}
 	
-	public static void checkPriceExists (int id) throws PersistenceException{
+	public static void checkPriceExists (int id) throws PersistenceException, ValidationException{
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -248,14 +253,14 @@ public class PriceDAO {
 		
 		try {
 			
-			String query = "SELECT id FROM prices WHERE is_active = 1 AND price_id = ?";
+			String query = "SELECT price_id FROM prices WHERE is_active = 1 AND price_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			 
 			if(!rs.next()) {
-				throw new PersistenceException("Price id does not exists");
+				throw new ValidationException("Price id does not exists");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

@@ -28,9 +28,13 @@ public class TypeValidator {
 		
 		if(type.getCateId()<=0) {
 			
-			throw new ValidationException("Invalid category id");
+			throw new ValidationException("Category id cannot be zero or in negative");
 			
 		}
+		
+		TypeDAO typedao = new TypeDAO();
+
+		typedao.checkCategoryIdExists(type.getCateId());
 		
 		StringUtil.rejectIfInvalidString(type.getTypeName(), "Type name");
 		
@@ -38,13 +42,25 @@ public class TypeValidator {
 			throw new ValidationException("Type name doesn't match the pattern");
 		}
 				
-		TypeDAO typedao = new TypeDAO();
 
-		typedao.checkCategoryIdExists(type.getCateId());
 
 		typedao.checkTypeExistWithName(type.getTypeName());
 		
 			
+	}
+	
+	
+	public static void validateTypeId(int id) throws ValidationException, PersistenceException {
+		
+		if(id<=0) {
+			throw new ValidationException("Type id cannot be zero or in negative");
+		}
+		
+		TypeDAO typedao = new TypeDAO();
+
+		typedao.checkTypeExistWithId(id);
+		
+		
 	}
 
 

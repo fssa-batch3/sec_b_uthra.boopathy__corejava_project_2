@@ -54,7 +54,7 @@ public class SizeService {
 			sizedao.create(newSize);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
-			throw new ValidationException(e.getMessage());
+			throw new ServiceException(e.getMessage());
 		}
 		
 	}

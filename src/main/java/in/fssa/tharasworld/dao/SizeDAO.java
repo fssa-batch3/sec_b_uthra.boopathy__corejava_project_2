@@ -93,7 +93,7 @@ public class SizeDAO {
 		
 	}
 	
-	public void checkSizeNameExists (String name) throws PersistenceException {
+	public void checkSizeNameExists (String name) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -112,7 +112,44 @@ public class SizeDAO {
 			
 			if(rs.next()) {
 				
-				throw new PersistenceException("This size is already exists");
+				throw new ValidationException("This size is already exists");
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			
+			ConnectionUtil.close(con, ps, rs);
+			
+		}
+		
+	}
+	
+	public void checkSizeExistWithId (int id) throws PersistenceException, ValidationException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		SizeEntity catefory = null;
+		
+		try {
+			
+			String query = "SELECT * FROM sizes WHERE is_active=1 AND size_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, id);
+			
+			rs = ps.executeQuery();
+			
+			if(!rs.next()) {
+				
+				throw new ValidationException("Size does not exists");
 				
 			}
 			

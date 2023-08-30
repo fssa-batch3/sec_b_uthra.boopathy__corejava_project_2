@@ -390,39 +390,7 @@ public class ProductDAO {
 	 * @throws ValidationException
 	 */
 	
-	public void checkProductExists(int id) throws PersistenceException {
-		
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try {
-			
-			String query = "SELECT * FROM products WHERE is_active=1 AND pdt_id =?";
-			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			
-			while(!rs.next()) {
-				
-				throw new PersistenceException("Product does not exists");
-				
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new PersistenceException(e.getMessage());
-			
-		} finally {
-			ConnectionUtil.close(con, ps, rs);
-		}
-		
-	}
-	
-	public static void checkProductExist(int id) throws PersistenceException {
+	public static void checkProductExist(int id) throws PersistenceException, ValidationException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -441,7 +409,7 @@ public class ProductDAO {
 			 
 			 if(!rs.next()) {
 				 
-				 throw new PersistenceException("Product does not exixts");
+				 throw new ValidationException("Product does not exixts");
 				 
 			 }
 			 

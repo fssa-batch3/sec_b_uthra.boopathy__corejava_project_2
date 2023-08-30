@@ -502,7 +502,7 @@ public class TestCasesForUser {
 	//// TEST FOR GET USER BY ID
 	
 	@Test
-	public void getById() throws ServiceException, ValidationException {
+	void getById() throws ServiceException, ValidationException {
 		
 		UserService userService = new UserService();
 		
@@ -523,13 +523,11 @@ public class TestCasesForUser {
 		UserEntity updateUser = new UserEntity();
 		
 		updateUser.setName("UthraKannan");
-		updateUser.setEmail("uthra12@gmail.com");
-		updateUser.setPhoneNumber(7908946112l);
 		updateUser.setPassword("Ramya@12");
 		updateUser.setAge(18);
 		
 		assertDoesNotThrow(() -> {
-			userService.update(1, updateUser);
+			userService.update(2, updateUser);
 		});
 		
 	}
@@ -541,7 +539,7 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(10);
+			userService.delete(4);
 		});
 		
 	}

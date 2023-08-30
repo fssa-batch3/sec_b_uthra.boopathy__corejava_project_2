@@ -17,7 +17,7 @@ public class UserService {
 	 * @return
 	 */
 	
-	public Set<UserEntity> findAll() throws ServiceException {
+	public static Set<UserEntity> findAll() throws ServiceException {
 		
 		Set<UserEntity> userList = null;
 				
@@ -58,7 +58,7 @@ public class UserService {
 		
 		} catch (PersistenceException e) {
 			e.printStackTrace(); 
-			throw new ValidationException(e.getMessage());
+			throw new ServiceException(e.getMessage());
 		}
 		
 	}
@@ -73,10 +73,10 @@ public class UserService {
 	public void update(int id, UserEntity updatedUser) throws ServiceException, ValidationException {
 		
 		try {
-			CategoryValidator.validateId(id);
-			UserValidator.validate(updatedUser);
-			UserValidator.CheckUserExistsForUpdate(updatedUser.getEmail());
-			UserValidator.CheckUserExistsWithPhoneNumberForUpdate(updatedUser.getPhoneNumber());			
+			UserValidator.CheckUserExistsWithId(id);
+			UserValidator.validateName(updatedUser.getName());
+			UserValidator.validatePassword(updatedUser.getPassword());
+			UserValidator.validateAge(updatedUser.getAge());
 			
 			UserDAO userdao = new UserDAO();
 			userdao.update(id, updatedUser);
@@ -96,14 +96,14 @@ public class UserService {
 	public void delete(int id) throws ServiceException, ValidationException {
 		
 		try {
-			CategoryValidator.validateId(id);
+			UserValidator.CheckUserExistsWithId(id);
 			UserValidator.CheckUserExistsWithId(id);
 			
 			UserDAO userdao = new UserDAO();
 			userdao.delete(id);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
-			throw new ValidationException(e.getMessage());
+			throw new ServiceException(e.getMessage());
 		}
 		
 	}
@@ -114,13 +114,13 @@ public class UserService {
 	 * @return
 	 */
 	
-	public UserEntity findById(int id) throws ServiceException, ValidationException {
+	public static UserEntity findById(int id) throws ServiceException, ValidationException {
 		
 		UserEntity user = null;
 				
 		try {
 			
-			CategoryValidator.validateId(id);
+			UserValidator.CheckUserExistsWithId(id);
 			UserDAO userDao = new UserDAO();
 					
 			user = userDao.findById(id);

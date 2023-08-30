@@ -128,7 +128,7 @@ public class TestCasesForCategory {
 				CategoryService categoryService = new CategoryService();
 				
 				CategoryEntity newCategory = new CategoryEntity();
-				newCategory.setCateName("Dress");
+				newCategory.setCateName("Cosmetics");
 					
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					categoryService.create(newCategory);
@@ -147,10 +147,10 @@ public class TestCasesForCategory {
 				CategoryService categoryService = new CategoryService();
 				
 				CategoryEntity updatedCategory = new CategoryEntity();
-				updatedCategory.setCateName("Dresses");
+				updatedCategory.setCateName("Accessories");
 				
 				assertDoesNotThrow(() -> {
-					categoryService.update(1, updatedCategory);
+					categoryService.update(8, updatedCategory);
 				});
 				
 			}
@@ -162,7 +162,7 @@ public class TestCasesForCategory {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(1);
+					categoryService.delete(11);
 				});
 				
 			}
