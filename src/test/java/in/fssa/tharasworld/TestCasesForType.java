@@ -201,7 +201,7 @@ public class TestCasesForType {
 					updatedType.setCateId(5);
 					
 					assertDoesNotThrow(() -> {
-						typeService.update(10, updatedType);
+						typeService.update(6, updatedType);
 					});
 					
 				}
@@ -213,11 +213,11 @@ public class TestCasesForType {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(11);
+						typeService.delete(9);
 					});
 					
 				}
-//				
+				
 			//// TEST FOR GET ALL TYPES
 				
 				@Test

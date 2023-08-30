@@ -1087,7 +1087,7 @@ public class TestCasesForProduct {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(7);
+					productService.delete(11);
 				});
 				
 			}

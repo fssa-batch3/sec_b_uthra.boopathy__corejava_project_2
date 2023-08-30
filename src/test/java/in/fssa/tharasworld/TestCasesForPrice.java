@@ -91,7 +91,7 @@ public class TestCasesForPrice {
 		
 		PriceService priceService = new PriceService();
 		assertDoesNotThrow ( () -> {
-			priceService.delete(4);
+			priceService.delete(13);
 		});
 		
 	}
