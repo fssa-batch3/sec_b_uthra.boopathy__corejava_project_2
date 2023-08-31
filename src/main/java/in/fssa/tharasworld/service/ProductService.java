@@ -21,7 +21,7 @@ public class ProductService {
 	 * @return
 	 */
 	
-	public Set<ProductDetailDTO> findAll() throws ServiceException {
+	public static Set<ProductDetailDTO> findAll() throws ServiceException {
 
 		Set<ProductDetailDTO> productList;
 		try {
@@ -163,7 +163,7 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	
-	public Set<ProductDetailDTO> findByTypeId(int id) throws ServiceException, ValidationException {
+	public static Set<ProductDetailDTO> findByTypeId(int id) throws ServiceException, ValidationException {
 		
 		
 
@@ -199,7 +199,7 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	
-	public ProductDetailDTO findByProductId(int id) throws ServiceException, ValidationException  {
+	public static ProductDetailDTO findByProductId(int id) throws ServiceException, ValidationException  {
 
 		
 

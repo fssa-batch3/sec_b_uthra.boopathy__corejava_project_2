@@ -43,25 +43,32 @@ public class PriceService {
 	 * @throws Exception
 	 */
 
-	public void update(int id, PriceEntity price) throws ServiceException, ValidationException {
+	public static void update(int pdtId, int sizeId, PriceEntity price) throws ServiceException, ValidationException {
 
 		try {
 			ProductService productService = new ProductService();
 
-			PriceValidator.validateId(id);
+			PriceValidator.validateProductIdAndSizeIdForUpdatePrice(pdtId, sizeId);
 
 			PriceValidator.validate(price);
 
 //			ProductValidator.validateProductId(id);
 
 			PriceDAO priceDAO = new PriceDAO();
+			
+			int priceId = priceDAO.findByPriceIdByProductAndSizeId(pdtId, sizeId);
 
-			priceDAO.update(id, price);
+			priceDAO.delete(priceId);
+			
+			priceDAO.update(price, pdtId, sizeId);
+			
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
 		}
 	}
+	
+	/// delete size id or price id
 
 	public static void delete(int id) throws ServiceException, ValidationException {
 

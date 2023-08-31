@@ -230,6 +230,17 @@ public class TestCasesForType {
 					});
 					
 				}
+				
+				@Test
+				public void getAllTypesByCategoryId() throws ServiceException {
+					
+					TypeService typeService = new TypeService();
+					assertDoesNotThrow(() -> {
+						Set<TypeEntity> typeList = typeService.findAllTypesByCategoryId(5);
+						System.out.println(typeList);
+					});
+					
+				}
 			
 	
 }

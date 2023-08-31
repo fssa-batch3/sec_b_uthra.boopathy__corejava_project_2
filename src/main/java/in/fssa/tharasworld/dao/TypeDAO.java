@@ -167,6 +167,57 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 	}
 	
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws PersistenceException
+	 */
+	
+	
+	public Set<TypeEntity> findAllTypeByCategoryId(int id) throws PersistenceException {
+
+		Set<TypeEntity> typeList = new HashSet<>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null; 
+
+		try {
+
+			String query = "SELECT * FROM types WHERE is_active=1 AND cate_id=?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				TypeEntity type = new TypeEntity();
+				type.setTypeId(rs.getInt("type_id"));
+				type.setTypeName(rs.getString("name"));
+				type.setCateId(rs.getInt("cate_id"));
+
+				typeList.add(type);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+
+		return typeList;
+
+	}
+	
+	
 	/**
 	 * 
 	 * @param name

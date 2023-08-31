@@ -18,7 +18,7 @@ public class CategoryService {
 	 * @return
 	 * @throws ServiceException 
 	 */
-	public Set<CategoryEntity> findAll() throws ServiceException { 
+	public static Set<CategoryEntity> findAll() throws ServiceException { 
 		
 		Set<CategoryEntity> CategoryList;
 		try {

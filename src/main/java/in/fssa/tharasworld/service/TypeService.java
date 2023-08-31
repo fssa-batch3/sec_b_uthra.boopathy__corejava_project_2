@@ -104,4 +104,27 @@ public class TypeService {
 		
 	}
 	
+	public static Set<TypeEntity> findAllTypesByCategoryId(int id) throws ServiceException, ValidationException, PersistenceException {
+		
+		TypeValidator.validateCategoryId(id);
+		
+		Set<TypeEntity> typeList = null;
+		
+		try {
+			TypeDAO typeDao = new TypeDAO();
+			
+			typeList = typeDao.findAllTypeByCategoryId(id);
+			
+			for(TypeEntity type:typeList) {
+				System.out.println(type);
+			}
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+				
+		return typeList; 
+		
+	}
+	
 }

@@ -32,21 +32,27 @@ public class TypeValidator {
 			
 		}
 		
-		TypeDAO typedao = new TypeDAO();
-
-		typedao.checkCategoryIdExists(type.getCateId());
-		
+		validateCategoryId(type.getCateId());
+				
 		StringUtil.rejectIfInvalidString(type.getTypeName(), "Type name");
 		
 		if (!Pattern.matches(NAME_PATTERN, type.getTypeName())) {
 			throw new ValidationException("Type name doesn't match the pattern");
 		}
 				
-
+		TypeDAO typedao = new TypeDAO();
 
 		typedao.checkTypeExistWithName(type.getTypeName());
 		
 			
+	}
+	
+	public static void validateCategoryId(int id) throws ValidationException, PersistenceException {
+		
+		TypeDAO typedao = new TypeDAO();
+
+		typedao.checkCategoryIdExists(id);
+		
 	}
 	
 	

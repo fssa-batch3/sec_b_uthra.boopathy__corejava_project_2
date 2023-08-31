@@ -15,7 +15,7 @@ public class PriceValidator {
 			
 		}
 		
-		validateSizeId(price.getSizeId());
+//		validateSizeId(price.getSizeId());
 		
 		validateActualPrice(price.getActualPrice());
 		
@@ -103,8 +103,27 @@ public class PriceValidator {
 			throw new ValidationException("Price id cannot be zero or in negative");
 		}
 		
-		PriceDAO priceDAo = new PriceDAO();
-		PriceDAO.checkPriceExists(id);
+//		PriceDAO priceDAo = new PriceDAO();
+//		PriceDAO.checkPriceExists(id);
+
+	}
+	
+	public static void validateProductIdAndSizeIdForUpdatePrice(int pdtId, int sizeId) throws ValidationException, PersistenceException {
+		
+		if(pdtId<=0 ) {
+			throw new ValidationException("Product id cannot be zero or in negative");
+		}
+		
+		if(sizeId<=0 ) {
+			throw new ValidationException("Size id cannot be zero or in negative");
+		}
+		
+		ProductDAO productDAO = new ProductDAO();
+		productDAO.checkProductExist(pdtId);
+		
+		SizeDAO sizeDAO = new SizeDAO();
+		sizeDAO.checkSizeExistWithId(sizeId);
+
 	}
 
 }

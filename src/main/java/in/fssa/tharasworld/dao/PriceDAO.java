@@ -34,7 +34,7 @@ public class PriceDAO {
 			ps.setDouble(4, newPrice.getDiscount());
 			ps.setDouble(5, newPrice.getSizeId());
 			
-			ps.executeUpdate();
+			ps.executeUpdate(); 
 			
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -53,60 +53,36 @@ public class PriceDAO {
 	 * @param updatePrice
 	 */
 	
-	public void update (int id, PriceEntity updatePrice) throws PersistenceException {
+	public void update (PriceEntity updatePrice, int pdtId, int sizeId) throws PersistenceException {
 		
-		Connection conn = null;
-	    PreparedStatement ps = null;
-	    
-	    try {
-	    
-	    	StringBuilder queryBuilder = new StringBuilder("UPDATE prices SET ");
-	        List<Object> values = new ArrayList<>();
-	        
-	        if (updatePrice.getActualPrice() > 0) {
-	            queryBuilder.append("actual_price = ?, ");
-	            values.add(updatePrice.getActualPrice());
-	        }
-	        
-	        if (updatePrice.getCurrentPrice() > 0 ) {
-	            queryBuilder.append("current_price = ?, ");
-	            values.add(updatePrice.getCurrentPrice());
-	        }
-	        
-	        if (updatePrice.getDiscount() > 0) {
-	            queryBuilder.append("discount = ?, ");
-	            values.add(updatePrice.getDiscount());
-	        }
-	        
-	        if (updatePrice.getSizeId() > 0) {
-	            queryBuilder.append("size_id = ?, ");
-	            values.add(updatePrice.getSizeId());
-	        }
-	       
-	        queryBuilder.setLength(queryBuilder.length() - 2);
-	        queryBuilder.append(" WHERE is_active = 1 AND price_id = ?");
-	        conn = ConnectionUtil.getConnection();
-	        ps = conn.prepareStatement(queryBuilder.toString());
-	       
-	        for (int i = 0; i < values.size(); i++) {
-	            ps.setObject(i + 1, values.get(i));
-	        }
-	        ps.setInt(values.size() + 1, id);
-	        ps.executeUpdate();
-	        System.out.println("Product price has been updated successfully");
-	   
-	    } catch (SQLException e) {
-	       
-	    	e.printStackTrace();
-	        System.out.println(e.getMessage());
-	        throw new PersistenceException(e.getMessage());
-	   
-	    } finally {
-	   
-	    	ConnectionUtil.close(conn, ps);
-	    
-	    }
-	    
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			
+			String query = "INSERT INTO prices (pdt_id, actual_price, current_price, discount, size_id) VALUES (?, ?, ?, ?, ?)";
+			
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, pdtId);
+			ps.setDouble(2, updatePrice.getActualPrice());
+			ps.setDouble(3, updatePrice.getCurrentPrice());
+			ps.setDouble(4, updatePrice.getDiscount());
+			ps.setDouble(5, sizeId);
+			
+			ps.executeUpdate();
+			
+			System.out.println("Product price has been updated successfully!");
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
 		
 	}
 	
@@ -156,7 +132,7 @@ public class PriceDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM prices WHERE is_active = 1 AND pdt_id = ?";
+			String query = "SELECT * FROM prices WHERE pdt_id = ?";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -244,6 +220,52 @@ public class PriceDAO {
 		return prices;
 		
 	}
+	
+	
+	public int findByPriceIdByProductAndSizeId(int pdtId, int sizeId) throws PersistenceException {
+		
+		int priceId = 0;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		PriceEntity price = null;
+		
+		try {
+			
+			String query = "SELECT * FROM prices WHERE pdt_id=? AND size_id=?";
+			
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, pdtId);
+			ps.setInt(2, sizeId);
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				
+				price = new PriceEntity();
+				
+				price.setPriceId(rs.getInt("price_id"));
+					
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+
+		
+		return priceId = price.getPriceId();
+		
+	}
+	
 	
 	public static void checkPriceExists (int id) throws PersistenceException, ValidationException{
 		
