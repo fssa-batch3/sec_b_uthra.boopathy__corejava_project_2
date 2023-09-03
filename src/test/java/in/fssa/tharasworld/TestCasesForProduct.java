@@ -64,7 +64,7 @@ public class TestCasesForProduct {
 				p2.setActualPrice(1500);
 				p2.setCurrentPrice(500);
 				p2.setDiscount(40.00);
-				p2.setSizeId(5);
+				p2.setSizeId(6);
 				
 				prices.add(p2);
 				

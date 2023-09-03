@@ -133,4 +133,33 @@ public class UserService {
 		
 	}
 	
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ServiceException
+	 * @throws ValidationException
+	 */
+	
+	
+	public UserEntity checkUserExistsWithPhoneNumber(long phoneNumber) throws ServiceException, ValidationException {
+		
+		UserEntity user = null;
+				
+		try {
+			
+			UserValidator.CheckUserExistsWithPhoneNumberForUpdate(phoneNumber);;
+			UserDAO userDAO = new UserDAO();
+					
+			user = userDAO.checkUserExistsWithPhoneNumberForLogin(phoneNumber);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		
+		return user;
+		
+	}
+	
 }

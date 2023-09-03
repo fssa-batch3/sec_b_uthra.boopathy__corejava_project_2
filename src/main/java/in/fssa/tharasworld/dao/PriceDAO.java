@@ -98,12 +98,14 @@ public class PriceDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM prices WHERE is_active = 1 AND price_id = ?";
+			String query = "UPDATE prices SET is_active = 0 WHERE is_active = 1 AND price_id = ?";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
 			ps.setInt(1, priceId);
+			
+			ps.executeUpdate();
 			
 		} catch(SQLException e) {
 			e.printStackTrace();

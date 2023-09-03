@@ -23,15 +23,15 @@ public class ConnectionUtil {
 		
 		/////  local
 		
-//		url = "jdbc:mysql://localhost:3306/project";
-//		username = "root"; 
-//		password = "Uthra#1210";
+		url = "jdbc:mysql://localhost:3306/project";
+		username = "root"; 
+		password = "Uthra#1210";
 			
 			////  planet scale 
 ////			
-			url = "jdbc:mysql://164.52.216.41:3306/uthra_boopathy_corejava_project";
-			username = "JkVbyMzZf0g6"; 
-			password = "a7ff4f4c-8f26-4206-bbf6-883b7398c257";
+//			url = "jdbc:mysql://164.52.216.41:3306/uthra_boopathy_corejava_project";
+//			username = "JkVbyMzZf0g6"; 
+//			password = "a7ff4f4c-8f26-4206-bbf6-883b7398c257";
 //		}
 // 
 		Connection connection = null;

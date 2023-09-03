@@ -103,8 +103,8 @@ public class PriceValidator {
 			throw new ValidationException("Price id cannot be zero or in negative");
 		}
 		
-//		PriceDAO priceDAo = new PriceDAO();
-//		PriceDAO.checkPriceExists(id);
+		PriceDAO priceDAO = new PriceDAO();
+		PriceDAO.checkPriceExists(id);
 
 	}
 	

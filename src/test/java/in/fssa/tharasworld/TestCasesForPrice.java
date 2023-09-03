@@ -19,21 +19,19 @@ public class TestCasesForPrice {
 	
 	@Test
 	void testUpdatePrice() {
-
-		PriceService priceService = new PriceService();
 		
 		PriceEntity updatePrice = new PriceEntity();
 		
-		int productId = 5;
-		int sizeId = 6;
+		int productId = 11;
+		int sizeId = 5;
 
-		updatePrice.setActualPrice(1500);
-		updatePrice.setCurrentPrice(5975);
-		updatePrice.setDiscount(32);
+		updatePrice.setActualPrice(10);
+		updatePrice.setCurrentPrice(50);
+		updatePrice.setDiscount(15);
 		updatePrice.setSizeId(6);
 		
 		assertDoesNotThrow(() -> {
-			priceService.update(productId, sizeId, updatePrice);
+			PriceService.update(productId, sizeId, updatePrice);
 			
 		});
 		
@@ -156,7 +154,7 @@ public class TestCasesForPrice {
 		
 		PriceService priceService = new PriceService();
 		assertDoesNotThrow ( () -> {
-			priceService.delete(13);
+			PriceService.delete(28);
 		});
 		
 	}

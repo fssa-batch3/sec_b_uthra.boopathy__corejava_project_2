@@ -385,7 +385,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		try {
 			
-			String query = "SELECT phone_number FROM users WHERE is_active=1 AND phone_number=?";
+			String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setLong(1, phoneNumber);
@@ -447,6 +447,47 @@ public class UserDAO implements UserInterface<UserEntity>{
 			
 		}
 		
+	}
+	
+	
+	public UserEntity checkUserExistsWithPhoneNumberForLogin(long phoneNumber) throws PersistenceException, ValidationException {
+		
+	Connection con = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	UserEntity user= null;
+	
+	try {
+		
+		String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
+		con = ConnectionUtil.getConnection();
+		ps = con.prepareStatement(query);
+		ps.setLong(1, phoneNumber);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			user = new UserEntity();
+			user.setPhoneNumber(rs.getLong("phone_number"));
+			user.setPassword(rs.getString("password"));
+			
+		} else {
+			throw new ValidationException("User does not exist");
+		}
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+		System.out.println(e.getMessage());
+		throw new PersistenceException(e.getMessage());
+	
+	} finally {
+		
+		ConnectionUtil.close(con, ps, rs);
+		
+	}
+	return user;
+	
 	}
 	
 }
