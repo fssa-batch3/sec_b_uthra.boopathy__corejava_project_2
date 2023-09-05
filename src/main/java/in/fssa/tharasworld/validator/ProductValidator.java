@@ -23,6 +23,8 @@ public class ProductValidator {
 		
 		validateName(product.getName());
 		
+		validateImageUrl(product.getImg());
+		
 		validateDescription(product.getDescription());
 		
 		validateSellerId(product.getSellerId());
@@ -36,12 +38,15 @@ public class ProductValidator {
 	public static void validateName(String name) throws ValidationException {
 		
 		StringUtil.rejectIfInvalidString(name, "Product name");
-		
-		if (!Pattern.matches(NAME_PATTERN, name)) {
-			throw new ValidationException("Product name doesn't match the pattern");
-		}
 	
 	}
+	
+	public static void validateImageUrl(String imgUrl) throws ValidationException {
+		
+		StringUtil.rejectIfInvalidString(imgUrl, "Image url");
+
+	}
+	
 	
 	public static void validateSellerId(int id) throws ValidationException, PersistenceException {
 		

@@ -44,6 +44,8 @@ public class TestCasesForProduct {
 				
 				newproduct.setName(random);
 				
+				newproduct.setImg("https://iili.io/HNO3V94.jpg");
+				
 				String random1 = generateRandomString(20);
 				
 				newproduct.setDescription(random1);
@@ -56,17 +58,8 @@ public class TestCasesForProduct {
 				p1.setActualPrice(1000);
 				p1.setCurrentPrice(500);
 				p1.setDiscount(50.00);
-				p1.setSizeId(5);
 				
 				prices.add(p1);
-				
-				PriceEntity p2 = new PriceEntity();
-				p2.setActualPrice(1500);
-				p2.setCurrentPrice(500);
-				p2.setDiscount(40.00);
-				p2.setSizeId(6);
-				
-				prices.add(p2);
 				
 				newproduct.setListOfPrices(prices);
 				
@@ -105,6 +98,7 @@ public class TestCasesForProduct {
 				newProduct.setName(null);
 								
 				newProduct.setDescription(random);
+				newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 				newProduct.setSellerId(2);
 				newProduct.setTypeId(3);
 				
@@ -114,17 +108,8 @@ public class TestCasesForProduct {
 				p1.setActualPrice(1000);
 				p1.setCurrentPrice(500);
 				p1.setDiscount(50.00);
-				p1.setSizeId(5);
 				
 				prices.add(p1);
-				
-				PriceEntity p2 = new PriceEntity();
-				p2.setActualPrice(1500);
-				p2.setCurrentPrice(500);
-				p2.setDiscount(40.00);
-				p2.setSizeId(5);
-				
-				prices.add(p2);
 				
 				newProduct.setListOfPrices(prices);
 				
@@ -145,9 +130,8 @@ public class TestCasesForProduct {
 
 		        ProductDetailDTO newProduct = new ProductDetailDTO();
 
-		        // Set the product name to null
-		        newProduct.setName(null);
-
+		        newProduct.setName("");
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random = generateRandomString(15);
 		        newProduct.setDescription(random);
 		        newProduct.setSellerId(2);
@@ -159,17 +143,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(500);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -178,51 +153,6 @@ public class TestCasesForProduct {
 		        });
 
 		        String expectedMessage = "Product name cannot be null or empty";
-		        String actualMessage = exception.getMessage();
-
-		        assertEquals(expectedMessage, actualMessage);
-				
-			}
-			
-			@Test
-			void testCreateProductWithInvalidName() {
-				
-				ProductService productService = new ProductService();
-
-		        ProductDetailDTO newProduct = new ProductDetailDTO();
-
-		        newProduct.setName("243");
-
-		        String random = generateRandomString(15);
-		        newProduct.setDescription(random);
-		        newProduct.setSellerId(2);
-		        newProduct.setTypeId(3);
-
-		        List<PriceEntity> prices = new ArrayList<>();
-
-		        PriceEntity p1 = new PriceEntity();
-		        p1.setActualPrice(1000);
-		        p1.setCurrentPrice(500);
-		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
-
-		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
-
-		        newProduct.setListOfPrices(prices);
-
-		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.create(newProduct);
-		        });
-
-		        String expectedMessage = "Product name doesn't match the pattern";
 		        String actualMessage = exception.getMessage();
 
 		        assertEquals(expectedMessage, actualMessage);
@@ -239,7 +169,7 @@ public class TestCasesForProduct {
 				String random = generateRandomString(6);
 				
 				newProduct.setName(random);
-								
+				newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 				newProduct.setDescription(null);
 				newProduct.setSellerId(2);
 				newProduct.setTypeId(3);
@@ -250,17 +180,8 @@ public class TestCasesForProduct {
 				p1.setActualPrice(1000);
 				p1.setCurrentPrice(500);
 				p1.setDiscount(50.00);
-				p1.setSizeId(5);
 				
 				prices.add(p1);
-				
-				PriceEntity p2 = new PriceEntity();
-				p2.setActualPrice(1500);
-				p2.setCurrentPrice(500);
-				p2.setDiscount(40.00);
-				p2.setSizeId(5);
-				
-				prices.add(p2);
 				
 				newProduct.setListOfPrices(prices);
 				
@@ -284,7 +205,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        newProduct.setDescription("");
 		        newProduct.setSellerId(2);
 		        newProduct.setTypeId(3);
@@ -295,17 +216,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(500);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -332,7 +244,7 @@ public class TestCasesForProduct {
 		        newProduct.setName(random);
 		        
 		        String random1 = generateRandomString(16);
-
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        newProduct.setDescription(random1);
 		        newProduct.setSellerId(0);
 		        newProduct.setTypeId(3);
@@ -346,14 +258,6 @@ public class TestCasesForProduct {
 		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -378,11 +282,11 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
-		        newProduct.setSellerId(4);
+		        newProduct.setSellerId(3);
 		        
 		        newProduct.setTypeId(3);
 
@@ -392,17 +296,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(500);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -427,7 +322,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -440,17 +335,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(500);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -475,12 +361,12 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
 		        newProduct.setSellerId(2);
-		        newProduct.setTypeId(17);
+		        newProduct.setTypeId(43);
 
 		        List<PriceEntity> prices = new ArrayList<>();
 
@@ -488,17 +374,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(500);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -523,7 +400,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -557,7 +434,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -573,14 +450,6 @@ public class TestCasesForProduct {
 		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -606,7 +475,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -622,14 +491,6 @@ public class TestCasesForProduct {
 		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -654,7 +515,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -667,17 +528,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(0);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -703,7 +555,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -716,17 +568,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(100000);
 		        p1.setDiscount(50.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -751,7 +594,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -764,17 +607,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(500);
 		        p1.setDiscount(-5);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -799,7 +633,7 @@ public class TestCasesForProduct {
 		        String random = generateRandomString(6);
 
 		        newProduct.setName(random);
-		        
+		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        newProduct.setDescription(random1);
@@ -812,17 +646,8 @@ public class TestCasesForProduct {
 		        p1.setActualPrice(1000);
 		        p1.setCurrentPrice(100);
 		        p1.setDiscount(100.00);
-		        p1.setSizeId(5);
 
 		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
 
 		        newProduct.setListOfPrices(prices);
 
@@ -837,101 +662,7 @@ public class TestCasesForProduct {
 				
 			}
 			
-			@Test
-			void testCreateProductWithSizeIdZero() {
-				
-				ProductService productService = new ProductService();
-
-		        ProductDetailDTO newProduct = new ProductDetailDTO();
-
-		        String random = generateRandomString(6);
-
-		        newProduct.setName(random);
-		        
-		        String random1 = generateRandomString(16);
-
-		        newProduct.setDescription(random1);
-		        newProduct.setSellerId(2);
-		        newProduct.setTypeId(5);
-
-		        List<PriceEntity> prices = new ArrayList<>();
-
-		        PriceEntity p1 = new PriceEntity();
-		        p1.setActualPrice(1000);
-		        p1.setCurrentPrice(100);
-		        p1.setDiscount(10.00);
-		        p1.setSizeId(0);
-
-		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
-
-		        newProduct.setListOfPrices(prices);
-
-		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.create(newProduct);
-		        });
-
-		        String expectedMessage = "Size id cannot be zero or in negative";
-		        String actualMessage = exception.getMessage();
-
-		        assertEquals(expectedMessage, actualMessage);
-				
-			}
 			
-			@Test
-			void testCreateProductWithSizeIdDoesNotExist() {
-				
-				ProductService productService = new ProductService();
-
-		        ProductDetailDTO newProduct = new ProductDetailDTO();
-
-		        String random = generateRandomString(6);
-
-		        newProduct.setName(random);
-		        
-		        String random1 = generateRandomString(16);
-
-		        newProduct.setDescription(random1);
-		        newProduct.setSellerId(2);
-		        newProduct.setTypeId(5);
-
-		        List<PriceEntity> prices = new ArrayList<>();
-
-		        PriceEntity p1 = new PriceEntity();
-		        p1.setActualPrice(1000);
-		        p1.setCurrentPrice(100);
-		        p1.setDiscount(10.00);
-		        p1.setSizeId(2);
-
-		        prices.add(p1);
-
-		        PriceEntity p2 = new PriceEntity();
-		        p2.setActualPrice(1500);
-		        p2.setCurrentPrice(500);
-		        p2.setDiscount(40.00);
-		        p2.setSizeId(5);
-
-		        prices.add(p2);
-
-		        newProduct.setListOfPrices(prices);
-
-		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.create(newProduct);
-		        });
-
-		        String expectedMessage = "Size does not exists";
-		        String actualMessage = exception.getMessage();
-
-		        assertEquals(expectedMessage, actualMessage);
-				
-			}
 			
 		//// TEST FOR GET ALL PRODUCTS
 			
@@ -985,7 +716,7 @@ public class TestCasesForProduct {
 					
 					Exception exception = assertThrows(ValidationException.class, () -> {
 						
-						System.out.println(productService.findByProductId(2));
+						System.out.println(productService.findByProductId(76));
 
 			        });
 
@@ -1008,7 +739,7 @@ public class TestCasesForProduct {
 				String random = generateRandomString(6);
 
 				updateProduct.setName(random);
-		        
+				updateProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        updateProduct.setDescription(random1);
@@ -1033,7 +764,7 @@ public class TestCasesForProduct {
 				String random = generateRandomString(6);
 
 				updateProduct.setName(random);
-		        
+				updateProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        updateProduct.setDescription(random1);
@@ -1061,7 +792,7 @@ public class TestCasesForProduct {
 				String random = generateRandomString(6);
 
 				updateProduct.setName(random);
-		        
+				updateProduct.setImg("https://iili.io/HNeBZmJ.webp");
 		        String random1 = generateRandomString(16);
 
 		        updateProduct.setDescription(random1);
@@ -1069,7 +800,7 @@ public class TestCasesForProduct {
 		        updateProduct.setTypeId(5);
 				
 		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.update(2, updateProduct);
+		            productService.update(200, updateProduct);
 		        });
 
 		        String expectedMessage = "Product does not exixts";
@@ -1087,7 +818,7 @@ public class TestCasesForProduct {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(11);
+					productService.delete(39);
 				});
 				
 			}
@@ -1116,7 +847,7 @@ public class TestCasesForProduct {
 				ProductEntity updateProduct = new ProductEntity();
 				
 		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.delete(2);
+		            productService.delete(200);
 		        });
 
 		        String expectedMessage = "Product does not exixts";
@@ -1127,15 +858,27 @@ public class TestCasesForProduct {
 			}
 			
 			
-		//// TEST FOR GET PRODUCTS BY CATEGORY ID
+		//// TEST FOR GET PRODUCTS BY CATEGORY NAME
 			
+					@Test
+					void getAllProductsByCategoryName() {
+						
+						ProductService productService = new ProductService();
+						
+						assertDoesNotThrow (() -> {
+							Set<ProductDetailDTO> productList = productService.findByCategoryName("Cosmetics");
+							System.out.println(productList);
+						});
+						
+					}
+					
 					@Test
 					void getAllProductsByCategoryId() {
 						
 						ProductService productService = new ProductService();
 						
 						assertDoesNotThrow (() -> {
-							Set<ProductDetailDTO> productList = productService.findByCategoryId(4);
+							Set<ProductDetailDTO> productList = productService.findByCategoryId(5);
 							System.out.println(productList);
 						});
 						
@@ -1166,7 +909,7 @@ public class TestCasesForProduct {
 							
 							Exception exception = assertThrows(ValidationException.class, () -> {
 								
-								System.out.println(productService.findByCategoryId(2));
+								System.out.println(productService.findByCategoryId(20));
 
 					        });
 
@@ -1177,6 +920,19 @@ public class TestCasesForProduct {
 						
 					}
 		
+					
+					@Test
+					void getAllProductsByTypeName() {
+						
+						ProductService productService = new ProductService();
+						
+						assertDoesNotThrow (() -> {
+							Set<ProductDetailDTO> productList = productService.findByTypeName("Earrings");
+							System.out.println(productList);
+						});
+						
+					}
+					
 				//// TEST FOR GET PRODUCTS BY TYPE ID
 					
 							@Test
@@ -1216,7 +972,7 @@ public class TestCasesForProduct {
 									
 									Exception exception = assertThrows(ValidationException.class, () -> {
 										
-										System.out.println(productService.findByTypeId(2));
+										System.out.println(productService.findByTypeId(200));
 
 							        });
 
@@ -1227,4 +983,17 @@ public class TestCasesForProduct {
 								
 							}
 				
+							
+							@Test
+							void getAllProductsBySellerId() {
+								
+								ProductService productService = new ProductService();
+								
+								assertDoesNotThrow (() -> {
+									Set<ProductDetailDTO> productList = productService.findAllProductsBySellerId(2);
+									System.out.println(productList);
+								});
+								
+							}
+							
 }

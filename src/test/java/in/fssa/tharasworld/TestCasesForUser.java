@@ -166,7 +166,7 @@ public class TestCasesForUser {
 			
 		UserEntity newUser = new UserEntity();
 		newUser.setName("Uthra");
-		newUser.setEmail("uthra12@gmail.com");
+		newUser.setEmail("uthra@gmail.com");
 		newUser.setPhoneNumber(7908946112l);
 		newUser.setPassword("Uthra@12");
 		newUser.setRole("Buyer");
@@ -443,7 +443,7 @@ public class TestCasesForUser {
 	        newUser.setName("Uthra");
 	        String randomString = generateRandomString(8);
 	        newUser.setEmail("cbuhs435@gmail.com");
-	        newUser.setPhoneNumber(9340697100l); // Same phone number as existing user
+	        newUser.setPhoneNumber(9876543210l); // Same phone number as existing user
 	        newUser.setPassword("Uthra@12");
 	        newUser.setRole("Buyer");
 	        newUser.setAge(18);
@@ -522,8 +522,8 @@ public class TestCasesForUser {
 		
 		UserEntity updateUser = new UserEntity();
 		
-		updateUser.setName("UthraKannan");
-		updateUser.setPassword("Ramya@12");
+		updateUser.setName("Ramya");
+		updateUser.setPassword("Ramya#08");
 		updateUser.setAge(18);
 		
 		assertDoesNotThrow(() -> {
@@ -539,7 +539,7 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(4);
+			userService.delete(8);
 		});
 		
 	}

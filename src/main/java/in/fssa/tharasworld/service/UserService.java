@@ -22,9 +22,9 @@ public class UserService {
 		Set<UserEntity> userList = null;
 				
 		try {
-			UserDAO userDao = new UserDAO();
+			UserDAO userDAO = new UserDAO();
 					
-			userList = userDao.findAll();
+			userList = userDAO.findAll();
 			
 			for(UserEntity user:userList) {
 				System.out.println(user);
@@ -53,8 +53,8 @@ public class UserService {
 			UserValidator.CheckUserExists(newUser.getEmail());
 			UserValidator.CheckUserExistsWithPhoneNumber(newUser.getPhoneNumber());
 			
-			UserDAO userdao = new UserDAO();
-			userdao.create(newUser);
+			UserDAO userDAO = new UserDAO();
+			userDAO.create(newUser);
 		
 		} catch (PersistenceException e) {
 			e.printStackTrace(); 
@@ -78,8 +78,8 @@ public class UserService {
 			UserValidator.validatePassword(updatedUser.getPassword());
 			UserValidator.validateAge(updatedUser.getAge());
 			
-			UserDAO userdao = new UserDAO();
-			userdao.update(id, updatedUser);
+			UserDAO userDAO = new UserDAO();
+			userDAO.update(id, updatedUser);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -99,8 +99,8 @@ public class UserService {
 			UserValidator.CheckUserExistsWithId(id);
 			UserValidator.CheckUserExistsWithId(id);
 			
-			UserDAO userdao = new UserDAO();
-			userdao.delete(id);
+			UserDAO userDAO = new UserDAO();
+			userDAO.delete(id);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -121,9 +121,9 @@ public class UserService {
 		try {
 			
 			UserValidator.CheckUserExistsWithId(id);
-			UserDAO userDao = new UserDAO();
+			UserDAO userDAO = new UserDAO();
 					
-			user = userDao.findById(id);
+			user = userDAO.findById(id);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());

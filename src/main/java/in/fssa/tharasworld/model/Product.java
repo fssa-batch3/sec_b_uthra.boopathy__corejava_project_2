@@ -4,6 +4,7 @@ public abstract class Product implements Comparable<Product> {
 
 	private int pdtId;
 	private String name;
+	private String img;
 	private String description;
 	private int sellerId;
 	private int typeId;
@@ -24,6 +25,14 @@ public abstract class Product implements Comparable<Product> {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	public String getDescription() {
@@ -61,7 +70,7 @@ public abstract class Product implements Comparable<Product> {
 	
 	@Override
 	public String toString() {
-		return "Product [pdtId=" + pdtId + ", name=" + name + ", description=" + description + ", sellerId=" + sellerId
+		return "Product [pdtId=" + pdtId + ", name=" + name + ", img_url=" + img +", description=" + description + ", sellerId=" + sellerId
 				+ ", typeId=" + typeId + ", isActive=" + isActive + "]";
 	}
 	

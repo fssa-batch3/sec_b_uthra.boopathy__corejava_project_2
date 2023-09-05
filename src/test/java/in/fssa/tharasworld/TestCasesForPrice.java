@@ -23,15 +23,13 @@ public class TestCasesForPrice {
 		PriceEntity updatePrice = new PriceEntity();
 		
 		int productId = 11;
-		int sizeId = 5;
 
-		updatePrice.setActualPrice(10);
-		updatePrice.setCurrentPrice(50);
-		updatePrice.setDiscount(15);
-		updatePrice.setSizeId(6);
+		updatePrice.setActualPrice(1000);
+		updatePrice.setCurrentPrice(500);
+		updatePrice.setDiscount(50);
 		
 		assertDoesNotThrow(() -> {
-			PriceService.update(productId, sizeId, updatePrice);
+			PriceService.update(productId, updatePrice);
 			
 		});
 		
@@ -47,15 +45,13 @@ public class TestCasesForPrice {
 		PriceEntity updatePrice = new PriceEntity();
 		
 		int productId = 0;
-		int sizeId = 6;
 
 		updatePrice.setActualPrice(10000);
 		updatePrice.setCurrentPrice(5975);
 		updatePrice.setDiscount(32);
-		updatePrice.setSizeId(sizeId);
 		
         Exception exception = assertThrows(ValidationException.class, () -> {
-        	priceService.update(productId, sizeId, updatePrice);
+        	priceService.update(productId, updatePrice);
         });
 
         String expectedMessage = "Product id cannot be zero or in negative";
@@ -65,31 +61,6 @@ public class TestCasesForPrice {
 		
 	}
 	
-	@Test
-	void testUpdatePriceWithsizeIdZero() {
-
-		PriceService priceService = new PriceService();
-		
-		PriceEntity updatePrice = new PriceEntity();
-		
-		int productId = 5;
-		int sizeId = 0;
-
-		updatePrice.setActualPrice(10000);
-		updatePrice.setCurrentPrice(5975);
-		updatePrice.setDiscount(32);
-		updatePrice.setSizeId(sizeId);
-		
-        Exception exception = assertThrows(ValidationException.class, () -> {
-        	priceService.update(productId, sizeId, updatePrice);
-        });
-
-        String expectedMessage = "Size id cannot be zero or in negative";
-        String actualMessage = exception.getMessage();
-
-        assertEquals(expectedMessage, actualMessage);
-		
-	}
 	
 	/// product does not exists
 	
@@ -100,47 +71,17 @@ public class TestCasesForPrice {
 		
 		PriceEntity updatePrice = new PriceEntity();
 		
-		int productId = 11;
-		int sizeId = 6;
+		int productId = 111;
 
 		updatePrice.setActualPrice(10000);
 		updatePrice.setCurrentPrice(5975);
 		updatePrice.setDiscount(32);
-		updatePrice.setSizeId(sizeId);
 		
         Exception exception = assertThrows(ValidationException.class, () -> {
-        	priceService.update(productId, sizeId, updatePrice);
+        	priceService.update(productId, updatePrice);
         });
 
         String expectedMessage = "Product does not exixts";
-        String actualMessage = exception.getMessage();
-
-        assertEquals(expectedMessage, actualMessage);
-		
-	}
-	
-	//// size does not exists
-	
-	@Test
-	void testUpdatePriceWithSizeIdDoesNotExists() {
-
-		PriceService priceService = new PriceService();
-		
-		PriceEntity updatePrice = new PriceEntity();
-		
-		int productId = 10;
-		int sizeId = 2;
-
-		updatePrice.setActualPrice(10000);
-		updatePrice.setCurrentPrice(5975);
-		updatePrice.setDiscount(32);
-		updatePrice.setSizeId(sizeId);
-		
-        Exception exception = assertThrows(ValidationException.class, () -> {
-        	priceService.update(productId, sizeId, updatePrice);
-        });
-
-        String expectedMessage = "Size does not exists";
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
@@ -154,7 +95,7 @@ public class TestCasesForPrice {
 		
 		PriceService priceService = new PriceService();
 		assertDoesNotThrow ( () -> {
-			PriceService.delete(28);
+			PriceService.delete(40);
 		});
 		
 	}
@@ -181,7 +122,7 @@ public class TestCasesForPrice {
 		PriceService priceService = new PriceService();
 		
         Exception exception = assertThrows(ValidationException.class, () -> {
-        	priceService.delete(2);
+        	priceService.delete(200);
         });
 
         String expectedMessage = "Price id does not exists";

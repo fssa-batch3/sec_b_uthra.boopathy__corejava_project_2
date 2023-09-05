@@ -23,7 +23,7 @@ public class PriceDAO {
 		
 		try {
 			
-			String query = "INSERT INTO prices (pdt_id, actual_price, current_price, discount, size_id) VALUES (?, ?, ?, ?, ?)";
+			String query = "INSERT INTO prices (pdt_id, actual_price, current_price, discount) VALUES (?, ?, ?, ?)";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -32,7 +32,6 @@ public class PriceDAO {
 			ps.setDouble(2, newPrice.getActualPrice());
 			ps.setDouble(3, newPrice.getCurrentPrice());
 			ps.setDouble(4, newPrice.getDiscount());
-			ps.setDouble(5, newPrice.getSizeId());
 			
 			ps.executeUpdate(); 
 			
@@ -53,14 +52,14 @@ public class PriceDAO {
 	 * @param updatePrice
 	 */
 	
-	public void update (PriceEntity updatePrice, int pdtId, int sizeId) throws PersistenceException {
+	public void update (PriceEntity updatePrice, int pdtId) throws PersistenceException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		try {
 			
-			String query = "INSERT INTO prices (pdt_id, actual_price, current_price, discount, size_id) VALUES (?, ?, ?, ?, ?)";
+			String query = "INSERT INTO prices (pdt_id, actual_price, current_price, discount) VALUES (?, ?, ?, ?)";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -69,7 +68,6 @@ public class PriceDAO {
 			ps.setDouble(2, updatePrice.getActualPrice());
 			ps.setDouble(3, updatePrice.getCurrentPrice());
 			ps.setDouble(4, updatePrice.getDiscount());
-			ps.setDouble(5, sizeId);
 			
 			ps.executeUpdate();
 			
@@ -132,9 +130,11 @@ public class PriceDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
+		PriceEntity price = null;
+		
 		try {
 			
-			String query = "SELECT * FROM prices WHERE pdt_id = ?";
+			String query = "SELECT price_id, pdt_id, actual_price, current_price, discount, is_active FROM prices WHERE is_active=1 AND pdt_id = ?";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -145,14 +145,13 @@ public class PriceDAO {
 			
 			while (rs.next()) {
 				
-				PriceEntity price = new PriceEntity();
+				price = new PriceEntity();
 				
 				price.setPriceId(rs.getInt("price_id"));
 				price.setActualPrice(rs.getDouble("actual_price"));
 				price.setCurrentPrice(rs.getDouble("current_price"));
 				price.setDiscount(rs.getDouble("discount"));
 				price.setPdtId(rs.getInt("pdt_id"));
-				price.setSizeId(rs.getInt("size_id"));
 				
 				prices.add(price);
 				
@@ -187,7 +186,7 @@ public class PriceDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM prices WHERE is_active = 1";
+			String query = "SELECT price_id, pdt_id, actual_price, current_price, discount, is_active FROM prices WHERE is_active = 1";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -203,7 +202,6 @@ public class PriceDAO {
 				price.setCurrentPrice(rs.getDouble("current_price"));
 				price.setDiscount(rs.getDouble("discount"));
 				price.setPdtId(rs.getInt("pdt_id"));
-				price.setSizeId(rs.getInt("size_id"));
 				
 				prices.add(price);
 				
@@ -224,7 +222,7 @@ public class PriceDAO {
 	}
 	
 	
-	public int findByPriceIdByProductAndSizeId(int pdtId, int sizeId) throws PersistenceException {
+	public int findPriceIdByProduct(int pdtId) throws PersistenceException {
 		
 		int priceId = 0;
 		
@@ -236,13 +234,12 @@ public class PriceDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM prices WHERE pdt_id=? AND size_id=?";
+			String query = "SELECT price_id, pdt_id, actual_price, current_price, discount, is_active FROM prices WHERE is_active = 1 AND pdt_id=?";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
 			ps.setInt(1, pdtId);
-			ps.setInt(2, sizeId);
 			
 			rs = ps.executeQuery();
 			

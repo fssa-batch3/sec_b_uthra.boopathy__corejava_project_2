@@ -30,7 +30,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		try {
 
-			String query = "SELECT * FROM types WHERE is_active=1";
+			String query = "SELECT type_id, name, img_url, cate_id, is_active FROM types WHERE is_active=1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -40,6 +40,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 				TypeEntity type = new TypeEntity();
 				type.setTypeId(rs.getInt("type_id"));
 				type.setTypeName(rs.getString("name"));
+				type.setImg(rs.getString("img_url"));
 				type.setCateId(rs.getInt("cate_id"));
 
 				typeList.add(type);
@@ -73,12 +74,13 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		PreparedStatement ps = null;
 
 		try {
-			String query = "INSERT INTO types (name, cate_id) VALUES (?, ?)";
+			String query = "INSERT INTO types (name, img_url, cate_id) VALUES (?, ?, ?)";
 			connection = ConnectionUtil.getConnection();
 			ps = connection.prepareStatement(query);
 
 			ps.setString(1, newType.getTypeName());
-			ps.setInt(2, newType.getCateId());
+			ps.setString(2, newType.getImg());
+			ps.setInt(3, newType.getCateId());
 
 			ps.executeUpdate();
 
@@ -107,14 +109,15 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		try {
 
-			String query = "UPDATE types SET name=?, cate_id=? WHERE is_active=1 AND type_id=?";
+			String query = "UPDATE types SET name=?, img_url=?, cate_id=? WHERE is_active=1 AND type_id=?";
 
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
 			ps.setString(1, updatedType.getTypeName());
-			ps.setInt(2, updatedType.getCateId());
-			ps.setInt(3, updatedType.getTypeId());
+			ps.setString(2, updatedType.getImg());
+			ps.setInt(3, updatedType.getCateId());
+			ps.setInt(4, id);
 
 			ps.executeUpdate();
 
@@ -186,7 +189,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		try {
 
-			String query = "SELECT * FROM types WHERE is_active=1 AND cate_id=?";
+			String query = "SELECT type_id, name, img_url, cate_id, is_active FROM types WHERE is_active=1 AND cate_id=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -197,6 +200,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 				TypeEntity type = new TypeEntity();
 				type.setTypeId(rs.getInt("type_id"));
 				type.setTypeName(rs.getString("name"));
+				type.setImg(rs.getString("img_url"));
 				type.setCateId(rs.getInt("cate_id"));
 
 				typeList.add(type);
@@ -232,7 +236,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		try {
 
-			String query = "SELECT * FROM types WHERE is_active=1 AND name = ?";
+			String query = "SELECT name FROM types WHERE is_active=1 AND name = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -263,19 +267,22 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	/**
 	 * 
 	 * @param name
+	 * @return 
 	 * @throws ValidationException
 	 * @throws PersistenceException 
 	 */
 	
-	public void checkTypeExistWithId(int id) throws ValidationException, PersistenceException {
+	public TypeEntity checkTypeExistWithId(int id) throws ValidationException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		
+		TypeEntity type = null;
 
 		try {
 
-			String query = "SELECT type_id FROM types WHERE is_active=1 AND type_id = ?";
+			String query = "SELECT type_id, name FROM types WHERE is_active=1 AND type_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -283,10 +290,17 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			rs = ps.executeQuery();
 
-			if (!rs.next()) {
+			if (rs.next()) {
 
+				type = new TypeEntity();
+				type.setTypeId(rs.getInt("type_id"));
+				type.setTypeName(rs.getString("name"));
+				
+
+			} else {
+				
 				throw new ValidationException("Type id does not exists");
-
+				
 			}
 
 		} catch (SQLException e) {
@@ -301,6 +315,8 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		}
 
+		return type;
+		
 	}
 	
 	/**
@@ -317,7 +333,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		try {
 
-			String query = "SELECT * FROM categories WHERE is_active=1 AND cate_id = ?";
+			String query = "SELECT cate_id FROM categories WHERE is_active=1 AND cate_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 

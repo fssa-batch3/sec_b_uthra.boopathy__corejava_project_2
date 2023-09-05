@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import in.fssa.tharasworld.dto.ProductDetailDTO;
+import in.fssa.tharasworld.entity.CategoryEntity;
 import in.fssa.tharasworld.entity.PriceEntity;
 import in.fssa.tharasworld.entity.ProductEntity;
 import in.fssa.tharasworld.entity.TypeEntity;
@@ -28,7 +29,7 @@ public class ProductDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM products WHERE is_active=1";
+			String query = "SELECT pdt_id, name, image_url, description, seller_id, type_id, is_active FROM products WHERE is_active=1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -39,6 +40,7 @@ public class ProductDAO {
 				
 				product.setPdtId(rs.getInt("pdt_id"));
 				product.setName(rs.getString("name"));
+				product.setImg(rs.getString("image_url"));
 				product.setDescription(rs.getString("description"));
 				product.setSellerId(rs.getInt("seller_id"));
 				product.setTypeId(rs.getInt("type_id"));
@@ -77,14 +79,15 @@ public class ProductDAO {
 		int productId = -1;
 		
 		try {
-			String query = "INSERT INTO products (name, description, seller_id, type_id) VALUES (?, ?, ?, ?)";
+			String query = "INSERT INTO products (name, image_url, description, seller_id, type_id) VALUES (?, ?, ?, ?, ?)";
 			connection = ConnectionUtil.getConnection();
 			ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			ps.setString(1, newProduct.getName());
-			ps.setString(2, newProduct.getDescription());
-			ps.setInt(3, newProduct.getSellerId());
-			ps.setInt(4, newProduct.getTypeId());
+			ps.setString(2, newProduct.getImg());
+			ps.setString(3, newProduct.getDescription());
+			ps.setInt(4, newProduct.getSellerId());
+			ps.setInt(5, newProduct.getTypeId());
 			
 			ps.executeUpdate();
 			
@@ -128,6 +131,11 @@ public class ProductDAO {
 	        if (updatedProduct.getName() != null) {
 	            queryBuilder.append("name = ?, ");
 	            values.add(updatedProduct.getName());
+	        }
+	        
+	        if (updatedProduct.getImg() != null) {
+	            queryBuilder.append("image_url = ?, ");
+	            values.add(updatedProduct.getImg());
 	        }
 	        
 	        if (updatedProduct.getDescription() != null) {
@@ -198,6 +206,47 @@ public class ProductDAO {
 		
 	}
 	
+	
+	public static int findCategoryIdByCategoryName(String name) throws PersistenceException {
+		
+		int categoryId = 0;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		CategoryEntity category = null;
+		
+		try {
+			
+			String query = "SELECT * FROM categories WHERE is_active=1 AND cate_name = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				category = new CategoryEntity();
+				category.setCateId(rs.getInt("cate_id"));
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		
+		return categoryId = category.getCateId();
+		
+	}
+	
+	
 	public Set<ProductDetailDTO> findByCategoryId(int id) throws PersistenceException {
 		
 		Set<ProductDetailDTO> productList = new HashSet<>();
@@ -210,7 +259,7 @@ public class ProductDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM types WHERE is_active=1 AND cate_id = ?";
+			String query = "SELECT type_id, name, img_url, cate_id, is_active FROM types WHERE is_active=1 AND cate_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -243,7 +292,7 @@ public class ProductDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM products WHERE is_active=1 AND type_id = ?";
+			String query = "SELECT pdt_id, name, image_url, description, seller_id, type_id, is_active FROM products WHERE is_active=1 AND type_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, pdt.getTypeId());
@@ -255,6 +304,7 @@ public class ProductDAO {
 				
 				product.setPdtId(rs.getInt("pdt_id"));
 				product.setName(rs.getString("name"));
+				product.setImg(rs.getString("image_url"));
 				product.setDescription(rs.getString("description"));
 				product.setSellerId(rs.getInt("seller_id"));
 				product.setTypeId(rs.getInt("type_id"));
@@ -279,7 +329,7 @@ public class ProductDAO {
 		
 	}
 	
-	public Set<ProductDetailDTO> findByTypeId(int id) throws PersistenceException {
+	public static Set<ProductDetailDTO> findByTypeId(int id) throws PersistenceException {
 
 	    Set<ProductDetailDTO> productList = new HashSet<>();
 
@@ -289,7 +339,7 @@ public class ProductDAO {
 
 	    try {
 
-	        String query = "SELECT * FROM products WHERE is_active=1 AND type_id = ?";
+	        String query = "SELECT pdt_id, name, image_url, description, seller_id, type_id, is_active FROM products WHERE is_active=1 AND type_id = ?";
 	        con = ConnectionUtil.getConnection();
 	        ps = con.prepareStatement(query);
 	        ps.setInt(1, id);
@@ -300,6 +350,7 @@ public class ProductDAO {
 	            ProductDetailDTO pdt = new ProductDetailDTO();
 	            pdt.setPdtId(rs.getInt("pdt_id"));
 	            pdt.setName(rs.getString("name"));
+	            pdt.setImg(rs.getString("image_url"));
 	            pdt.setDescription(rs.getString("description"));
 	            pdt.setSellerId(rs.getInt("seller_id"));
 	            pdt.setTypeId(rs.getInt("type_id"));
@@ -315,6 +366,41 @@ public class ProductDAO {
 	    }
 
 	    return productList;
+	}
+	
+	public static int findByTypeName(String name) throws PersistenceException {
+
+	    int typeId = 0;
+
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    TypeEntity type = null;
+
+	    try {
+
+	        String query = "SELECT type_id, name, img_url, cate_id, is_active FROM types WHERE is_active=1 AND name = ?";
+	        con = ConnectionUtil.getConnection();
+	        ps = con.prepareStatement(query);
+	        ps.setString(1, name);
+	        rs = ps.executeQuery();
+
+	        while (rs.next()) {
+
+	           type = new TypeEntity();
+	           type.setTypeId(rs.getInt("type_id"));
+	           
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new PersistenceException(e.getMessage());
+	    } finally {
+	        ConnectionUtil.close(con, ps, rs);
+	    }
+
+	    return typeId = type.getTypeId();
 	}
 	
 	/**
@@ -334,7 +420,7 @@ public class ProductDAO {
 		
 		try {
 			
-			String query = "SELECT * FROM products WHERE is_active = 1 AND pdt_id = ?";
+			String query = "SELECT pdt_id, name, image_url, description, seller_id, type_id, is_active FROM products WHERE is_active = 1 AND pdt_id = ?";
 			
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -345,6 +431,7 @@ public class ProductDAO {
 				pdt = new ProductDetailDTO();
 				pdt.setPdtId(rs.getInt("pdt_id"));
 				pdt.setName(rs.getString("name"));
+				pdt.setImg(rs.getString("image_url"));
 				pdt.setDescription(rs.getString("description"));
 				pdt.setTypeId(rs.getInt("type_id"));
 				
@@ -361,12 +448,58 @@ public class ProductDAO {
 	                price.setActualPrice(priceRs.getDouble("actual_price"));
 	                price.setCurrentPrice(priceRs.getDouble("current_price"));
 	                price.setDiscount(priceRs.getDouble("discount"));
-	                price.setSizeId(priceRs.getInt("size_id"));
 
 	                priceList.add(price);
 	            }
 
 	            pdt.setListOfPrices(priceList);
+			}
+			
+		}  catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new PersistenceException(e.getMessage());
+			
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		
+		return pdt;
+		
+	}
+	
+	
+	public Set<ProductDetailDTO> findAllProductsBySellerId(int id) throws PersistenceException {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Set<ProductDetailDTO> pdt = new HashSet<>();
+		
+		try {
+			
+			String query = "SELECT pdt_id, name, image_url, description, seller_id, type_id, is_active FROM products WHERE is_active = 1 AND seller_id = ?";
+			
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				
+				ProductDetailDTO product = new ProductDetailDTO();
+				
+				product.setPdtId(rs.getInt("pdt_id"));
+				product.setName(rs.getString("name"));
+				product.setImg(rs.getString("image_url"));
+				product.setDescription(rs.getString("description"));
+				product.setSellerId(rs.getInt("seller_id"));
+				product.setTypeId(rs.getInt("type_id"));
+				
+				pdt.add(product);
+				
 			}
 			
 		}  catch (SQLException e) {
@@ -398,7 +531,7 @@ public class ProductDAO {
 		 
 		 try {
 			 
-			 String query = "SELECT * FROM products WHERE is_active = 1 AND pdt_id = ?";
+			 String query = "SELECT pdt_id FROM products WHERE is_active = 1 AND pdt_id = ?";
 			 
 			 con = ConnectionUtil.getConnection();
 			 ps = con.prepareStatement(query);

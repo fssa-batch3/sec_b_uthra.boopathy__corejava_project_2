@@ -4,6 +4,7 @@ public abstract class Type implements Comparable<Type> {
 	
 	private int typeId;
 	private String typeName;
+	private String img;
 	private int cateId;
 	private boolean isActive;
 	
@@ -21,6 +22,14 @@ public abstract class Type implements Comparable<Type> {
 	
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	public int getCateId() {
@@ -58,7 +67,7 @@ public abstract class Type implements Comparable<Type> {
 	
 	@Override
 	public String toString() {
-		return "Type [typeId=" + typeId + ", typeName=" + typeName + ", cateId=" + cateId + ", isActive=" + isActive + "]";
+		return "Type [typeId=" + typeId + ", typeName=" + typeName + ", img_url=" + img + ", cateId=" + cateId + ", isActive=" + isActive + "]";
 	}
 
 

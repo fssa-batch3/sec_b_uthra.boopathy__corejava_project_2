@@ -43,23 +43,23 @@ public class PriceService {
 	 * @throws Exception
 	 */
 
-	public static void update(int pdtId, int sizeId, PriceEntity price) throws ServiceException, ValidationException {
+	public static void update(int pdtId, PriceEntity price) throws ServiceException, ValidationException {
 
 		try {
 
-			PriceValidator.validateProductIdAndSizeIdForUpdatePrice(pdtId, sizeId);
+			PriceValidator.validateProductIdForUpdatePrice(pdtId);
 
 			PriceValidator.validate(price);
 
 			PriceDAO priceDAO = new PriceDAO();
 			
-			int priceId = priceDAO.findByPriceIdByProductAndSizeId(pdtId, sizeId);
+			int priceId = priceDAO.findPriceIdByProduct(pdtId);
 			
 			System.out.println(priceId);
 
 			priceDAO.delete(priceId);
 			
-			priceDAO.update(price, pdtId, sizeId);
+			priceDAO.update(price, pdtId);
 			
 			
 		} catch (PersistenceException e) {

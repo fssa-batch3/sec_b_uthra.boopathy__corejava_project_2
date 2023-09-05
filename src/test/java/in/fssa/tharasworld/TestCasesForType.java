@@ -43,8 +43,8 @@ public class TestCasesForType {
 				
 				String random= generateRandomString(6);
 				newType.setTypeName(random);
+				newType.setImg("https://iili.io/HNO3V94.jpg");
 				newType.setCateId(5);
-			
 				
 				assertDoesNotThrow(()->{
 					typeService.create(newType);
@@ -75,7 +75,8 @@ public class TestCasesForType {
 				TypeService typeService = new TypeService();
 				
 				TypeEntity newType = new TypeEntity();
-				newType.setTypeName("Chudi");
+				newType.setTypeName("kurti");
+				newType.setImg("https://iili.io/HNO3V94.jpg");
 				newType.setCateId(0);
 				
 				Exception exception = assertThrows(ValidationException.class, () -> {
@@ -95,7 +96,8 @@ public class TestCasesForType {
 				TypeService typeService = new TypeService();
 				
 				TypeEntity newType = new TypeEntity();
-				newType.setTypeName("Chudi");
+				newType.setTypeName("Leggins");
+				newType.setImg("https://iili.io/HNO3V94.jpg");
 				newType.setCateId(21);
 				
 				Exception exception = assertThrows(ValidationException.class, () -> {
@@ -116,7 +118,8 @@ public class TestCasesForType {
 				
 				TypeEntity newType = new TypeEntity();
 				newType.setTypeName(null);
-				newType.setCateId(8);
+				newType.setImg("https://iili.io/HNO3V94.jpg");
+				newType.setCateId(4);
 				
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					typeService.create(newType);
@@ -137,6 +140,7 @@ public class TestCasesForType {
 				
 					TypeEntity newType = new TypeEntity();
 					newType.setTypeName("");
+					newType.setImg("https://iili.io/HNO3V94.jpg");
 					newType.setCateId(5);
 						
 					Exception exception = assertThrows(ValidationException.class, () -> {
@@ -157,6 +161,7 @@ public class TestCasesForType {
 				
 				TypeEntity newType = new TypeEntity();
 				newType.setTypeName("1234");
+				newType.setImg("https://iili.io/HNO3V94.jpg");
 				newType.setCateId(5);
 					
 				Exception exception = assertThrows(ValidationException.class, () -> {
@@ -176,7 +181,8 @@ public class TestCasesForType {
 					TypeService typeService = new TypeService();
 					
 					TypeEntity newType = new TypeEntity();
-					newType.setTypeName("weieIC");
+					newType.setTypeName("Saree");
+					newType.setImg("https://iili.io/HNO3V94.jpg");
 					newType.setCateId(5);
 						
 					Exception exception = assertThrows(ValidationException.class, () -> {
@@ -188,6 +194,50 @@ public class TestCasesForType {
 					assertEquals(exceptedMessage,actualMessage);
 				}
 
+			//// TEST FOR TYPE IMAGE WITH NULL
+				
+				@Test 
+				void testCreateTypeWithImageNameNull() {
+					
+					TypeService typeService = new TypeService();
+					
+					TypeEntity newType = new TypeEntity();
+					String random= generateRandomString(6);
+					newType.setTypeName(random);
+					newType.setImg(null);
+					newType.setCateId(8);
+					
+					Exception exception = assertThrows(ValidationException.class, () -> {
+						typeService.create(newType);
+					});
+					String exceptedMessage = "Image url cannot be null or empty";
+					String actualMessage = exception.getMessage();
+					
+					assertEquals(exceptedMessage,actualMessage);
+				}
+
+				
+				//// TEST FOR TYPE IMAGE WITH EMPTY STRING
+				
+				@Test 
+				void testCreateTypeWithTypeImageEmpty() {
+							
+						TypeService typeService = new TypeService();
+					
+						TypeEntity newType = new TypeEntity();
+						String random= generateRandomString(6);
+						newType.setTypeName(random);
+						newType.setImg("");
+						newType.setCateId(5);
+							
+						Exception exception = assertThrows(ValidationException.class, () -> {
+							typeService.create(newType);
+						});
+						String exceptedMessage = "Image url cannot be null or empty";
+						String actualMessage = exception.getMessage();
+							
+						assertEquals(exceptedMessage,actualMessage);
+					}
 				
 				//// TEST FOR UPDATE TYPE
 				
@@ -197,11 +247,12 @@ public class TestCasesForType {
 					TypeService typeService = new TypeService();
 					
 					TypeEntity updatedType = new TypeEntity();
-					updatedType.setTypeName("Croptop");
-					updatedType.setCateId(5);
+					updatedType.setTypeName("Frock");
+					updatedType.setImg("https://iili.io/HNO3V94.jpg");
+					updatedType.setCateId(1);
 					
 					assertDoesNotThrow(() -> {
-						typeService.update(6, updatedType);
+						typeService.update(33, updatedType);
 					});
 					
 				}
@@ -213,7 +264,7 @@ public class TestCasesForType {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(9);
+						typeService.delete(34);
 					});
 					
 				}
@@ -221,7 +272,7 @@ public class TestCasesForType {
 			//// TEST FOR GET ALL TYPES
 				
 				@Test
-				public void getAllTypes() throws ServiceException {
+				void getAllTypes() throws ServiceException {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
@@ -232,7 +283,7 @@ public class TestCasesForType {
 				}
 				
 				@Test
-				public void getAllTypesByCategoryId() throws ServiceException {
+				void getAllTypesByCategoryId() throws ServiceException {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {

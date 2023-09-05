@@ -27,7 +27,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		
 		try {
 			
-			String query = "SELECT * FROM categories WHERE is_active=1";
+			String query = "SELECT cate_id, cate_name, img_url, is_active FROM categories WHERE is_active=1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -37,6 +37,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 				CategoryEntity category = new CategoryEntity();
 				category.setCateId(rs.getInt("cate_id"));
 				category.setCateName(rs.getString("cate_name"));
+				category.setImg(rs.getString("img_url"));
 				
 				categoryList.add(category);
 				
@@ -69,11 +70,12 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "INSERT INTO categories (cate_name) VALUES (?)";
+			String query = "INSERT INTO categories (cate_name, img_url) VALUES (?, ?)";
 			connection = ConnectionUtil.getConnection();
 			ps = connection.prepareStatement(query);
 			
 			ps.setString(1, newCategory.getCateName());
+			ps.setString(2, newCategory.getImg());
 			
 			ps.executeUpdate();
 			
@@ -104,14 +106,16 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	    
 	    try {
 	    
-	    	String query = "UPDATE categories SET cate_name=? WHERE is_active=1 AND cate_id=?";
+	    	String query = "UPDATE categories SET cate_name=?, img_url=? WHERE is_active=1 AND cate_id=?";
 	    	
 	    	con = ConnectionUtil.getConnection();
 	    	ps = con.prepareStatement(query);
 	    	 
 	        ps.setString(1, updatedCategory.getCateName());
 	        
-	        ps.setInt(2, id);
+	        ps.setString(2, updatedCategory.getImg());
+	        
+	        ps.setInt(3, id);
 	        
 	        ps.executeUpdate();
 	       
@@ -179,7 +183,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 		
 		try {
 			
-			String query = "SELECT * FROM categories WHERE is_active=1 AND cate_name = ?";
+			String query = "SELECT cate_name FROM categories WHERE is_active=1 AND cate_name = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			

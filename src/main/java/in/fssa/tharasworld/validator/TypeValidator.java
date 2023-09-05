@@ -31,20 +31,28 @@ public class TypeValidator {
 			throw new ValidationException("Category id cannot be zero or in negative");
 			
 		}
-		
-		validateCategoryId(type.getCateId());
 				
 		StringUtil.rejectIfInvalidString(type.getTypeName(), "Type name");
+		
+		StringUtil.rejectIfInvalidString(type.getImg(), "Image url");
 		
 		if (!Pattern.matches(NAME_PATTERN, type.getTypeName())) {
 			throw new ValidationException("Type name doesn't match the pattern");
 		}
+		
+		validateCategoryId(type.getCateId());
 				
 		TypeDAO typedao = new TypeDAO();
 
 		typedao.checkTypeExistWithName(type.getTypeName());
 		
 			
+	}
+	
+	public static void validateTypeName(String name) throws ValidationException, PersistenceException {
+		
+		StringUtil.rejectIfInvalidString(name, "Type name");
+		
 	}
 	
 	public static void validateCategoryId(int id) throws ValidationException, PersistenceException {

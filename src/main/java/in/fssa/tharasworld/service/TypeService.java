@@ -25,9 +25,9 @@ public class TypeService {
 		Set<TypeEntity> typeList = null;
 		
 		try {
-			TypeDAO typeDao = new TypeDAO();
+			TypeDAO typeDAO = new TypeDAO();
 			
-			typeList = typeDao.findAll();
+			typeList = typeDAO.findAll();
 			
 			for(TypeEntity type:typeList) {
 				System.out.println(type);
@@ -52,8 +52,8 @@ public class TypeService {
 		try {
 			TypeValidator.validate(newType);
 			
-			TypeDAO typedao = new TypeDAO();
-			typedao.create(newType);
+			TypeDAO typeDAO = new TypeDAO();
+			typeDAO.create(newType);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ValidationException(e.getMessage());
@@ -74,8 +74,8 @@ public class TypeService {
 			TypeValidator.validateTypeId(id);
 			TypeValidator.validate(updatedType);
 			
-			TypeDAO typedao = new TypeDAO();
-			typedao.update(id, updatedType);
+			TypeDAO typeDAO = new TypeDAO();
+			typeDAO.update(id, updatedType);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -95,8 +95,8 @@ public class TypeService {
 			
 			TypeValidator.validateTypeId(id);
 			
-			TypeDAO typedao = new TypeDAO();
-			typedao.delete(id);
+			TypeDAO typeDAO = new TypeDAO();
+			typeDAO.delete(id);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -111,9 +111,9 @@ public class TypeService {
 		Set<TypeEntity> typeList = null;
 		
 		try {
-			TypeDAO typeDao = new TypeDAO();
+			TypeDAO typeDAO = new TypeDAO();
 			
-			typeList = typeDao.findAllTypeByCategoryId(id);
+			typeList = typeDAO.findAllTypeByCategoryId(id);
 			
 			for(TypeEntity type:typeList) {
 				System.out.println(type);
@@ -124,6 +124,27 @@ public class TypeService {
 		}
 				
 		return typeList; 
+		
+	}
+	
+	public static TypeEntity findByTypeId(int id) throws ValidationException, PersistenceException, ServiceException {
+		
+		TypeValidator.validateTypeId(id);
+		
+		TypeEntity type = null;
+		
+		try {
+			TypeDAO typeDAO = new TypeDAO();
+			
+			type = typeDAO.checkTypeExistWithId(id);
+			
+				System.out.println(type);
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+				
+		return type; 
 		
 	}
 	

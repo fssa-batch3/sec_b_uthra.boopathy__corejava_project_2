@@ -30,7 +30,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		 
 		try {
 			
-			String query = "SELECT * FROM users WHERE is_active=1";
+			String query = "SELECT user_id, email, user_name, age, phone_number, password, role, is_active FROM users WHERE is_active=1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -43,6 +43,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 				user.setAge(rs.getInt("age"));
 				user.setId(rs.getInt("user_id"));
 				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
 				user.setRole(rs.getString("role"));
 				
 				userList.add(user);
@@ -204,7 +205,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		try {
 			
-			String query = "SELECT * FROM users WHERE is_active = 1 AND user_id = ?";
+			String query = "SELECT user_id, email, user_name, age, phone_number, password, role, is_active FROM users WHERE is_active = 1 AND user_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -219,6 +220,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 				user.setEmail(rs.getString("email"));
 				user.setName(rs.getString("user_name"));
 				user.setPhoneNumber(rs.getLong("phone_number"));
+				user.setPassword(rs.getString("password"));
 				user.setRole(rs.getString("role"));
 				
 			}
@@ -249,7 +251,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		try {
 			
-			String query = "SELECT * FROM users WHERE is_active=1 AND email=?";
+			String query = "SELECT email FROM users WHERE is_active=1 AND email=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setString(1, email);
@@ -283,7 +285,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		try {
 			
-			String query = "SELECT * FROM users WHERE is_active=1 AND email=?";
+			String query = "SELECT email FROM users WHERE is_active=1 AND email=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setString(1, email);
@@ -317,13 +319,22 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		try {
 			
-			String query = "SELECT user_id FROM users WHERE is_active=1 AND user_id=?";
+			String query = "SELECT user_id, email, user_name, age, phone_number, password, role, is_active FROM users WHERE is_active=1 AND user_id=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			
-			while(!rs.next()) {
+			if(rs.next()) {
+				user = new UserEntity();
+				user.setId(rs.getInt("user_id"));
+				user.setName(rs.getString("user_name"));
+				user.setEmail(rs.getString("email"));
+				user.setPhoneNumber(rs.getLong("phone_number"));
+				user.setAge(rs.getInt("age"));
+				user.setRole(rs.getString("role"));
+				user.setPassword(rs.getString("password"));
+			} else {
 				throw new ValidationException("User does not exist");
 			}
 		
@@ -351,13 +362,22 @@ public class UserDAO implements UserInterface<UserEntity>{
 	
 	try {
 		
-		String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
+		String query = "SELECT user_id, email, user_name, age, phone_number, password, role, is_active FROM users WHERE is_active=1 AND phone_number=?";
 		con = ConnectionUtil.getConnection();
 		ps = con.prepareStatement(query);
 		ps.setLong(1, phoneNumber);
 		rs = ps.executeQuery();
 		
-		while(!rs.next()) {
+		if(rs.next()) {
+			user = new UserEntity();
+			user.setId(rs.getInt("user_id"));
+			user.setName(rs.getString("user_name"));
+			user.setEmail(rs.getString("email"));
+			user.setPhoneNumber(rs.getLong("phone_number"));
+			user.setAge(rs.getInt("age"));
+			user.setRole(rs.getString("role"));
+			user.setPassword(rs.getString("password"));
+		} else {
 			throw new ValidationException("User does not exist");
 		}
 	
@@ -385,7 +405,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		try {
 			
-			String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
+			String query = "SELECT phone_number FROM users WHERE is_active=1 AND phone_number=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setLong(1, phoneNumber);
@@ -460,7 +480,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	
 	try {
 		
-		String query = "SELECT * FROM users WHERE is_active=1 AND phone_number=?";
+		String query = "SELECT user_id, phone_number, password FROM users WHERE is_active=1 AND phone_number=?";
 		con = ConnectionUtil.getConnection();
 		ps = con.prepareStatement(query);
 		ps.setLong(1, phoneNumber);
@@ -468,6 +488,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		
 		if(rs.next()) {
 			user = new UserEntity();
+			user.setId(rs.getInt("user_id"));
 			user.setPhoneNumber(rs.getLong("phone_number"));
 			user.setPassword(rs.getString("password"));
 			

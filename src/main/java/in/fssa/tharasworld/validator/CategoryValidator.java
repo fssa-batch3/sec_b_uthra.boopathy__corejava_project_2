@@ -28,6 +28,8 @@ public class CategoryValidator {
 		
 		StringUtil.rejectIfInvalidString(category.getCateName(), "Category name");
 		
+		StringUtil.rejectIfInvalidString(category.getImg(), "Image url");
+		
 		if (!Pattern.matches(NAME_PATTERN, category.getCateName())) {
 			throw new ValidationException("Category name doesn't match the pattern");
 		}
@@ -36,6 +38,15 @@ public class CategoryValidator {
 		categorydao.checkCategoryExist(category.getCateName());
 			
 		}
+	
+	public static void validateName(String name) throws ValidationException, PersistenceException {
+		
+		StringUtil.rejectIfInvalidString(name, "Category name");
+		
+		if (!Pattern.matches(NAME_PATTERN, name)) {
+			throw new ValidationException("Category name doesn't match the pattern");
+		}
+	}
 	
 	public static void validateId(int id) throws ValidationException, PersistenceException {
 		

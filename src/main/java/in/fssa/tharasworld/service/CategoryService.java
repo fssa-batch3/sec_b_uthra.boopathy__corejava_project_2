@@ -22,9 +22,9 @@ public class CategoryService {
 		
 		Set<CategoryEntity> CategoryList;
 		try {
-			CategoryDAO categoryDao = new CategoryDAO();
+			CategoryDAO categoryDAO = new CategoryDAO();
 			
-			CategoryList = categoryDao.findAll();
+			CategoryList = categoryDAO.findAll();
 			
 			for(CategoryEntity cate:CategoryList) {
 				System.out.println(cate);
@@ -50,8 +50,8 @@ public class CategoryService {
 		try {
 			CategoryValidator.validate(newCategory);
 			
-			CategoryDAO categorydao = new CategoryDAO();
-			categorydao.create(newCategory);
+			CategoryDAO categoryDAO = new CategoryDAO();
+			categoryDAO.create(newCategory);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -73,8 +73,9 @@ public class CategoryService {
 			
 			CategoryValidator.validate(updatedCategory);
 			
-			CategoryDAO categorydao = new CategoryDAO();
-			categorydao.update(id, updatedCategory);
+			CategoryDAO categoryDAO = new CategoryDAO();
+			categoryDAO.update(id, updatedCategory);
+		
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -94,8 +95,9 @@ public class CategoryService {
 			
 			CategoryValidator.validateId(id);
 			
-			CategoryDAO categorydao = new CategoryDAO();
-			categorydao.delete(id);
+			CategoryDAO categoryDAO = new CategoryDAO();
+			categoryDAO.delete(id);
+		
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());

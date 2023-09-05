@@ -4,6 +4,7 @@ public abstract class Category implements Comparable<Category> {
 
 	private int cateId;
 	private String cateName;
+	private String img;
 	private boolean isActive;
 	
 	public int getCateId() {
@@ -20,6 +21,14 @@ public abstract class Category implements Comparable<Category> {
 	
 	public void setCateName(String cateName) {
 		this.cateName = cateName;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	public boolean isActive() {
@@ -49,7 +58,7 @@ public abstract class Category implements Comparable<Category> {
 	
 	@Override
 	public String toString() {
-		return "Category [cateId=" + cateId + ", cateName=" + cateName + ", isActive=" + isActive + "]";
+		return "Category [cateId=" + cateId + ", cateName=" + cateName + ", imgUrl=" + img + ", isActive=" + isActive + "]";
 	}
 
 

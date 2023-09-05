@@ -25,13 +25,13 @@ public class ProductService {
 
 		Set<ProductDetailDTO> productList;
 		try {
-			ProductDAO productdao = new ProductDAO();
-			PriceDAO pricedao = new PriceDAO();
+			ProductDAO productDAO = new ProductDAO();
+			PriceDAO priceDAO = new PriceDAO();
 
-			productList = productdao.findAll();
+			productList = productDAO.findAll();
 
 			for (ProductDetailDTO pdt : productList) {
-				List<PriceEntity> prices = pricedao.findByProductId(pdt.getPdtId());
+				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
 				System.out.println(pdt);
 			}
@@ -53,16 +53,16 @@ public class ProductService {
 	public void create(ProductDetailDTO newProduct) throws ServiceException, ValidationException {
 
 		try {
-			ProductDAO productdao = new ProductDAO();
-			PriceDAO pricedao = new PriceDAO();
+			ProductDAO productDAO = new ProductDAO();
+			PriceDAO priceDAO = new PriceDAO();
 
 			ProductValidator.validate(newProduct);
 			ProductValidator.validatePriceList(newProduct.getListOfPrices());
 
-			int id = productdao.create(newProduct);
+			int id = productDAO.create(newProduct);
 
 			for (PriceEntity newPrice : newProduct.getListOfPrices()) {
-				pricedao.create(newPrice, id);
+				priceDAO.create(newPrice, id);
 			}
 		} catch (PersistenceException e) {
 			e.printStackTrace();
@@ -85,13 +85,14 @@ public class ProductService {
 
 			ProductValidator.validateProductId(id);
 
-			ProductDAO productdao = new ProductDAO();
+			ProductDAO productDAO = new ProductDAO();
 
 			ProductValidator.validateName(updatedProduct.getName());
+			ProductValidator.validateImageUrl(updatedProduct.getImg());
 			ProductValidator.validateDescription(updatedProduct.getDescription());
 			ProductValidator.validateTypeId(updatedProduct.getTypeId());
 
-			productdao.update(id, updatedProduct);
+			productDAO.update(id, updatedProduct);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -111,9 +112,9 @@ public class ProductService {
 
 			ProductValidator.validateProductId(id);
 
-			ProductDAO productdao = new ProductDAO();
+			ProductDAO productDAO = new ProductDAO();
 
-			productdao.delete(id);
+			productDAO.delete(id);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -128,7 +129,7 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	
-	public Set<ProductDetailDTO> findByCategoryId(int id) throws ServiceException, ValidationException {
+	public static Set<ProductDetailDTO> findByCategoryId(int id) throws ServiceException, ValidationException {
 
 		Set<ProductDetailDTO> productList = null;
 		
@@ -136,14 +137,44 @@ public class ProductService {
 			
 			CategoryValidator.validateId(id);
 			
-			ProductDAO productdao = new ProductDAO();
+			ProductDAO productDAO = new ProductDAO();
 
-			productList = productdao.findByCategoryId(id);
+			productList = productDAO.findByCategoryId(id);
 			
-			PriceDAO pricedao = new PriceDAO();
+			PriceDAO priceDAO = new PriceDAO();
 			
 			for (ProductDetailDTO pdt : productList) {
-				List<PriceEntity> prices = pricedao.findByProductId(pdt.getPdtId());
+				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
+				pdt.setListOfPrices(prices);
+				System.out.println(pdt);
+			}
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+
+		return productList;
+		
+	}
+	
+	public static Set<ProductDetailDTO> findByCategoryName(String name) throws ServiceException, ValidationException {
+
+		Set<ProductDetailDTO> productList = null;
+		
+		try {
+			
+			CategoryValidator.validateName(name);
+			
+			ProductDAO productDAO = new ProductDAO();
+			
+			int categoryId = productDAO.findCategoryIdByCategoryName(name);
+
+			productList = productDAO.findByCategoryId(categoryId);
+			
+			PriceDAO priceDAO = new PriceDAO();
+			
+			for (ProductDetailDTO pdt : productList) {
+				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
 				System.out.println(pdt);
 			}
@@ -173,13 +204,45 @@ public class ProductService {
 			
 			TypeValidator.validateTypeId(id);
 			
-			ProductDAO productdao = new ProductDAO();
-			PriceDAO pricedao = new PriceDAO();
+			ProductDAO productDAO = new ProductDAO();
+			PriceDAO priceDAO = new PriceDAO();
 					
-			productList = productdao.findByTypeId(id);
+			productList = productDAO.findByTypeId(id);
 			
 			for (ProductDetailDTO pdt : productList) {
-				List<PriceEntity> prices = pricedao.findByProductId(pdt.getPdtId());
+				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
+				pdt.setListOfPrices(prices);
+				System.out.println(pdt);
+			}
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+
+		return productList;
+		
+	}
+	
+	
+	public static Set<ProductDetailDTO> findByTypeName(String name) throws ServiceException, ValidationException {
+		
+		
+
+		Set<ProductDetailDTO> productList = null;
+				
+		try {
+			
+			TypeValidator.validateTypeName(name);
+			
+			ProductDAO productDAO = new ProductDAO();
+			PriceDAO priceDAO = new PriceDAO();
+			
+			int typeId = productDAO.findByTypeName(name);
+					
+			productList = productDAO.findByTypeId(typeId);
+			
+			for (ProductDetailDTO pdt : productList) {
+				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
 				System.out.println(pdt);
 			}
@@ -209,14 +272,52 @@ public class ProductService {
 				
 				ProductValidator.validateProductId(id);
 				
-				ProductDAO productdao = new ProductDAO();
-				PriceDAO pricedao = new PriceDAO();
+				ProductDAO productDAO = new ProductDAO();
+				PriceDAO priceDAO = new PriceDAO();
 					
-				productList = productdao.findByProductId(id);
+				productList = productDAO.findByProductId(id);
 
-				List<PriceEntity> prices = pricedao.findByProductId(id);
+				List<PriceEntity> prices = priceDAO.findByProductId(id);
 				productList.setListOfPrices(prices);
 				System.out.println(productList);
+			
+			} catch (PersistenceException e) {
+				e.printStackTrace();
+				throw new ServiceException(e.getMessage());
+			}
+
+		return productList;
+		
+	}
+	
+	
+	public static Set<ProductDetailDTO> findAllProductsBySellerId(int id) throws ServiceException, ValidationException  {
+
+		
+
+		Set<ProductDetailDTO> productList;
+				
+			try {
+				
+				ProductValidator.validateProductId(id);
+				
+				ProductDAO productDAO = new ProductDAO();
+				PriceDAO priceDAO = new PriceDAO();
+					
+				productList = productDAO.findAllProductsBySellerId(id);
+				
+				
+				for (ProductDetailDTO pdt : productList) {
+					List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
+					pdt.setListOfPrices(prices);
+					System.out.println(pdt);
+				}
+
+				for(ProductDetailDTO pdt: productList) {
+				
+				System.out.println(pdt);
+				
+				}
 			
 			} catch (PersistenceException e) {
 				e.printStackTrace();

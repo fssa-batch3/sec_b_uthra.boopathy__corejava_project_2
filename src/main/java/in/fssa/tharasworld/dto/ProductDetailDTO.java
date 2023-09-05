@@ -8,6 +8,7 @@ public class ProductDetailDTO {
 
 	private int pdtId;
 	private String name;
+	private String img;
 	private String description;
 	private int sellerId;
 	private int typeId;
@@ -32,6 +33,14 @@ public class ProductDetailDTO {
 		this.name = name;
 	}
 	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	public String getDescription() {
 		return description;
 	}

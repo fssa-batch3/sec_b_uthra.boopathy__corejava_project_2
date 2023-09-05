@@ -40,7 +40,7 @@ public class TestCasesForCategory {
 			
 			String random = generateRandomString(7);
 			newCategory.setCateName(random);
-		
+			newCategory.setImg("https://iili.io/HvZYe0x.webp");
 			
 			assertDoesNotThrow(()->{
 				categoryService.create(newCategory);
@@ -101,6 +101,48 @@ public class TestCasesForCategory {
 			assertEquals(exceptedMessage,actualMessage);
 		}
 		
+		//// TEST FOR CATEGORY IMAGE WITH NULL
+		
+			@Test 
+			void testCreateCategoryWithCategoryImageNull() {
+				
+				CategoryService categoryService = new CategoryService();
+				
+				CategoryEntity newCategory = new CategoryEntity();
+				String random = generateRandomString(7);
+				newCategory.setCateName(random);
+				newCategory.setImg(null);
+				
+				Exception exception = assertThrows(ValidationException.class, () -> {
+					categoryService.create(newCategory);
+				});
+				String exceptedMessage = "Image url cannot be null or empty";
+				String actualMessage = exception.getMessage();
+				
+				assertEquals(exceptedMessage,actualMessage);
+			}
+			
+			//// TEST FOR CATEGORY WITH EMPTY STRING
+			
+			@Test 
+			void testCreateCategoryWithCategoryImageEmpty() {
+				
+				CategoryService categoryService = new CategoryService();
+				
+				CategoryEntity newCategory = new CategoryEntity();
+				String random = generateRandomString(7);
+				newCategory.setCateName(random);
+				newCategory.setImg("");
+				
+				Exception exception = assertThrows(ValidationException.class, () -> {
+					categoryService.create(newCategory);
+				});
+				String exceptedMessage = "Image url cannot be null or empty";
+				String actualMessage = exception.getMessage();
+				
+				assertEquals(exceptedMessage,actualMessage);
+			}
+		
 		////TEST FOR CATEGORY NAME WITH PATTERN	
 		
 		@Test 
@@ -110,6 +152,7 @@ public class TestCasesForCategory {
 			
 			CategoryEntity newCategory = new CategoryEntity();
 			newCategory.setCateName("13245");
+			newCategory.setImg("https://iili.io/J9CoLXV.webp");
 				
 			Exception exception = assertThrows(ValidationException.class, () -> {
 				categoryService.create(newCategory);
@@ -129,6 +172,7 @@ public class TestCasesForCategory {
 				
 				CategoryEntity newCategory = new CategoryEntity();
 				newCategory.setCateName("Cosmetics");
+				newCategory.setImg("https://iili.io/J9CoLXV.webp");
 					
 				Exception exception = assertThrows(ValidationException.class, () -> {
 					categoryService.create(newCategory);
@@ -147,10 +191,11 @@ public class TestCasesForCategory {
 				CategoryService categoryService = new CategoryService();
 				
 				CategoryEntity updatedCategory = new CategoryEntity();
-				updatedCategory.setCateName("Accessories");
+				updatedCategory.setCateName("Choli");
+				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
 				
 				assertDoesNotThrow(() -> {
-					categoryService.update(8, updatedCategory);
+					categoryService.update(9, updatedCategory);
 				});
 				
 			}
@@ -162,7 +207,7 @@ public class TestCasesForCategory {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(11);
+					categoryService.delete(10);
 				});
 				
 			}
