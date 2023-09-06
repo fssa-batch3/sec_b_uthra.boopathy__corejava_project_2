@@ -277,7 +277,7 @@ public class TestCasesForType {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(35);
+						typeService.delete(36);
 					});
 					
 				}

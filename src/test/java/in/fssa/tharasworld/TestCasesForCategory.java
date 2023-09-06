@@ -261,7 +261,7 @@ public class TestCasesForCategory {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(11);
+					categoryService.delete(12);
 				});
 				
 			}

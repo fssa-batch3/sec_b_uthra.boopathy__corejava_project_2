@@ -559,7 +559,7 @@ public class TestCasesForUser {
 		UserService userService = new UserService();
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			UserEntity userList = userService.findById(10);
+			UserEntity userList = userService.findById(100);
 			System.out.println(userList);
 		});
 		String expectedMessage = "User does not exist";
@@ -644,7 +644,7 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(8);
+			userService.delete(10);
 		});
 		
 	}
