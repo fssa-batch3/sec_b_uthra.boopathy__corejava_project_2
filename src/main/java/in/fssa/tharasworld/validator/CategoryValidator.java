@@ -34,8 +34,8 @@ public class CategoryValidator {
 			throw new ValidationException("Category name doesn't match the pattern");
 		}
 		
-		CategoryDAO categorydao = new CategoryDAO();
-		categorydao.checkCategoryExist(category.getCateName());
+		CategoryDAO categoryDAO = new CategoryDAO();
+		categoryDAO.checkCategoryExist(category.getCateName());
 			
 		}
 	

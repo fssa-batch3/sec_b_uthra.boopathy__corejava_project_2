@@ -299,7 +299,7 @@ public class ProductService {
 				
 			try {
 				
-				ProductValidator.validateProductId(id);
+				ProductValidator.validateSellerId(id);
 				
 				ProductDAO productDAO = new ProductDAO();
 				PriceDAO priceDAO = new PriceDAO();

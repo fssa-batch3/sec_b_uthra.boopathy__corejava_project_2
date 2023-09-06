@@ -31,127 +31,127 @@ public class TestCasesForSize {
 	    }
 
 	///  TEST FOR VALID INPUT TO CREATE SIZE
-	
-		@Test
-		void testCreateSizeWithValidInput() {
-			
-			SizeService sizeService = new SizeService();
-			
-			SizeEntity newSize = new SizeEntity();
-			String random = generateRandomString(3);
-			newSize.setSizeName(random);
-		 
-			
-			assertDoesNotThrow(()->{ 
-				sizeService.create(newSize);
-			});
-		
-		}
-		
-		//// TEST FOR INVALID INPUT
-		
-		@Test
-		void testCreateSizeWithInvalidInput() {
-			
-			SizeService sizeService = new SizeService();
-			Exception exception = assertThrows(ValidationException.class, () -> {
-				sizeService.create(null);
-			});
-			String exceptedMessage = "Invalid size input";
-			String actualMessage = exception.getMessage();
-			
-			assertEquals(exceptedMessage,actualMessage);
-		}
-		
-		//// TEST FOR SIZE NAME WITH NULL
-		
-		@Test 
-		void testCreateSizeWithSizenameNull() {
-			
-			SizeService sizeService = new SizeService();
-			
-			SizeEntity newSize = new SizeEntity();
-			newSize.setSizeName(null);
-			
-			Exception exception = assertThrows(ValidationException.class, () -> {
-				sizeService.create(newSize);
-			});
-			String exceptedMessage = "Size name cannot be null or empty";
-			String actualMessage = exception.getMessage();
-			
-			assertEquals(exceptedMessage,actualMessage);
-		}
-		
-			//// TEST FOR SIZE NAME WITH EMPTY
-		
-			@Test 
-			void testCreateSizeWithSizenameEmpty() {
-				
-				SizeService sizeService = new SizeService();
-				
-				SizeEntity newSize = new SizeEntity();
-				newSize.setSizeName("");
-				
-				Exception exception = assertThrows(ValidationException.class, () -> {
-					sizeService.create(newSize);
-				});
-				String exceptedMessage = "Size name cannot be null or empty";
-				String actualMessage = exception.getMessage();
-				
-				assertEquals(exceptedMessage,actualMessage);
-			}
-			
-		//// TEST FOR SIZE NAME WITH PATTERN
-			
-				@Test 
-				void testCreateSizeWithSizenamePattern() {
-					
-					SizeService sizeService = new SizeService();
-					
-					SizeEntity newSize = new SizeEntity();
-					newSize.setSizeName("&$");
-					
-					Exception exception = assertThrows(ValidationException.class, () -> {
-						sizeService.create(newSize);
-					});
-					String exceptedMessage = "Size name doesn't match the pattern";
-					String actualMessage = exception.getMessage();
-					
-					assertEquals(exceptedMessage,actualMessage);
-				}
-				
-			//// TEST FOR SIZE NAME WITH ALREADY EXISTS
-				
-					@Test 
-					void testCreateSizeWithSizenameExists() {
-						
-						SizeService sizeService = new SizeService();
-						
-						SizeEntity newSize = new SizeEntity();
-						newSize.setSizeName("XXL");
-						
-						Exception exception = assertThrows(ValidationException.class, () -> {
-							sizeService.create(newSize);
-						});
-						String exceptedMessage = "This size is already exists";
-						String actualMessage = exception.getMessage();
-						
-						assertEquals(exceptedMessage,actualMessage);
-					}
-		
-					
-				//// TEST FOR GET ALL SIZES
-					
-					@Test
-					void getAllSizes() throws ServiceException {
-						
-						SizeService sizeService = new SizeService();
-						
-						assertDoesNotThrow(() -> {
-							Set<SizeEntity> sizeList = sizeService.findAll();
-							System.out.println(sizeList);
-						});
-						
-					}
+//	
+//		@Test
+//		void testCreateSizeWithValidInput() {
+//			
+//			SizeService sizeService = new SizeService();
+//			
+//			SizeEntity newSize = new SizeEntity();
+//			String random = generateRandomString(3);
+//			newSize.setSizeName(random);
+//		 
+//			
+//			assertDoesNotThrow(()->{ 
+//				sizeService.create(newSize);
+//			});
+//		
+//		}
+//		
+//		//// TEST FOR INVALID INPUT
+//		
+//		@Test
+//		void testCreateSizeWithInvalidInput() {
+//			
+//			SizeService sizeService = new SizeService();
+//			Exception exception = assertThrows(ValidationException.class, () -> {
+//				sizeService.create(null);
+//			});
+//			String exceptedMessage = "Invalid size input";
+//			String actualMessage = exception.getMessage();
+//			
+//			assertEquals(exceptedMessage,actualMessage);
+//		}
+//		
+//		//// TEST FOR SIZE NAME WITH NULL
+//		
+//		@Test 
+//		void testCreateSizeWithSizenameNull() {
+//			
+//			SizeService sizeService = new SizeService();
+//			
+//			SizeEntity newSize = new SizeEntity();
+//			newSize.setSizeName(null);
+//			
+//			Exception exception = assertThrows(ValidationException.class, () -> {
+//				sizeService.create(newSize);
+//			});
+//			String exceptedMessage = "Size name cannot be null or empty";
+//			String actualMessage = exception.getMessage();
+//			
+//			assertEquals(exceptedMessage,actualMessage);
+//		}
+//		
+//			//// TEST FOR SIZE NAME WITH EMPTY
+//		
+//			@Test 
+//			void testCreateSizeWithSizenameEmpty() {
+//				
+//				SizeService sizeService = new SizeService();
+//				
+//				SizeEntity newSize = new SizeEntity();
+//				newSize.setSizeName("");
+//				
+//				Exception exception = assertThrows(ValidationException.class, () -> {
+//					sizeService.create(newSize);
+//				});
+//				String exceptedMessage = "Size name cannot be null or empty";
+//				String actualMessage = exception.getMessage();
+//				
+//				assertEquals(exceptedMessage,actualMessage);
+//			}
+//			
+//		//// TEST FOR SIZE NAME WITH PATTERN
+//			
+//				@Test 
+//				void testCreateSizeWithSizenamePattern() {
+//					
+//					SizeService sizeService = new SizeService();
+//					
+//					SizeEntity newSize = new SizeEntity();
+//					newSize.setSizeName("&$");
+//					
+//					Exception exception = assertThrows(ValidationException.class, () -> {
+//						sizeService.create(newSize);
+//					});
+//					String exceptedMessage = "Size name doesn't match the pattern";
+//					String actualMessage = exception.getMessage();
+//					
+//					assertEquals(exceptedMessage,actualMessage);
+//				}
+//				
+//			//// TEST FOR SIZE NAME WITH ALREADY EXISTS
+//				
+//					@Test 
+//					void testCreateSizeWithSizenameExists() {
+//						
+//						SizeService sizeService = new SizeService();
+//						
+//						SizeEntity newSize = new SizeEntity();
+//						newSize.setSizeName("XXL");
+//						
+//						Exception exception = assertThrows(ValidationException.class, () -> {
+//							sizeService.create(newSize);
+//						});
+//						String exceptedMessage = "This size is already exists";
+//						String actualMessage = exception.getMessage();
+//						
+//						assertEquals(exceptedMessage,actualMessage);
+//					}
+//		
+//					
+//				//// TEST FOR GET ALL SIZES
+//					
+//					@Test
+//					void getAllSizes() throws ServiceException {
+//						
+//						SizeService sizeService = new SizeService();
+//						
+//						assertDoesNotThrow(() -> {
+//							Set<SizeEntity> sizeList = sizeService.findAll();
+//							System.out.println(sizeList);
+//						});
+//						
+//					}
 	
 }

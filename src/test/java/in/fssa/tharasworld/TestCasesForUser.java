@@ -513,6 +513,40 @@ public class TestCasesForUser {
 		
 	}
 	
+	@Test
+	void getByUserIdAsZero() throws ServiceException, ValidationException {
+		
+		UserService userService = new UserService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			UserEntity userList = userService.findById(0);
+			System.out.println(userList);
+		});
+		String expectedMessage = "Invalid user id";
+		String actualMessage = exception.getMessage();
+		System.out.println(actualMessage);
+
+		assertEquals(expectedMessage,actualMessage);		
+		
+	}
+	
+	@Test
+	void getByUserIdAsInvalidId() throws ServiceException, ValidationException {
+		
+		UserService userService = new UserService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			UserEntity userList = userService.findById(10);
+			System.out.println(userList);
+		});
+		String expectedMessage = "User does not exist";
+		String actualMessage = exception.getMessage();
+		System.out.println(actualMessage);
+
+		assertEquals(expectedMessage,actualMessage);		
+		
+	}
+	
 	//// TEST FOR UPDATE USER
 	
 	@Test
@@ -532,6 +566,50 @@ public class TestCasesForUser {
 		
 	}
 	
+	@Test
+	void testUpdateUserWithZero() {
+
+		UserService userService = new UserService();
+		
+		UserEntity updateUser = new UserEntity();
+		
+		updateUser.setName("Ramya");
+		updateUser.setPassword("Ramya#08");
+		updateUser.setAge(18);
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			userService.update(0, updateUser);
+		});
+		String expectedMessage = "Invalid user id";
+		String actualMessage = exception.getMessage();
+		System.out.println(actualMessage);
+
+		assertEquals(expectedMessage,actualMessage);
+
+	}
+	
+	@Test
+	void testUpdateUserWithInvalidId() {
+
+		UserService userService = new UserService();
+		
+		UserEntity updateUser = new UserEntity();
+		
+		updateUser.setName("Ramya");
+		updateUser.setPassword("Ramya#08");
+		updateUser.setAge(18);
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			userService.update(10, updateUser);
+		});
+		String expectedMessage = "User does not exist";
+		String actualMessage = exception.getMessage();
+		System.out.println(actualMessage);
+
+		assertEquals(expectedMessage,actualMessage);
+
+	}
+	
 	//// TEST FOR DELETE USER
 	
 	@Test
@@ -539,7 +617,7 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(8);
+			userService.delete(5);
 		});
 		
 	}

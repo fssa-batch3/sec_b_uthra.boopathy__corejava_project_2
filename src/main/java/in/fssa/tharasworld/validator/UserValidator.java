@@ -90,15 +90,15 @@ public class UserValidator {
 		
 		public static void CheckUserExists(String email) throws ValidationException, PersistenceException {
 			
-			UserDAO userdao = new UserDAO();
-			userdao.checkUserExists(email);
+			UserDAO userDAO = new UserDAO();
+			userDAO.checkUserExists(email);
 			
 		}
 		
 		public static void CheckUserExistsWithPhoneNumber(long phoneNumber) throws ValidationException, PersistenceException {
 			
-			UserDAO userdao = new UserDAO();
-			userdao.checkUserExistsWithPhoneNumber(phoneNumber);
+			UserDAO userDAO = new UserDAO();
+			userDAO.checkUserExistsWithPhoneNumber(phoneNumber);
 			
 		}
 		
@@ -108,22 +108,22 @@ public class UserValidator {
 				throw new ValidationException("Invalid user id");
 			}
 			
-			UserDAO userdao = new UserDAO();
-			userdao.checkUserExistsWithId(id);
+			UserDAO userDAO = new UserDAO();
+			userDAO.checkUserExistsWithId(id);
 			
 		}
 		
 		public static void CheckUserExistsForUpdate(String email) throws ValidationException, PersistenceException {
 			
-			UserDAO userdao = new UserDAO();
-			userdao.checkUserExistsForUpdate(email);
+			UserDAO userDAO = new UserDAO();
+			userDAO.checkUserExistsForUpdate(email);
 			
 		}
 		
 		public static void CheckUserExistsWithPhoneNumberForUpdate(long phoneNumber) throws ValidationException, PersistenceException {
 			
-			UserDAO userdao = new UserDAO();
-			userdao.checkUserExistsWithPhoneNumberForUpdate(phoneNumber);
+			UserDAO userDAO = new UserDAO();
+			userDAO.checkUserExistsWithPhoneNumberForUpdate(phoneNumber);
 			
 		}
 		

@@ -72,7 +72,7 @@ public class TestCasesForCategory {
 			
 			CategoryEntity newCategory = new CategoryEntity();
 			newCategory.setCateName(null);
-			
+			newCategory.setImg("https://iili.io/HvZYe0x.webp");
 			Exception exception = assertThrows(ValidationException.class, () -> {
 				categoryService.create(newCategory);
 			});
@@ -91,7 +91,7 @@ public class TestCasesForCategory {
 			
 			CategoryEntity newCategory = new CategoryEntity();
 			newCategory.setCateName("");
-			
+			newCategory.setImg("https://iili.io/HvZYe0x.webp");
 			Exception exception = assertThrows(ValidationException.class, () -> {
 				categoryService.create(newCategory);
 			});
@@ -191,7 +191,7 @@ public class TestCasesForCategory {
 				CategoryService categoryService = new CategoryService();
 				
 				CategoryEntity updatedCategory = new CategoryEntity();
-				updatedCategory.setCateName("Choli");
+				updatedCategory.setCateName("Saree");
 				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
 				
 				assertDoesNotThrow(() -> {
@@ -200,6 +200,46 @@ public class TestCasesForCategory {
 				
 			}
 			
+			@Test
+			void testUpdateCategoryWithNameNull() {
+
+				CategoryService categoryService = new CategoryService();
+				
+				CategoryEntity updatedCategory = new CategoryEntity();
+				updatedCategory.setCateName(null);
+				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
+				
+				Exception exception = assertThrows(ValidationException.class, () -> {
+					categoryService.update(8, updatedCategory);
+				});
+				String exceptedMessage = "Category name cannot be null or empty";
+				String actualMessage = exception.getMessage();
+				
+				assertEquals(exceptedMessage,actualMessage);				
+				
+			}
+			
+			@Test
+			void testUpdateCategoryWithNameEmpty() {
+
+				CategoryService categoryService = new CategoryService();
+				
+				CategoryEntity updatedCategory = new CategoryEntity();
+				updatedCategory.setCateName("");
+				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
+				
+				Exception exception = assertThrows(ValidationException.class, () -> {
+					categoryService.update(8, updatedCategory);
+				});
+				String exceptedMessage = "Category name cannot be null or empty";
+				String actualMessage = exception.getMessage();
+				
+				assertEquals(exceptedMessage,actualMessage);
+					
+				
+			}
+
+			
 			//// TEST FOR DELETE CATEGORY
 			
 			@Test
@@ -207,8 +247,38 @@ public class TestCasesForCategory {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(10);
+					categoryService.delete(9);
 				});
+				
+			}
+			
+			@Test
+			void deleteCategoryWithIdZero() throws Exception {
+				
+				CategoryService categoryService = new CategoryService();
+				
+				Exception exception = assertThrows(ValidationException.class, () -> {
+					categoryService.delete(0);
+				});
+				String exceptedMessage = "Category id cannot be zero or in negative";
+				String actualMessage = exception.getMessage();
+				
+				assertEquals(exceptedMessage,actualMessage);				
+				
+			}
+			
+			@Test
+			void deleteCategoryWithInvalidId() throws Exception {
+				
+				CategoryService categoryService = new CategoryService();
+				
+				Exception exception = assertThrows(ValidationException.class, () -> {
+					categoryService.delete(100);
+				});
+				String exceptedMessage = "Category does not exists";
+				String actualMessage = exception.getMessage();
+				
+				assertEquals(exceptedMessage,actualMessage);				
 				
 			}
 		

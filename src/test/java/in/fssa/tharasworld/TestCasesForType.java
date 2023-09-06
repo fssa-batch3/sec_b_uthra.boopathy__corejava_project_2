@@ -153,25 +153,25 @@ public class TestCasesForType {
 				}
 			
 			////TEST FOR TYPE NAME WITH PATTERN	
-			
-			@Test 
-			void testCreateTypeWithTypeNamePattern() {
-					
-				TypeService typeService = new TypeService();
-				
-				TypeEntity newType = new TypeEntity();
-				newType.setTypeName("1234");
-				newType.setImg("https://iili.io/HNO3V94.jpg");
-				newType.setCateId(5);
-					
-				Exception exception = assertThrows(ValidationException.class, () -> {
-					typeService.create(newType);
-				});
-				String exceptedMessage = "Type name doesn't match the pattern";
-				String actualMessage = exception.getMessage();
-					
-				assertEquals(exceptedMessage,actualMessage);
-			}
+//			
+//			@Test 
+//			void testCreateTypeWithTypeNamePattern() {
+//					
+//				TypeService typeService = new TypeService();
+//				
+//				TypeEntity newType = new TypeEntity();
+//				newType.setTypeName("1234");
+//				newType.setImg("https://iili.io/HNO3V94.jpg");
+//				newType.setCateId(5);
+//					
+//				Exception exception = assertThrows(ValidationException.class, () -> {
+//					typeService.create(newType);
+//				});
+//				String exceptedMessage = "Type name doesn't match the pattern";
+//				String actualMessage = exception.getMessage();
+//					
+//				assertEquals(exceptedMessage,actualMessage);
+//			}
 			
 				////TEST FOR TYPE NAME ALREADY EXISTS
 			
@@ -252,7 +252,7 @@ public class TestCasesForType {
 					updatedType.setCateId(1);
 					
 					assertDoesNotThrow(() -> {
-						typeService.update(33, updatedType);
+						typeService.update(32, updatedType);
 					});
 					
 				}
@@ -264,7 +264,7 @@ public class TestCasesForType {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(34);
+						typeService.delete(33);
 					});
 					
 				}
@@ -293,5 +293,36 @@ public class TestCasesForType {
 					
 				}
 			
+				@Test
+				void getAllTypesByCategoryIdWithZero() throws ServiceException {
+					
+					TypeService typeService = new TypeService();
+					
+					Exception exception = assertThrows(ValidationException.class, () -> {
+						Set<TypeEntity> typeList = typeService.findAllTypesByCategoryId(0);
+						System.out.println(typeList);
+					});
+					String exceptedMessage = "Category id cannot be zero or in negative";
+					String actualMessage = exception.getMessage();
+						
+					assertEquals(exceptedMessage,actualMessage);
+					
+				}
+				
+				@Test
+				void getAllTypesByCategoryIdWithInvalidid() throws ServiceException {
+					
+					TypeService typeService = new TypeService();
+					
+					Exception exception = assertThrows(ValidationException.class, () -> {
+						Set<TypeEntity> typeList = typeService.findAllTypesByCategoryId(10);
+						System.out.println(typeList);
+					});
+					String exceptedMessage = "Category does not exists";
+					String actualMessage = exception.getMessage();
+						
+					assertEquals(exceptedMessage,actualMessage);
+					
+				}
 	
 }

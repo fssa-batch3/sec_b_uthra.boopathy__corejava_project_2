@@ -80,8 +80,8 @@ public class PriceValidator {
 			throw new ValidationException("Invalid id");
 		}
 		
-		PriceDAO pricedao = new PriceDAO();
-		pricedao.checkPriceExists(id);
+		PriceDAO priceDAO = new PriceDAO();
+		priceDAO.checkPriceExists(id);
 		
 	}
 	

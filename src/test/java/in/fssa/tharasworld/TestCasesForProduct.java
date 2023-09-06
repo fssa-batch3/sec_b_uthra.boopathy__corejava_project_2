@@ -818,7 +818,7 @@ public class TestCasesForProduct {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(39);
+					productService.delete(34);
 				});
 				
 			}
@@ -994,6 +994,46 @@ public class TestCasesForProduct {
 									System.out.println(productList);
 								});
 								
+							}
+							
+							@Test
+							void getAllProductsBySellerIdWithZero() {
+								
+								ProductService productService = new ProductService();
+								
+								Exception exception = assertThrows(ValidationException.class, () -> {
+									
+
+									Set<ProductDetailDTO> productList = productService.findAllProductsBySellerId(0);
+									System.out.println(productList);
+
+						        });
+
+						        String expectedMessage = "Seller id connot be zero or in negative";
+						        String actualMessage = exception.getMessage();
+
+						        assertEquals(expectedMessage, actualMessage);
+
+							}
+							
+							@Test
+							void getAllProductsBySellerIdWithInvalidId() {
+								
+								ProductService productService = new ProductService();
+								
+								Exception exception = assertThrows(ValidationException.class, () -> {
+									
+
+									Set<ProductDetailDTO> productList = productService.findAllProductsBySellerId(1);
+									System.out.println(productList);
+
+						        });
+
+						        String expectedMessage = "Seller does not exist";
+						        String actualMessage = exception.getMessage();
+
+						        assertEquals(expectedMessage, actualMessage);
+
 							}
 							
 }

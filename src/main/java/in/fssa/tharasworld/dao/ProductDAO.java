@@ -207,7 +207,7 @@ public class ProductDAO {
 	}
 	
 	
-	public static int findCategoryIdByCategoryName(String name) throws PersistenceException {
+	public int findCategoryIdByCategoryName(String name) throws PersistenceException {
 		
 		int categoryId = 0;
 		
@@ -329,7 +329,7 @@ public class ProductDAO {
 		
 	}
 	
-	public static Set<ProductDetailDTO> findByTypeId(int id) throws PersistenceException {
+	public Set<ProductDetailDTO> findByTypeId(int id) throws PersistenceException {
 
 	    Set<ProductDetailDTO> productList = new HashSet<>();
 
@@ -368,7 +368,7 @@ public class ProductDAO {
 	    return productList;
 	}
 	
-	public static int findByTypeName(String name) throws PersistenceException {
+	public int findByTypeName(String name) throws PersistenceException {
 
 	    int typeId = 0;
 
@@ -380,7 +380,7 @@ public class ProductDAO {
 
 	    try {
 
-	        String query = "SELECT type_id, name, img_url, cate_id, is_active FROM types WHERE is_active=1 AND name = ?";
+	        String query = "SELECT type_id FROM types WHERE is_active=1 AND name = ?";
 	        con = ConnectionUtil.getConnection();
 	        ps = con.prepareStatement(query);
 	        ps.setString(1, name);
