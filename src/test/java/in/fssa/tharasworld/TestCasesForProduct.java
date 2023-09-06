@@ -843,7 +843,7 @@ public class TestCasesForProduct {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(32);
+					productService.delete(36);
 				});
 				
 			}

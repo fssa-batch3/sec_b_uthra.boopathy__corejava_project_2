@@ -206,7 +206,7 @@ public class TestCasesForCategory {
 				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
 				
 				assertDoesNotThrow(() -> {
-					categoryService.update(9, updatedCategory);
+					categoryService.update(6, updatedCategory);
 				});
 				
 			}
@@ -261,7 +261,7 @@ public class TestCasesForCategory {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(10);
+					categoryService.delete(11);
 				});
 				
 			}

@@ -460,8 +460,8 @@ public class TestCasesForUser {
 		 UserEntity newUser = new UserEntity();
 	        newUser.setName("Uthra");
 	        String randomString = generateRandomString(8);
-	        newUser.setEmail("cbuhs435@gmail.com");
-	        newUser.setPhoneNumber(9876543210l); // Same phone number as existing user
+	        newUser.setEmail(randomString + "@gmail.com");
+	        newUser.setPhoneNumber(8956498348l); // Same phone number as existing user
 	        newUser.setPassword("Uthra@12");
 	        newUser.setRole("Buyer");
 	        newUser.setAge(18);
@@ -626,7 +626,7 @@ public class TestCasesForUser {
 		updateUser.setAge(18);
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.update(10, updateUser);
+			userService.update(5, updateUser);
 		});
 		String expectedMessage = "User does not exist";
 		String actualMessage = exception.getMessage();
@@ -644,7 +644,7 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(5);
+			userService.delete(8);
 		});
 		
 	}
