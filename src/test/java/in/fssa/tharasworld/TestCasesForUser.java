@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Random;
 import java.util.Set;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.tharasworld.entity.UserEntity;
@@ -49,6 +50,7 @@ public class TestCasesForUser {
 	    }
 	   
 	 @Test
+	 @Order(1)
 	    void testCreateUserWithValidInput() {
 	        UserService userService = new UserService();
 
@@ -74,6 +76,7 @@ public class TestCasesForUser {
 	//// TEST FOR INVALID INPUT
 	  
 	@Test
+	@Order(2)
 	void testCreateUserWithInvalidInput() {
 		
 		UserService userService = new UserService();
@@ -88,7 +91,8 @@ public class TestCasesForUser {
 	
 	//// TEST FOR EMAIL WITH NULL
 	
-	@Test 
+	@Test
+	@Order(3)
 	void testCreateUserWithEmailNull() {
 		
 		UserService userService = new UserService();
@@ -113,6 +117,7 @@ public class TestCasesForUser {
 	//// TEST FOR EMAIL WITH EMPTY STRING
 	
 	@Test 
+	@Order(4)
 	void testCreateUserWithEmailEmpty() {
 		
 		UserService userService = new UserService();
@@ -136,6 +141,7 @@ public class TestCasesForUser {
 	
 	////TEST FOR EMAIL WITH PATTERN	
 	@Test 
+	@Order(5)
 	void testCreateUserWithEmailPattern() {
 			
 		UserService userService = new UserService();
@@ -160,6 +166,7 @@ public class TestCasesForUser {
 	////TEST FOR EMAIL WITH ALREADY EXISTS	
 	
 	@Test 
+	@Order(6)
 	void testCreateUserWithEmailExists() {
 			
 		UserService userService = new UserService();
@@ -185,6 +192,7 @@ public class TestCasesForUser {
 	/// TEST FOR PASSWORD WITH NULL
 	
 	@Test
+	@Order(7)
 	void testCreateUserWithPasswordNull() {
 		
 		UserService userService = new UserService();
@@ -210,6 +218,7 @@ public class TestCasesForUser {
 	//// TEST FOR PASSWORD WITH EMPTY STRING
 
 	@Test
+	@Order(8)
 	void testCreateUserWithPasswordEmpty() {
 		
 		UserService userService = new UserService();
@@ -235,6 +244,7 @@ public class TestCasesForUser {
 	////TEST FOR PASSWORD WITH PASSWORD LENGTH 
 
 	@Test
+	@Order(9)
 	void testCreateUserWithPasswordLength() {
 		
 		UserService userService = new UserService();
@@ -261,6 +271,7 @@ public class TestCasesForUser {
 	////TEST FOR PASSWORD WITH PATTERN 
 
 	@Test
+	@Order(10)
 	public void testCreateUserWithPasswordPattern() {
 		
 		UserService userService = new UserService();
@@ -286,6 +297,7 @@ public class TestCasesForUser {
 	//// TEST FOR NAME WITH NULL
 
 	@Test
+	@Order(11)
 	void testCreateUserWithNameNull() {
 		
 		UserService userService = new UserService();
@@ -311,6 +323,7 @@ public class TestCasesForUser {
 	//// TEST FOR NAME WITH EMPTY STRING
 
 	@Test
+	@Order(12)
 	void testCreateUserWithNameEmpty() {
 		UserService userService = new UserService();
 		UserEntity newUser = new UserEntity();
@@ -334,6 +347,7 @@ public class TestCasesForUser {
 	////TEST FOR NAME WITH PATTERN
 
 	@Test
+	@Order(13)
 	void testCreateUserWithNamePattern() {
 		UserService userService = new UserService();
 		UserEntity newUser = new UserEntity();
@@ -357,6 +371,7 @@ public class TestCasesForUser {
 	//// TEST FOR PHONE NUMBER WITH 0
 	
 	@Test
+	@Order(14)
 	void testCreateUserWithPhoneNumber () {
 		
 		UserService userService = new UserService();
@@ -383,6 +398,7 @@ public class TestCasesForUser {
 	//// TEST FOR PHONE NUMBER WITH LENGHT
 	
 	@Test
+	@Order(15)
 	void testCreateUserWithPhoneNumberLength () {
 		
 		UserService userService = new UserService();
@@ -409,6 +425,7 @@ public class TestCasesForUser {
 	//// TEST FOR PHONE NUMBER WITH PATTERN
 	
 	@Test
+	@Order(16)
 	public void testCreateUserWithInvalidPhoneNumber () {
 		
 		UserService userService = new UserService();
@@ -435,6 +452,7 @@ public class TestCasesForUser {
 	////TEST FOR PHONE NUMBER WITH ALREADY EXISTS	
 	
 	@Test 
+	@Order(17)
 	public void testCreateUserWithPhoneNumberExists() {
 			
 		UserService userService = new UserService();
@@ -462,6 +480,7 @@ public class TestCasesForUser {
 	////TEST FOR AGE
 	
 	@Test
+	@Order(18)
 	void testCreateUserWithInvalidAge () {
 		
 		UserService userService = new UserService();
@@ -489,6 +508,7 @@ public class TestCasesForUser {
 	//// TEST FOR GET ALL USERS
 	
 	@Test
+	@Order(19)
 	void getAllUsers() throws ServiceException {
 		
 		UserService userService = new UserService();
@@ -502,6 +522,7 @@ public class TestCasesForUser {
 	//// TEST FOR GET USER BY ID
 	
 	@Test
+	@Order(20)
 	void getById() throws ServiceException, ValidationException {
 		
 		UserService userService = new UserService();
@@ -514,6 +535,7 @@ public class TestCasesForUser {
 	}
 	
 	@Test
+	@Order(21)
 	void getByUserIdAsZero() throws ServiceException, ValidationException {
 		
 		UserService userService = new UserService();
@@ -531,6 +553,7 @@ public class TestCasesForUser {
 	}
 	
 	@Test
+	@Order(22)
 	void getByUserIdAsInvalidId() throws ServiceException, ValidationException {
 		
 		UserService userService = new UserService();
@@ -550,6 +573,7 @@ public class TestCasesForUser {
 	//// TEST FOR UPDATE USER
 	
 	@Test
+	@Order(23)
 	void testUpdateUser() {
 
 		UserService userService = new UserService();
@@ -567,6 +591,7 @@ public class TestCasesForUser {
 	}
 	
 	@Test
+	@Order(24)
 	void testUpdateUserWithZero() {
 
 		UserService userService = new UserService();
@@ -589,6 +614,7 @@ public class TestCasesForUser {
 	}
 	
 	@Test
+	@Order(25)
 	void testUpdateUserWithInvalidId() {
 
 		UserService userService = new UserService();
@@ -613,6 +639,7 @@ public class TestCasesForUser {
 	//// TEST FOR DELETE USER
 	
 	@Test
+	@Order(26)
 	void deleteUser() throws ServiceException, ValidationException {
 		
 		UserService userService = new UserService();

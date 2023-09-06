@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.tharasworld.exception.ServiceException;
@@ -32,6 +33,7 @@ public class TestCasesForCategory {
 	///  TEST FOR VALID INPUT TO CREATE CATEGORY
 	
 		@Test
+		@Order(1)
 		void testCreateCategoryWithValidInput() {
 			
 			CategoryService categoryService = new CategoryService();
@@ -51,6 +53,7 @@ public class TestCasesForCategory {
 		//// TEST FOR INVALID INPUT
 		
 		@Test
+		@Order(2)
 		void testCreateCategoryWithInvalidInput() {
 			
 			CategoryService categoryService = new CategoryService();
@@ -66,6 +69,7 @@ public class TestCasesForCategory {
 		//// TEST FOR CATEGORY WITH NULL
 		
 		@Test 
+		@Order(3)
 		void testCreateCategoryWithCategoryNameNull() {
 			
 			CategoryService categoryService = new CategoryService();
@@ -85,6 +89,7 @@ public class TestCasesForCategory {
 		//// TEST FOR CATEGORY WITH EMPTY STRING
 		
 		@Test 
+		@Order(4)
 		void testCreateCategoryWithCategoryNameEmpty() {
 			
 			CategoryService categoryService = new CategoryService();
@@ -104,6 +109,7 @@ public class TestCasesForCategory {
 		//// TEST FOR CATEGORY IMAGE WITH NULL
 		
 			@Test 
+			@Order(5)
 			void testCreateCategoryWithCategoryImageNull() {
 				
 				CategoryService categoryService = new CategoryService();
@@ -125,6 +131,7 @@ public class TestCasesForCategory {
 			//// TEST FOR CATEGORY WITH EMPTY STRING
 			
 			@Test 
+			@Order(6)
 			void testCreateCategoryWithCategoryImageEmpty() {
 				
 				CategoryService categoryService = new CategoryService();
@@ -146,6 +153,7 @@ public class TestCasesForCategory {
 		////TEST FOR CATEGORY NAME WITH PATTERN	
 		
 		@Test 
+		@Order(7)
 		void testCreateCategoryWithNamePattern() {
 				
 			CategoryService categoryService = new CategoryService();
@@ -166,6 +174,7 @@ public class TestCasesForCategory {
 			////TEST FOR CATEGORY NAME ALREADY EXISTS
 		
 			@Test 
+			@Order(8)
 			void testCreateCategoryWithCategoryNameAlredyExists() {
 					
 				CategoryService categoryService = new CategoryService();
@@ -186,12 +195,14 @@ public class TestCasesForCategory {
 			//// TEST FOR UPDATE CATEGORY
 			
 			@Test
+			@Order(9)
 			void testUpdateCategory() {
 
 				CategoryService categoryService = new CategoryService();
 				
 				CategoryEntity updatedCategory = new CategoryEntity();
-				updatedCategory.setCateName("Saree");
+				String random = generateRandomString(7);
+				updatedCategory.setCateName(random);
 				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
 				
 				assertDoesNotThrow(() -> {
@@ -201,6 +212,7 @@ public class TestCasesForCategory {
 			}
 			
 			@Test
+			@Order(10)
 			void testUpdateCategoryWithNameNull() {
 
 				CategoryService categoryService = new CategoryService();
@@ -220,6 +232,7 @@ public class TestCasesForCategory {
 			}
 			
 			@Test
+			@Order(11)
 			void testUpdateCategoryWithNameEmpty() {
 
 				CategoryService categoryService = new CategoryService();
@@ -243,16 +256,18 @@ public class TestCasesForCategory {
 			//// TEST FOR DELETE CATEGORY
 			
 			@Test
+			@Order(12)
 			void deleteCategory() throws Exception {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(9);
+					categoryService.delete(10);
 				});
 				
 			}
 			
 			@Test
+			@Order(13)
 			void deleteCategoryWithIdZero() throws Exception {
 				
 				CategoryService categoryService = new CategoryService();
@@ -268,6 +283,7 @@ public class TestCasesForCategory {
 			}
 			
 			@Test
+			@Order(14)
 			void deleteCategoryWithInvalidId() throws Exception {
 				
 				CategoryService categoryService = new CategoryService();
@@ -285,6 +301,7 @@ public class TestCasesForCategory {
 		//// TEST FOR GET ALL CATEGORY
 			
 			@Test
+			@Order(15)
 			public void getAllCategories() throws ServiceException {
 				
 				CategoryService categoryService = new CategoryService();

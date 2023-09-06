@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Random;
 import java.util.Set;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.tharasworld.exception.ServiceException;
@@ -35,6 +36,7 @@ public class TestCasesForType {
 	///  TEST FOR VALID INPUT TO CREATE TYPE
 	
 			@Test
+			@Order(1)
 			void testCreateTypeWithValidInput() {
 				
 				TypeService typeService = new TypeService();
@@ -55,6 +57,7 @@ public class TestCasesForType {
 			//// TEST FOR INVALID INPUT
 			
 			@Test
+			@Order(2)
 			void testCreateTypeWithInvalidInput() {
 				
 				TypeService typeService = new TypeService();
@@ -70,6 +73,7 @@ public class TestCasesForType {
 			//// TEST FOR CATEGORY ID WITH 0
 			
 			@Test 
+			@Order(3)
 			void testCreateTypeWithCategoryIdZero() {
 				
 				TypeService typeService = new TypeService();
@@ -91,6 +95,7 @@ public class TestCasesForType {
 			//// TEST FOR CATEGORY DOESNOT EXISTS
 			
 			@Test 
+			@Order(4)
 			void testCreateTypeWithCategoryDoesnotExists() {
 				
 				TypeService typeService = new TypeService();
@@ -112,6 +117,7 @@ public class TestCasesForType {
 			//// TEST FOR TYPE NAME WITH NULL
 			
 			@Test 
+			@Order(5)
 			void testCreateTypeWithTypeNameNull() {
 				
 				TypeService typeService = new TypeService();
@@ -134,6 +140,7 @@ public class TestCasesForType {
 			//// TEST FOR TYPE NAME WITH NULL
 			
 			@Test 
+			@Order(6)
 			void testCreateTypeWithTypeNameEmpty() {
 						
 					TypeService typeService = new TypeService();
@@ -176,6 +183,7 @@ public class TestCasesForType {
 				////TEST FOR TYPE NAME ALREADY EXISTS
 			
 				@Test 
+				@Order(7)
 				void testCreateTypeWithTypeNameAlredyExists() {
 						
 					TypeService typeService = new TypeService();
@@ -197,6 +205,7 @@ public class TestCasesForType {
 			//// TEST FOR TYPE IMAGE WITH NULL
 				
 				@Test 
+				@Order(8)
 				void testCreateTypeWithImageNameNull() {
 					
 					TypeService typeService = new TypeService();
@@ -220,6 +229,7 @@ public class TestCasesForType {
 				//// TEST FOR TYPE IMAGE WITH EMPTY STRING
 				
 				@Test 
+				@Order(9)
 				void testCreateTypeWithTypeImageEmpty() {
 							
 						TypeService typeService = new TypeService();
@@ -242,12 +252,14 @@ public class TestCasesForType {
 				//// TEST FOR UPDATE TYPE
 				
 				@Test
+				@Order(10)
 				void testUpdateType() {
 
 					TypeService typeService = new TypeService();
 					
 					TypeEntity updatedType = new TypeEntity();
-					updatedType.setTypeName("Frock");
+					String random= generateRandomString(6);
+					updatedType.setTypeName(random);
 					updatedType.setImg("https://iili.io/HNO3V94.jpg");
 					updatedType.setCateId(1);
 					
@@ -260,11 +272,12 @@ public class TestCasesForType {
 				//// TEST FOR DELETE TYPE
 				
 				@Test
+				@Order(11)
 				void deleteType() throws Exception {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(33);
+						typeService.delete(34);
 					});
 					
 				}
@@ -272,6 +285,7 @@ public class TestCasesForType {
 			//// TEST FOR GET ALL TYPES
 				
 				@Test
+				@Order(12)
 				void getAllTypes() throws ServiceException {
 					
 					TypeService typeService = new TypeService();
@@ -283,6 +297,7 @@ public class TestCasesForType {
 				}
 				
 				@Test
+				@Order(13)
 				void getAllTypesByCategoryId() throws ServiceException {
 					
 					TypeService typeService = new TypeService();
@@ -294,6 +309,7 @@ public class TestCasesForType {
 				}
 			
 				@Test
+				@Order(14)
 				void getAllTypesByCategoryIdWithZero() throws ServiceException {
 					
 					TypeService typeService = new TypeService();
@@ -310,6 +326,7 @@ public class TestCasesForType {
 				}
 				
 				@Test
+				@Order(15)
 				void getAllTypesByCategoryIdWithInvalidid() throws ServiceException {
 					
 					TypeService typeService = new TypeService();

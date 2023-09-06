@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.*;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.tharasworld.dto.*;
@@ -34,6 +35,7 @@ public class TestCasesForProduct {
 	///  TEST FOR VALID INPUT TO CREATE PRODUCT
 	
 			@Test
+			@Order(1)
 			void testCreateProductWithValidInput() {
 				
 				ProductService productService = new ProductService();
@@ -72,6 +74,7 @@ public class TestCasesForProduct {
 			///  TEST FOR INVALID INPUT TO CREATE PRODUCT
 			
 			@Test
+			@Order(2)
 			void testCreateProductWithInValidInput() {
 				
 				ProductService productService = new ProductService();
@@ -87,6 +90,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(3)
 			void testCreateProductWithNameNull() {
 				
 				ProductService productService = new ProductService();
@@ -124,6 +128,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(4)
 			void testCreateProductWithNameEmpty() {
 				
 				ProductService productService = new ProductService();
@@ -160,6 +165,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(5)
 			void testCreateProductWithDescriptionNull() {
 				
 				ProductService productService = new ProductService();
@@ -196,6 +202,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(6)
 			void testCreateProductWithDescriptionEmpty() {
 				
 				ProductService productService = new ProductService();
@@ -233,6 +240,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(7)
 			void testCreateProductWithSellerIdWithZero() {
 				
 				ProductService productService = new ProductService();
@@ -273,6 +281,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(8)
 			void testCreateProductWithSellerIdAsBuyer() {
 				
 				ProductService productService = new ProductService();
@@ -313,6 +322,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(9)
 			void testCreateProductWithTypeIdWithZero() {
 				
 				ProductService productService = new ProductService();
@@ -352,6 +362,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(10)
 			void testCreateProductWithTypeIdDoesnotExists() {
 				
 				ProductService productService = new ProductService();
@@ -391,6 +402,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(11)
 			void testCreateProductWithPriceNull() {
 				
 				ProductService productService = new ProductService();
@@ -425,6 +437,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(12)
 			void testCreateProductWithActualPriceZero() {
 				
 				ProductService productService = new ProductService();
@@ -466,6 +479,7 @@ public class TestCasesForProduct {
 			
 
 			@Test
+			@Order(13)
 			void testCreateProductWithActualPriceGreaterThanOrEqualToLakh() {
 				
 				ProductService productService = new ProductService();
@@ -506,6 +520,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(14)
 			void testCreateProductWithCurrentPriceZero() {
 				
 				ProductService productService = new ProductService();
@@ -546,6 +561,7 @@ public class TestCasesForProduct {
 			
 
 			@Test
+			@Order(15)
 			void testCreateProductWithCurrentPriceGreaterThanOrEqualToLakh() {
 				
 				ProductService productService = new ProductService();
@@ -585,6 +601,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(16)
 			void testCreateProductWithDiscountLessThanZero() {
 				
 				ProductService productService = new ProductService();
@@ -624,6 +641,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(17)
 			void testCreateProductWithDiscountGreaterThanOrEqualTo100() {
 				
 				ProductService productService = new ProductService();
@@ -667,6 +685,7 @@ public class TestCasesForProduct {
 		//// TEST FOR GET ALL PRODUCTS
 			
 			@Test
+			@Order(18)
 			void getAllProducts() {
 				
 				ProductService productService = new ProductService();
@@ -680,6 +699,7 @@ public class TestCasesForProduct {
 			//// TEST FOR GET PRODUCT BY ID
 			
 			@Test
+			@Order(19)
 			void getByProductId() {
 				
 				ProductService productService = new ProductService();
@@ -692,6 +712,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(20)
 			void getByProductIdWithZero() {
 				
 				ProductService productService = new ProductService();
@@ -710,6 +731,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(21)
 			void getByProductIdWithInvalidId() {
 				
 				ProductService productService = new ProductService();
@@ -727,9 +749,9 @@ public class TestCasesForProduct {
 				
 			}
 			
-			//// TEST FOR UPDATE USER
 			
 			@Test
+			@Order(22)
 			void testUpdateProduct() {
 
 				ProductService productService = new ProductService();
@@ -755,6 +777,7 @@ public class TestCasesForProduct {
 			//// TEST UPDATE PRODUCT WITH INVALID PRODUCT ID
 			
 			@Test
+			@Order(23)
 			void testUpdateProductWithProductIdZero() {
 
 				ProductService productService = new ProductService();
@@ -783,6 +806,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(24)
 			void testUpdateProductWithInvalidProductId() {
 
 				ProductService productService = new ProductService();
@@ -814,16 +838,18 @@ public class TestCasesForProduct {
 			//// TEST FOR DELETE PRODUCT
 			
 			@Test
+			@Order(25)
 			void deleteProduct() throws ServiceException, ValidationException {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(34);
+					productService.delete(32);
 				});
 				
 			}
 			
 			@Test
+			@Order(26)
 			void testDeleteProductWithProductIdZero() {
 
 				ProductService productService = new ProductService();
@@ -840,6 +866,7 @@ public class TestCasesForProduct {
 			}
 			
 			@Test
+			@Order(27)
 			void testDeleteProductWithInvalidProductId() {
 
 				ProductService productService = new ProductService();
@@ -861,6 +888,7 @@ public class TestCasesForProduct {
 		//// TEST FOR GET PRODUCTS BY CATEGORY NAME
 			
 					@Test
+					@Order(28)
 					void getAllProductsByCategoryName() {
 						
 						ProductService productService = new ProductService();
@@ -873,6 +901,7 @@ public class TestCasesForProduct {
 					}
 					
 					@Test
+					@Order(29)
 					void getAllProductsByCategoryId() {
 						
 						ProductService productService = new ProductService();
@@ -885,6 +914,7 @@ public class TestCasesForProduct {
 					}
 					
 					@Test
+					@Order(30)
 					void getAllProductsByCategoryIdWithZero() {
 						
 						ProductService productService = new ProductService();
@@ -903,6 +933,7 @@ public class TestCasesForProduct {
 					}
 					
 					@Test
+					@Order(31)
 					void getAllProductsByCategoryIdInvalidCategoryId() {
 						
 						ProductService productService = new ProductService();
@@ -922,6 +953,7 @@ public class TestCasesForProduct {
 		
 					
 					@Test
+					@Order(32)
 					void getAllProductsByTypeName() {
 						
 						ProductService productService = new ProductService();
@@ -936,6 +968,7 @@ public class TestCasesForProduct {
 				//// TEST FOR GET PRODUCTS BY TYPE ID
 					
 							@Test
+							@Order(33)
 							void getAllProductsByTypeId() {
 								
 								ProductService productService = new ProductService();
@@ -948,6 +981,7 @@ public class TestCasesForProduct {
 							}
 							
 							@Test
+							@Order(34)
 							void getAllProductsByTypeIdWithZero() {
 								
 								ProductService productService = new ProductService();
@@ -966,6 +1000,7 @@ public class TestCasesForProduct {
 							}
 							
 							@Test
+							@Order(35)
 							void getAllProductsByTypeIdInvalidTypeId() {
 								
 								ProductService productService = new ProductService();
@@ -985,6 +1020,7 @@ public class TestCasesForProduct {
 				
 							
 							@Test
+							@Order(36)
 							void getAllProductsBySellerId() {
 								
 								ProductService productService = new ProductService();
@@ -997,6 +1033,7 @@ public class TestCasesForProduct {
 							}
 							
 							@Test
+							@Order(37)
 							void getAllProductsBySellerIdWithZero() {
 								
 								ProductService productService = new ProductService();
@@ -1017,6 +1054,7 @@ public class TestCasesForProduct {
 							}
 							
 							@Test
+							@Order(38)
 							void getAllProductsBySellerIdWithInvalidId() {
 								
 								ProductService productService = new ProductService();

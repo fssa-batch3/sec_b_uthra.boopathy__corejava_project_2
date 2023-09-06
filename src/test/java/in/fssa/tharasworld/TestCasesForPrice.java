@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import in.fssa.tharasworld.entity.PriceEntity;
@@ -18,6 +19,7 @@ public class TestCasesForPrice {
 	//// TEST FOR UPDATE PRICE
 	
 	@Test
+	@Order(1)
 	void testUpdatePrice() {
 		
 		PriceEntity updatePrice = new PriceEntity();
@@ -38,6 +40,7 @@ public class TestCasesForPrice {
 	//// TEST UPDATE PRODUCT WITH INVALID PRICE ID
 	
 	@Test
+	@Order(2)
 	void testUpdatePriceWithProductIdZero() {
 
 		PriceService priceService = new PriceService();
@@ -65,6 +68,7 @@ public class TestCasesForPrice {
 	/// product does not exists
 	
 	@Test
+	@Order(3)
 	void testUpdatePriceWithProductIdDoesNotExists() {
 
 		PriceService priceService = new PriceService();
@@ -91,16 +95,18 @@ public class TestCasesForPrice {
 	//// TEST FOR DELETE PRICE
 	
 	@Test
+	@Order(4)
 	void deletePrice() throws ServiceException, ValidationException {
 		
 		PriceService priceService = new PriceService();
 		assertDoesNotThrow ( () -> {
-			PriceService.delete(30);
+			PriceService.delete(33);
 		});
 		
 	}
 	
 	@Test
+	@Order(5)
 	void testDeletePriceWithPriceIdZero() {
 
 		PriceService priceService = new PriceService();
@@ -117,6 +123,7 @@ public class TestCasesForPrice {
 	}
 	
 	@Test
+	@Order(6)
 	void testDeletePrricetWithInvalidPriceId() {
 
 		PriceService priceService = new PriceService();
