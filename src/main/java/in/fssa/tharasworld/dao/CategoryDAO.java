@@ -8,6 +8,7 @@ import in.fssa.tharasworld.entity.CategoryEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
+import in.fssa.tharasworld.util.Logger;
 
 public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	
@@ -45,8 +46,8 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
+			
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -82,8 +83,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			System.out.println("Category has been created successfully");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -123,8 +123,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 	   
 	    } catch (SQLException e) {
 	       
-	    	e.printStackTrace();
-	        System.out.println(e.getMessage());
+	    	Logger.error(e);
 	        throw new PersistenceException(e.getMessage());
 	   
 	    } finally {
@@ -158,8 +157,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 		} catch(SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -199,8 +197,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -235,8 +232,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity>{
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {

@@ -10,6 +10,7 @@ import in.fssa.tharasworld.entity.UserEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.interfaces.UserInterface;
 
 
@@ -52,8 +53,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -91,8 +91,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			System.out.println("User has been created successfully");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -145,9 +144,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		        System.out.println("User has been updated successfully");
 		   
 		    } catch (SQLException e) {
-		       
-		    	e.printStackTrace();
-		        System.out.println(e.getMessage());
+		       Logger.error(e);
 		        throw new PersistenceException(e.getMessage());
 		   
 		    } finally {
@@ -180,9 +177,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			System.out.println("User has been deleted successfully");
 			
 		} catch(SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -226,9 +221,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			}
 			
 		} catch (SQLException e) {
-		       
-	    	e.printStackTrace();
-	        System.out.println(e.getMessage());
+		    Logger.error(e);
 	        throw new PersistenceException(e.getMessage());
 	   
 	    } finally {
@@ -262,9 +255,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			}
 		
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -296,9 +287,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			}
 		
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -339,9 +328,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			}
 		
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -382,9 +369,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 		}
 	
 	} catch (SQLException e) {
-		
-		e.printStackTrace();
-		System.out.println(e.getMessage());
+		Logger.error(e);
 		throw new PersistenceException(e.getMessage());
 	
 	} finally {
@@ -416,9 +401,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			}
 		
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -456,9 +439,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 			}
 		
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -480,7 +461,7 @@ public class UserDAO implements UserInterface<UserEntity>{
 	
 	try {
 		
-		String query = "SELECT user_id, phone_number, password FROM users WHERE is_active=1 AND phone_number=?";
+		String query = "SELECT user_id, phone_number, password, role FROM users WHERE is_active=1 AND phone_number=?";
 		con = ConnectionUtil.getConnection();
 		ps = con.prepareStatement(query);
 		ps.setLong(1, phoneNumber);
@@ -491,15 +472,14 @@ public class UserDAO implements UserInterface<UserEntity>{
 			user.setId(rs.getInt("user_id"));
 			user.setPhoneNumber(rs.getLong("phone_number"));
 			user.setPassword(rs.getString("password"));
+			user.setRole(rs.getString("role"));
 			
 		} else {
 			throw new ValidationException("User does not exist");
 		}
 	
 	} catch (SQLException e) {
-		
-		e.printStackTrace();
-		System.out.println(e.getMessage());
+		Logger.error(e);
 		throw new PersistenceException(e.getMessage());
 	
 	} finally {

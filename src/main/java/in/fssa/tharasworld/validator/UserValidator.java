@@ -158,10 +158,6 @@ public class UserValidator {
 			
 			String ages = String.valueOf(age);
 			
-//			if(ages.length()<2 || ages.length()>2) {
-//				throw new ValidationException("Invalid age");
-//			}
-			
 			if(age <= 10 || age >= 100) {
 				throw new ValidationException("Invalid age");
 			}

@@ -7,6 +7,7 @@ import in.fssa.tharasworld.entity.PriceEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
+import in.fssa.tharasworld.util.Logger;
 
 public class PriceDAO {
 	
@@ -36,8 +37,7 @@ public class PriceDAO {
 			ps.executeUpdate(); 
 			
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -74,8 +74,7 @@ public class PriceDAO {
 			System.out.println("Product price has been updated successfully!");
 			
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -106,8 +105,7 @@ public class PriceDAO {
 			ps.executeUpdate();
 			
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -158,8 +156,7 @@ public class PriceDAO {
 			}
 			
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -208,8 +205,7 @@ public class PriceDAO {
 			}
 			
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -252,8 +248,7 @@ public class PriceDAO {
 			}
 			
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -284,8 +279,7 @@ public class PriceDAO {
 				throw new ValidationException("Price id does not exists");
 			}
 		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {

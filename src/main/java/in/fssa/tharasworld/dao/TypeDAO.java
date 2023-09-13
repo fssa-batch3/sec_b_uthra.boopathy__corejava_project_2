@@ -12,6 +12,7 @@ import in.fssa.tharasworld.entity.TypeEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
+import in.fssa.tharasworld.util.Logger;
 
 public class TypeDAO implements CategoryInterface<TypeEntity> {
 
@@ -49,8 +50,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -87,8 +87,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 			System.out.println("Type has been created successfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -125,8 +124,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -160,8 +158,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -209,8 +206,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -252,8 +248,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -305,8 +300,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {
@@ -349,8 +343,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 
 		} finally {

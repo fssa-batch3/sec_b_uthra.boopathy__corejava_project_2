@@ -11,6 +11,7 @@ import in.fssa.tharasworld.entity.SizeEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
+import in.fssa.tharasworld.util.Logger;
 
 public class SizeDAO { 
 	
@@ -46,9 +47,7 @@ public class SizeDAO {
 			}
 			
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -82,8 +81,7 @@ public class SizeDAO {
 			System.out.println("Size has been created successfully");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -117,9 +115,7 @@ public class SizeDAO {
 			}
 			
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -154,9 +150,7 @@ public class SizeDAO {
 			}
 			
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {

@@ -11,6 +11,7 @@ import in.fssa.tharasworld.entity.TypeEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
+import in.fssa.tharasworld.util.Logger;
 
 public class ProductDAO {
 	
@@ -51,8 +52,7 @@ public class ProductDAO {
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -101,8 +101,7 @@ public class ProductDAO {
 			
 						
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -162,8 +161,7 @@ public class ProductDAO {
 	   
 	    } catch (SQLException e) {
 	       
-	    	e.printStackTrace();
-	        System.out.println(e.getMessage());
+	    	Logger.error(e);
 	        throw new PersistenceException(e.getMessage());
 	   
 	    } finally {
@@ -196,8 +194,7 @@ public class ProductDAO {
 			
 		} catch(SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 		
 		} finally {
@@ -234,8 +231,7 @@ public class ProductDAO {
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -276,8 +272,7 @@ public class ProductDAO {
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -315,8 +310,7 @@ public class ProductDAO {
 			
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -359,7 +353,7 @@ public class ProductDAO {
 	        }
 
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        Logger.error(e);
 	        throw new PersistenceException(e.getMessage());
 	    } finally {
 	        ConnectionUtil.close(con, ps, rs);
@@ -394,7 +388,7 @@ public class ProductDAO {
 	        }
 
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        Logger.error(e);
 	        throw new PersistenceException(e.getMessage());
 	    } finally {
 	        ConnectionUtil.close(con, ps, rs);
@@ -457,8 +451,7 @@ public class ProductDAO {
 			
 		}  catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -504,8 +497,7 @@ public class ProductDAO {
 			
 		}  catch (SQLException e) {
 			
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			Logger.error(e);
 			throw new PersistenceException(e.getMessage());
 			
 		} finally {
@@ -548,8 +540,7 @@ public class ProductDAO {
 			 
 		 } catch (SQLException e) {
 				
-				e.printStackTrace();
-				System.out.println(e.getMessage());
+				Logger.error(e);
 				throw new PersistenceException(e.getMessage());
 			
 			} finally {
