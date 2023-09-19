@@ -71,21 +71,21 @@ public abstract class Price implements Comparable<Price> {
 		return "Price [priceId=" + priceId + ", sizeId=" + sizeId + ", pdtId=" + pdtId + ", actualPrice=" + actualPrice
 				+ ", currentPrice=" + currentPrice + ", discount=" + discount + ", isActive=" + isActive + "]";
 	}
-	
+
 	@Override
 	public int compareTo(Price p) {
-			
+
 		if (this.getPriceId() == p.getPriceId()) {
 			return 0;
 		} else {
-			if (this.priceId>getPriceId()) {
+			if (this.priceId > getPriceId()) {
 				return 1;
 			} else {
 				return -1;
 			}
-			
+
 		}
-		
+
 	}
 
 }

@@ -17,7 +17,11 @@ import in.fssa.tharasworld.util.Logger;
 public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 	/**
-	 * @return
+	 * Retrieves a set of all active product types from the database.
+	 *
+	 * @return A set containing TypeEntity objects representing the product types.
+	 * @throws PersistenceException If there is an issue with the database
+	 *                              connection or query.
 	 */
 
 	@Override
@@ -27,7 +31,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null; 
+		ResultSet rs = null;
 
 		try {
 
@@ -62,13 +66,19 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	}
 
 	/**
+	 * Creates a new product type in the database.
 	 *
-	 * @param newType
-	 * 	
+	 * This method inserts a new product type into the 'types' table with the
+	 * provided name, image URL, and category ID.
+	 *
+	 * @param newType An instance of the TypeEntity class representing the new
+	 *                product type to be created.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
 	 */
-	
+
 	@Override
-	public void create(TypeEntity newType) throws PersistenceException{
+	public void create(TypeEntity newType) throws PersistenceException {
 
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -95,9 +105,18 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		}
 
 	}
-	
+
 	/**
-	 * @param id, updatedType
+	 * Updates an existing product type in the database.
+	 *
+	 * This method updates the attributes of an existing product type in the 'types'
+	 * table with the provided type ID.
+	 *
+	 * @param id          The unique identifier of the product type to be updated.
+	 * @param updatedType An instance of the TypeEntity class containing the updated
+	 *                    attributes for the product type.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
 	 */
 
 	@Override
@@ -136,9 +155,16 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 	}
 
 	/**
-	 * @param id
+	 * Deletes a product type from the database.
+	 *
+	 * This method marks a product type as inactive in the 'types' table based on
+	 * the provided type ID.
+	 *
+	 * @param id The unique identifier of the product type to be deleted.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
 	 */
-	
+
 	@Override
 	public void delete(int id) throws PersistenceException {
 
@@ -166,23 +192,29 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		}
 
 	}
-	
-	
+
 	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws PersistenceException
+	 * Retrieves a set of product types associated with a specific category from the
+	 * database.
+	 *
+	 * This method queries the 'types' table to retrieve all active product types
+	 * that belong to the specified category.
+	 *
+	 * @param id The unique identifier of the category for which product types are
+	 *           to be retrieved.
+	 * @return A set of TypeEntity instances representing the product types
+	 *         associated with the specified category.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
 	 */
-	
-	
+
 	public Set<TypeEntity> findAllTypeByCategoryId(int id) throws PersistenceException {
 
 		Set<TypeEntity> typeList = new HashSet<>();
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null; 
+		ResultSet rs = null;
 
 		try {
 
@@ -216,12 +248,18 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		return typeList;
 
 	}
-	
-	
+
 	/**
-	 * 
-	 * @param name
-	 * @throws ValidationException
+	 * Checks if a product type with a given name already exists in the database.
+	 *
+	 * This method queries the 'types' table to determine whether a product type
+	 * with the specified name is already present and active in the database.
+	 *
+	 * @param name The name of the product type to be checked for existence.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
+	 * @throws ValidationException  If a product type with the specified name
+	 *                              already exists in the database.
 	 */
 
 	public void checkTypeExistWithName(String name) throws PersistenceException, ValidationException {
@@ -258,21 +296,29 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		}
 
 	}
-	
+
 	/**
-	 * 
-	 * @param name
-	 * @return 
-	 * @throws ValidationException
-	 * @throws PersistenceException 
+	 * Checks if a product type with a given ID exists and is active in the
+	 * database.
+	 *
+	 * This method queries the 'types' table to determine whether a product type
+	 * with the specified ID exists and is active in the database.
+	 *
+	 * @param id The ID of the product type to be checked for existence.
+	 * @return A TypeEntity object representing the product type if it exists and is
+	 *         active.
+	 * @throws ValidationException  If no product type with the specified ID is
+	 *                              found or if it is not active.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
 	 */
-	
+
 	public TypeEntity checkTypeExistWithId(int id) throws ValidationException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		TypeEntity type = null;
 
 		try {
@@ -290,12 +336,11 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 				type = new TypeEntity();
 				type.setTypeId(rs.getInt("type_id"));
 				type.setTypeName(rs.getString("name"));
-				
 
 			} else {
-				
+
 				throw new ValidationException("Type id does not exists");
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -310,13 +355,20 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 		}
 
 		return type;
-		
+
 	}
-	
+
 	/**
-	 * 
-	 * @param id
-	 * @throws ValidationException
+	 * Checks if a category with a given ID exists and is active in the database.
+	 *
+	 * This method queries the 'categories' table to determine whether a category
+	 * with the specified ID exists and is active in the database.
+	 *
+	 * @param id The ID of the category to be checked for existence.
+	 * @throws ValidationException  If no category with the specified ID is found or
+	 *                              if it is not active.
+	 * @throws PersistenceException If a database error occurs or a SQL exception is
+	 *                              thrown during the operation.
 	 */
 
 	public static void checkCategoryIdExists(int id) throws PersistenceException, ValidationException {

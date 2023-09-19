@@ -5,12 +5,16 @@ import in.fssa.tharasworld.exception.ValidationException;
 public class StringUtil {
 
 	/**
-	 * 
-	 * @param input
-	 * @param inputName
-	 * @throws ValidationException
+	 * Validates a string input, throwing a ValidationException if it is null or
+	 * empty.
+	 *
+	 * @param input     The string to be validated.
+	 * @param inputName The name or description of the input, used in the exception
+	 *                  message.
+	 * @throws ValidationException If the input is null or empty, a
+	 *                             ValidationException is thrown.
 	 */
-	
+
 	public static void rejectIfInvalidString(String input, String inputName) throws ValidationException {
 
 		if (input == null || "".equals(input.trim())) {
@@ -20,11 +24,12 @@ public class StringUtil {
 		}
 
 	}
-	
+
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * Checks if a string is valid (not null or empty).
+	 *
+	 * @param input The string to be checked.
+	 * @return True if the string is valid (not null or empty), false otherwise.
 	 */
 
 	public static boolean isValidString(String input) {
@@ -36,11 +41,12 @@ public class StringUtil {
 		}
 
 	}
-	
+
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * Checks if a string is invalid (null or empty).
+	 *
+	 * @param input The string to be checked.
+	 * @return True if the string is invalid (null or empty), false if it is valid.
 	 */
 
 	public static boolean isInvalidString(String input) {

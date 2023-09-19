@@ -9,10 +9,17 @@ import java.sql.SQLException;
 //import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
-	
+
 	/**
-	 * 
-	 * @return
+	 * Establishes a connection to a MySQL database using the provided environment
+	 * variables.
+	 *
+	 * @return A JDBC Connection object representing the database connection.
+	 * @throws RuntimeException       If any errors occur during the database
+	 *                                connection process.
+	 *
+	 * @throws ClassNotFoundException If the MySQL JDBC driver class cannot be
+	 *                                found.
 	 */
 
 	public static Connection getConnection() {
@@ -20,11 +27,13 @@ public class ConnectionUtil {
 		String url;
 		String username;
 		String password;
-		
-		/////  local
+
+//		url = System.getenv("DATABASE_HOSTNAME");
+//		username = System.getenv("DATABASE_USERNAME");
+//		password = System.getenv("DATABASE_PASSWORD");
 		
 		url = "jdbc:mysql://localhost:3306/project";
-		username = "root"; 
+		username = "root";
 		password = "Uthra#1210";
 
 		Connection connection = null;
@@ -41,11 +50,13 @@ public class ConnectionUtil {
 	}
 
 	/**
-	 * 
-	 * @param connection
-	 * @param ps
+	 * Closes a JDBC Connection and PreparedStatement, releasing associated
+	 * resources.
+	 *
+	 * @param connection The JDBC Connection to be closed.
+	 * @param ps         The PreparedStatement to be closed.
 	 */
-	
+
 	public static void close(Connection connection, PreparedStatement ps) {
 		try {
 			if (ps != null) {
@@ -58,12 +69,14 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @param connection
-	 * @param ps
-	 * @param rs
+	 * Closes a JDBC Connection, PreparedStatement, and ResultSet, releasing
+	 * associated resources.
+	 *
+	 * @param connection The JDBC Connection to be closed.
+	 * @param ps         The PreparedStatement to be closed.
+	 * @param rs         The ResultSet to be closed.
 	 */
 
 	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
