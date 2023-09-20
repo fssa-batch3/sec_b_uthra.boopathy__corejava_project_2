@@ -64,6 +64,22 @@ public class OrderService {
 
 	}
 	
+	public static void orderDelivered(int id) throws ServiceException, ValidationException {
+
+		try {
+
+			OrderValidator.validateOrderId(id);
+
+			OrderDAO orderDAO = new OrderDAO();
+			orderDAO.orderDelivered(id);
+
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+
+	}
+	
 	public static OrderEntity findOrderByOrderId(int id) throws ServiceException, ValidationException {
 
 		OrderEntity order = null;
@@ -106,9 +122,9 @@ public class OrderService {
 	
 	
 	
-	public static Set<OrderEntity> findOrdersByUserId(int id) throws ServiceException, ValidationException {
+	public static List<OrderEntity> findOrdersByUserId(int id) throws ServiceException, ValidationException {
 
-		Set<OrderEntity> orderList = null;
+		List<OrderEntity> orderList = new ArrayList<>();
 
 		try {
 
@@ -127,9 +143,9 @@ public class OrderService {
 	}
 	
 	
-	public static Set<OrderEntity> findOrdersBySellerId(int id) throws ServiceException, ValidationException {
+	public static List<OrderEntity> findOrdersBySellerId(int id) throws ServiceException, ValidationException {
 
-		Set<OrderEntity> orderList = null;
+		List<OrderEntity> orderList = null;
 
 		try {
 

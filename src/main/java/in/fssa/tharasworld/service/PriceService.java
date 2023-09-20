@@ -3,6 +3,7 @@ package in.fssa.tharasworld.service;
 import java.util.*;
 
 import in.fssa.tharasworld.dao.PriceDAO;
+import in.fssa.tharasworld.dto.ProductDetailDTO;
 import in.fssa.tharasworld.entity.PriceEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
@@ -113,6 +114,44 @@ public class PriceService {
 			throw new ServiceException(e.getMessage());
 		}
 
+	}
+	
+	public static int findProductByPriceId(int id) throws ValidationException, ServiceException {
+		
+		int pdtId = 0;
+			
+		try {
+		
+			PriceDAO priceDAO = new PriceDAO();
+			pdtId = priceDAO.findProductByPriceId(id);
+		
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		
+			return pdtId;
+			
+		
+	}
+	
+	public static PriceEntity findPriceByPriceId(int id) throws ValidationException, ServiceException {
+		
+		PriceEntity price = null;
+			
+		try {
+		
+			PriceDAO priceDAO = new PriceDAO();
+			price = priceDAO.findPriceByPriceId(id);
+		
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		
+			return price;
+			
+		
 	}
 
 }

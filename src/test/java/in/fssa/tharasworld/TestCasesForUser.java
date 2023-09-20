@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 import in.fssa.tharasworld.entity.UserEntity;
 import in.fssa.tharasworld.service.UserService;
@@ -56,17 +57,17 @@ public class TestCasesForUser {
 
 	        UserEntity newUser = new UserEntity();
 
-	        newUser.setName("Ramya");
+	        newUser.setName("Mathi");
 
 	        String randomString = generateRandomString(8);
-	        newUser.setEmail(randomString + "@gmail.com");
+	        newUser.setEmail("mathi@gmail.com");
 
 	        long randomPhoneNumber = generateRandomPhoneNumber(10);
 	        newUser.setPhoneNumber(randomPhoneNumber);
 
-	        newUser.setPassword("Thamim@12");
+	        newUser.setPassword("Mathi$123");
 	        newUser.setRole("Buyer");
-	        newUser.setAge(18);
+	        newUser.setAge(25);
 
 	        assertDoesNotThrow(() -> {
 	            userService.create(newUser);
@@ -647,6 +648,22 @@ public class TestCasesForUser {
 			userService.delete(10);
 		});
 		
+	}
+	
+
+	@Test
+	public void TestuserLoginWithValidInput() {
+		UserService userService = new UserService();
+		
+		
+		assertDoesNotThrow(() -> {
+			UserEntity user  = userService.checkUserExistsWithPhoneNumber(6077721208l);
+			if(!BCrypt.checkpw("Thamim@12", user.getPassword())) {
+				throw new ValidationException("Incorrect Password");
+			}
+			System.out.println(user);
+			
+					});
 	}
 	
 }

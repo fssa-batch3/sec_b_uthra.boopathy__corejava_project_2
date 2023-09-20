@@ -343,7 +343,7 @@ public class TestCasesForAddress {
 	
 	@Test
 	@Order(16)
-	void findByAddressId() throws Exception {
+	void findByAddressId() {
 		
 		AddressService addressService = new AddressService();
 		assertDoesNotThrow(() -> {
@@ -354,7 +354,7 @@ public class TestCasesForAddress {
 	
 	@Test
 	@Order(17)
-	void findByAddressIdWithZero() throws Exception {
+	void findByAddressIdWithZero() {
 		
 		AddressService addressService = new AddressService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -369,7 +369,7 @@ public class TestCasesForAddress {
 	
 	@Test
 	@Order(18)
-	void findByAddressIdWithInvalidId() throws Exception {
+	void findByAddressIdWithInvalidId() {
 		
 		AddressService addressService = new AddressService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -384,7 +384,7 @@ public class TestCasesForAddress {
 	
 	@Test
 	@Order(19)
-	void findAddressesByUserId() throws Exception {
+	void findAddressesByUserId() {
 		
 		AddressService addressService = new AddressService();
 		assertDoesNotThrow(() -> {
@@ -410,13 +410,85 @@ public class TestCasesForAddress {
 	
 	@Test
 	@Order(21)
-	void findByUserIdWithInvalidId() throws Exception {
+	void findByUserIdWithInvalidId() {
 		
 		AddressService addressService = new AddressService();
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			addressService.findAddressesByUserId(100);
 		});
 		String exceptedMessage = "User does not exist";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+		
+	}
+	
+	@Test
+	@Order(22)
+	void testSetAsDefaultAddressWithValidId() {
+		
+		AddressService addressService = new AddressService();
+		assertDoesNotThrow(() -> {
+			addressService.setAsDefaultAddress(3, 3);
+		});
+		
+		
+	}
+	
+	@Test
+	@Order(23)
+	void testSetAsDefaultAddressWithUserIdZero() throws Exception {
+		
+		AddressService addressService = new AddressService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			addressService.setAsDefaultAddress(0, 3);
+		});
+		String exceptedMessage = "User Id cannot be zero or in negative";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+		
+	}
+	
+	@Test
+	@Order(24)
+	void testSetAsDefaultAddressWithInvalidUserId() {
+		
+		AddressService addressService = new AddressService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			addressService.setAsDefaultAddress(100, 3);
+		});
+		String exceptedMessage = "User does not exist";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+		
+	}
+	
+	@Test
+	@Order(25)
+	void testSetAsDefaultAddressWithAddressIdZero() throws Exception {
+		
+		AddressService addressService = new AddressService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			addressService.setAsDefaultAddress(3, 0);
+		});
+		String exceptedMessage = "Address id cannot be zero or in negative";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+		
+	}
+	
+	@Test
+	@Order(26)
+	void testSetAsDefaultAddressWithInvalidAddressId() {
+		
+		AddressService addressService = new AddressService();
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			addressService.setAsDefaultAddress(3, 100);
+		});
+		String exceptedMessage = "Address id does not exists";
 		String actualMessage = exception.getMessage();
 		
 		assertEquals(exceptedMessage,actualMessage);

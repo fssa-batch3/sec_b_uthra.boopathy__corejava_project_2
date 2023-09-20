@@ -264,7 +264,7 @@ public class AddressDAO {
 
 		try {
 
-			String query = "SELECT address_id, name, address, state, pincode FROM address WHERE is_active = 1 AND user_id = ? AND set_as_default=1";
+			String query = "SELECT address_id, name, address, state, pincode, set_as_default FROM address WHERE is_active = 1 AND user_id = ? AND set_as_default=1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -278,6 +278,7 @@ public class AddressDAO {
 				address.setAddress(rs.getString("address"));
 				address.setState(rs.getString("state"));
 				address.setPincode(rs.getInt("pincode"));
+				address.setSetAsDefaultStatus(rs.getBoolean("set_as_default"));
 
 			}
 

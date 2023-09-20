@@ -21,8 +21,8 @@ public class OrderDAO {
 		PreparedStatement ps = null;
 
 		try {
-			String query = "INSERT INTO orders (phone_number, status, quantity, payment, user_id, address_id, price_id, seller_id, delivery_date) "
-					+ "VALUES (?, 'WAITING_LIST', ?, 'Cash_on_delivery', ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO orders (phone_number, status, quantity, payment, user_id, address_id, price_id, seller_id) "
+					+ "VALUES (?, 'WAITING_LIST', ?, 'Cash_on_delivery', ?, ?, ?, ?)";
 			connection = ConnectionUtil.getConnection();
 			ps = connection.prepareStatement(query);
 			
@@ -32,16 +32,10 @@ public class OrderDAO {
 			ps.setInt(4, newOrder.getAddressId());
 			ps.setInt(5, newOrder.getPriceId());
 			ps.setInt(6, newOrder.getSellerId());
-			
-	        LocalDate orderDate = LocalDate.now(); 
-	        int daysToAdd = 3; 
-	        LocalDate deliveryDate = orderDate.plusDays(daysToAdd);
-
-	        ps.setDate(7, Date.valueOf(deliveryDate));
 
 			ps.executeUpdate();
 
-			System.out.println("Address has been created successfully");
+			System.out.println("Order has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -60,12 +54,18 @@ public class OrderDAO {
 
 		try {
 
-			String query = "UPDATE orders SET status = 'ON_THE_WAY' WHERE is_active=1 AND order_id=?";
+			
+			 LocalDate todayDate = LocalDate.now(); 
+		        int daysToAdd = 3; 
+		        LocalDate deliveryDate = todayDate.plusDays(daysToAdd);
+			
+			String query = "UPDATE orders SET status='ON_THE_WAY', delivery_date=? WHERE is_active=1 AND order_id=?";
 
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setInt(1, id);
+			ps.setDate(1, Date.valueOf(deliveryDate));
+			ps.setInt(2, id);
 
 			ps.executeUpdate();
 
@@ -115,6 +115,37 @@ public class OrderDAO {
 
 	}
 	
+	public void orderDelivered(int id) throws PersistenceException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+
+			String query = "UPDATE orders SET status = 'DELIVERED', is_active=0 WHERE is_active=1 AND order_id=?";
+
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, id);
+
+			ps.executeUpdate();
+
+			System.out.println("Order has been delivered successfully");
+
+		} catch (SQLException e) {
+
+			Logger.error(e);
+			throw new PersistenceException(e.getMessage());
+
+		} finally {
+
+			ConnectionUtil.close(con, ps);
+
+		}
+
+	}
+	
 	public OrderEntity findByOrderId(int id) throws PersistenceException {
 
 		Connection con = null;
@@ -124,23 +155,21 @@ public class OrderDAO {
 
 		try {
 
-			String query = "SELECT order_id, ordered_date, delivery_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE is_active = 1 AND order_id = ?";
+			String query = "SELECT order_id, ordered_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE order_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				
+				order = new OrderEntity();
 
 				order.setOrderId(rs.getInt("order_id"));
 				
 				java.sql.Date orderedDateSQL = rs.getDate("ordered_date");
 				
 				order.setOrderedDate(orderedDateSQL.toLocalDate());
-				
-				java.sql.Date deliveryDateSQL = rs.getDate("delivery_date");
-				
-				order.setDeliveryDate(deliveryDateSQL.toLocalDate());
 				
 				order.setPhoneNumber(rs.getLong("phone_number"));
 				order.setActive(rs.getBoolean("is_active"));
@@ -182,7 +211,7 @@ public class OrderDAO {
 
 		try {
 
-			String query = "SELECT order_id, ordered_date, delivery_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE order_id = ?";
+			String query = "SELECT order_id, ordered_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE order_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -197,10 +226,6 @@ public class OrderDAO {
 				java.sql.Date orderedDateSQL = rs.getDate("ordered_date");
 				
 				order.setOrderedDate(orderedDateSQL.toLocalDate());
-				
-				java.sql.Date deliveryDateSQL = rs.getDate("delivery_date");
-				
-				order.setDeliveryDate(deliveryDateSQL.toLocalDate());
 				
 				order.setPhoneNumber(rs.getLong("phone_number"));
 				order.setActive(rs.getBoolean("is_active"));
@@ -230,16 +255,16 @@ public class OrderDAO {
 
 	}
 	
-	public Set<OrderEntity> findOrdersByUserId(int id) throws PersistenceException {
+	public List<OrderEntity> findOrdersByUserId(int id) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<OrderEntity> orders = new HashSet<>();
+		List<OrderEntity> orders = new ArrayList<>();
 
 		try {
 
-			String query = "SELECT order_id, ordered_date, delivery_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE user_id = ?";
+			String query = "SELECT order_id, ordered_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE user_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -254,10 +279,6 @@ public class OrderDAO {
 				java.sql.Date orderedDateSQL = rs.getDate("ordered_date");
 				
 				order.setOrderedDate(orderedDateSQL.toLocalDate());
-				
-				java.sql.Date deliveryDateSQL = rs.getDate("delivery_date");
-				
-				order.setDeliveryDate(deliveryDateSQL.toLocalDate());
 				
 				order.setPhoneNumber(rs.getLong("phone_number"));
 				order.setActive(rs.getBoolean("is_active"));
@@ -290,16 +311,16 @@ public class OrderDAO {
 	}
 
 	
-	public Set<OrderEntity> findOrdersBySellerId(int id) throws PersistenceException {
+	public List<OrderEntity> findOrdersBySellerId(int id) throws PersistenceException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Set<OrderEntity> orders = null;
+		List<OrderEntity> orders = new ArrayList<>();
 
 		try {
 
-			String query = "SELECT order_id, ordered_date, delivery_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE seller_id = ?";
+			String query = "SELECT order_id, ordered_date, phone_number, is_active, quantity, status, user_id, address_id, price_id  FROM orders WHERE seller_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);
@@ -314,10 +335,6 @@ public class OrderDAO {
 				java.sql.Date orderedDateSQL = rs.getDate("ordered_date");
 				
 				order.setOrderedDate(orderedDateSQL.toLocalDate());
-				
-				java.sql.Date deliveryDateSQL = rs.getDate("delivery_date");
-				
-				order.setDeliveryDate(deliveryDateSQL.toLocalDate());
 				
 				order.setPhoneNumber(rs.getLong("phone_number"));
 				order.setActive(rs.getBoolean("is_active"));
@@ -359,7 +376,7 @@ public class OrderDAO {
 
 		try {
 
-			String query = "SELECT order_id, ordered_date, delivery_date, phone_number, is_active, quantity, status, user_id, address_id, price_id FROM orders WHERE order_id=?";
+			String query = "SELECT order_id, ordered_date, phone_number, is_active, quantity, status, user_id, address_id, price_id FROM orders WHERE order_id=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);

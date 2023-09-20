@@ -361,6 +361,47 @@ public class PriceDAO {
 		return pdtId = price.getPdtId();
 
 	}
+	
+	
+	public static PriceEntity findPriceByPriceId(int id) throws PersistenceException, ValidationException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		PriceEntity price = null;
+
+		try {
+
+			String query = "SELECT price_id, pdt_id, actual_price, current_price, discount FROM prices WHERE price_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+
+				price = new PriceEntity();
+
+				price.setPriceId(rs.getInt("price_id"));
+				price.setActualPrice(rs.getDouble("actual_price"));
+				price.setCurrentPrice(rs.getDouble("current_price"));
+				price.setDiscount(rs.getDouble("discount"));
+				price.setPdtId(rs.getInt("pdt_id"));
+
+				
+			}
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new PersistenceException(e.getMessage());
+
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		
+		return price;
+
+	}
 
 	/**
 	 * Checks if a price entry with the specified price ID exists and is active in

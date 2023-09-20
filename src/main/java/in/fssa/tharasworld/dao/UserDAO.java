@@ -11,6 +11,7 @@ import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.util.ConnectionUtil;
 import in.fssa.tharasworld.util.Logger;
+import in.fssa.tharasworld.util.PasswordUtil;
 import in.fssa.tharasworld.interfaces.UserInterface;
 
 public class UserDAO implements UserInterface<UserEntity> {
@@ -100,7 +101,10 @@ public class UserDAO implements UserInterface<UserEntity> {
 			ps.setString(2, newuser.getName());
 			ps.setInt(3, newuser.getAge());
 			ps.setLong(4, newuser.getPhoneNumber());
-			ps.setString(5, newuser.getPassword());
+			
+			String hashPassword = PasswordUtil.encryptPassword(newuser.getPassword());
+			
+			ps.setString(5, hashPassword);
 			ps.setString(6, newuser.getRole());
 
 			ps.executeUpdate();

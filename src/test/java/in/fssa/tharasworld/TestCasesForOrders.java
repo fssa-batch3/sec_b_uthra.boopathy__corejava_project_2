@@ -512,7 +512,7 @@ public class TestCasesForOrders {
 	
 	
 	@Test 
-	@Order(20)
+	@Order(21)
 	void testGetAllOrdersWithValidUserId() {
 			
 		OrderService orderService = new OrderService();
@@ -520,6 +520,125 @@ public class TestCasesForOrders {
 			assertDoesNotThrow(() -> {
 				orderService.findOrdersByUserId(3);
 			});
+
+	}
+	
+	@Test 
+	@Order(22)
+	void testcancelOrdersWithUserIdZero() {
+			
+		OrderService orderService = new OrderService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.findOrdersByUserId(0);
+		});
+		String exceptedMessage = "Invalid user id";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+
+	}
+	
+	@Test 
+	@Order(23)
+	void testcancelOrdersWithInvalidUserId() {
+			
+		OrderService orderService = new OrderService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.findOrdersByUserId(100);
+		});
+		String exceptedMessage = "User does not exist";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+
+	}
+	
+	@Test 
+	@Order(24)
+	void testGetAllOrdersWithValidSellerId() {
+			
+		OrderService orderService = new OrderService();
+					
+			assertDoesNotThrow(() -> {
+				orderService.findOrdersByUserId(2);
+			});
+
+	}
+	
+	@Test 
+	@Order(25)
+	void testGetAllOrdersWithValidSellerIdZero() {
+			
+		OrderService orderService = new OrderService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.findOrdersByUserId(0);
+		});
+		String exceptedMessage = "Invalid user id";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+
+	}
+	
+	@Test 
+	@Order(26)
+	void testGetAllOrdersWithInvalidSellerId() {
+			
+		OrderService orderService = new OrderService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.findOrdersByUserId(200);
+		});
+		String exceptedMessage = "User does not exist";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+
+	}
+	
+	@Test
+	@Order(27)
+	void testOrderDelivered() throws Exception {
+		
+		OrderService orderService = new OrderService();
+		assertDoesNotThrow(() -> {
+			orderService.orderDelivered(2);
+		});
+		
+	}
+	
+	@Test 
+	@Order(28)
+	void testOrderDeliveredWithOrderIdZero() {
+			
+		OrderService orderService = new OrderService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.orderDelivered(0);
+		});
+		String exceptedMessage = "Order id cannot be zero or in negative";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+
+	}
+	
+	@Test 
+	@Order(29)
+	void testOrderDeliveredWithInvalidOrderId() {
+			
+		OrderService orderService = new OrderService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.orderDelivered(200);
+		});
+		String exceptedMessage = "Order does not exists";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
 
 	}
 	

@@ -109,7 +109,7 @@ public class UserService {
 		try {
 			UserValidator.CheckUserExistsWithId(id);
 			UserValidator.validateName(updatedUser.getName());
-			UserValidator.validatePassword(updatedUser.getPassword());
+//			UserValidator.validatePassword(updatedUser.getPassword());
 			UserValidator.validateAge(updatedUser.getAge());
 
 			UserDAO userDAO = new UserDAO();
@@ -181,6 +181,7 @@ public class UserService {
 			UserDAO userDAO = new UserDAO();
 
 			user = userDAO.findById(id);
+	
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -215,7 +216,6 @@ public class UserService {
 		try {
 
 			UserValidator.CheckUserExistsWithPhoneNumberForUpdate(phoneNumber);
-			;
 			UserDAO userDAO = new UserDAO();
 
 			user = userDAO.checkUserExistsWithPhoneNumberForLogin(phoneNumber);
