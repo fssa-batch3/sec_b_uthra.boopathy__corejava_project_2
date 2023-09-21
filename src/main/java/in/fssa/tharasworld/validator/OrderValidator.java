@@ -26,6 +26,8 @@ public class OrderValidator {
 		
 		ProductValidator.validateSellerId(order.getSellerId());
 		
+		validateSeller(order.getUserId(), order.getSellerId());
+		
 	}
 	
 	public static void validateQuantity(int quantity) throws ValidationException {
@@ -56,6 +58,15 @@ public class OrderValidator {
 
 		OrderDAO orderDAO = new OrderDAO();
 		orderDAO.checkorderExistWithOrderId(id);
+
+	}
+	
+	
+	public static void validateSeller(int userId, int sellerId) throws ValidationException, PersistenceException {
+
+		if(userId == sellerId) {
+			throw new ValidationException("User and seller cannot be the same person");
+		}
 
 	}
 

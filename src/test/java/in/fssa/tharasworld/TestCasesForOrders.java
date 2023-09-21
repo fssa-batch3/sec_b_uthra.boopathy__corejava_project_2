@@ -422,6 +422,37 @@ public class TestCasesForOrders {
 		assertEquals(exceptedMessage,actualMessage);
 	
 	}
+
+	
+	@Test
+	@Order(1)
+	void testCreateOrdersWithUserAndSellerIsSame() {
+		
+		OrderService orderService = new OrderService();
+		
+		OrderEntity newOrder = new OrderEntity();
+		newOrder.setPhoneNumber(8765432108l);
+		newOrder.setQuantity(1);
+		newOrder.setUserId(2);
+		newOrder.setAddressId(1);
+		newOrder.setPriceId(5);
+		newOrder.setSellerId(2);
+		
+        LocalDate orderDate = LocalDate.now(); 
+        int daysToAdd = 3; 
+        LocalDate deliveryDate = orderDate.plusDays(daysToAdd);
+        
+		newOrder.setDeliveryDate(deliveryDate);
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			orderService.create(newOrder);
+		});
+		String exceptedMessage = "User and seller cannot be the same person";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(exceptedMessage,actualMessage);
+	
+	}
 	
 	
 	@Test 
