@@ -28,13 +28,9 @@ public class ConnectionUtil {
 		String username;
 		String password;
 
-//		url = System.getenv("DATABASE_HOSTNAME");
-//		username = System.getenv("DATABASE_USERNAME");
-//		password = System.getenv("DATABASE_PASSWORD");
-		
-		url = "jdbc:mysql://localhost:3306/project";
-		username = "root";
-		password = "Uthra#1210";
+		url = System.getenv("DATABASE_HOSTNAME");
+		username = System.getenv("DATABASE_USERNAME");
+		password = System.getenv("DATABASE_PASSWORD");
 
 		Connection connection = null;
 
@@ -43,7 +39,7 @@ public class ConnectionUtil {
 			connection = DriverManager.getConnection(url, username, password);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new RuntimeException(e);
 		}
 		return connection;
@@ -66,7 +62,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 	}
 
@@ -91,7 +87,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 	}
 

@@ -114,7 +114,7 @@ public class ProductDAO {
 				productId = rs.getInt(1);
 			}
 
-			System.out.println("Product  has been created successfully");
+			Logger.info("Product  has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -184,7 +184,7 @@ public class ProductDAO {
 			}
 			ps.setInt(values.size() + 1, id);
 			ps.executeUpdate();
-			System.out.println("Product has been updated successfully");
+			Logger.info("Product has been updated successfully");
 
 		} catch (SQLException e) {
 
@@ -224,7 +224,7 @@ public class ProductDAO {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 
-			System.out.println("Product has been deleted successfully");
+			Logger.info("Product has been deleted successfully");
 
 		} catch (SQLException e) {
 

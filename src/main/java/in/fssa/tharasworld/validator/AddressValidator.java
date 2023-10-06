@@ -133,5 +133,13 @@ public class AddressValidator {
 		addressDAO.checkAddressExistWithAddId(id);
 
 	}
+	
+	public static void validateAddressId(int id) throws ValidationException, PersistenceException {
+
+		if (id <= 0) {
+			throw new ValidationException("Address id cannot be zero or in negative");
+		}
+
+	}
 
 }

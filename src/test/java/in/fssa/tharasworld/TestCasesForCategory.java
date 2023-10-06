@@ -242,7 +242,7 @@ public class TestCasesForCategory {
 				updatedCategory.setImg("https://iili.io/J9CoLXV.webp");
 				
 				Exception exception = assertThrows(ValidationException.class, () -> {
-					categoryService.update(8, updatedCategory);
+					categoryService.update(9, updatedCategory);
 				});
 				String exceptedMessage = "Category name cannot be null or empty";
 				String actualMessage = exception.getMessage();
@@ -261,7 +261,7 @@ public class TestCasesForCategory {
 				
 				CategoryService categoryService = new CategoryService();
 				assertDoesNotThrow(() -> {
-					categoryService.delete(12);
+					categoryService.delete(10);
 				});
 				
 			}

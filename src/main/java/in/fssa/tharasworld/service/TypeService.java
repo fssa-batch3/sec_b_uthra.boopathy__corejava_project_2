@@ -6,6 +6,7 @@ import in.fssa.tharasworld.dao.TypeDAO;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.entity.TypeEntity;
 import in.fssa.tharasworld.validator.CategoryValidator;
 import in.fssa.tharasworld.validator.TypeValidator;
@@ -35,11 +36,8 @@ public class TypeService {
 
 			typeList = typeDAO.findAll();
 
-			for (TypeEntity type : typeList) {
-				System.out.println(type);
-			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -71,7 +69,7 @@ public class TypeService {
 			TypeDAO typeDAO = new TypeDAO();
 			typeDAO.create(newType);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 
@@ -104,7 +102,7 @@ public class TypeService {
 			TypeDAO typeDAO = new TypeDAO();
 			typeDAO.update(id, updatedType);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -135,7 +133,7 @@ public class TypeService {
 			TypeDAO typeDAO = new TypeDAO();
 			typeDAO.delete(id);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -174,11 +172,8 @@ public class TypeService {
 
 			typeList = typeDAO.findAllTypeByCategoryId(id);
 
-			for (TypeEntity type : typeList) {
-				System.out.println(type);
-			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -215,9 +210,9 @@ public class TypeService {
 
 			type = typeDAO.checkTypeExistWithId(id);
 
-			System.out.println(type);
+			
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 

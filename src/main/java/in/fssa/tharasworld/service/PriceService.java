@@ -8,6 +8,7 @@ import in.fssa.tharasworld.entity.PriceEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.validator.PriceValidator;
 import in.fssa.tharasworld.validator.ProductValidator;
 
@@ -35,11 +36,8 @@ public class PriceService {
 
 			priceList = priceDAO.findAllPrices();
 
-			for (PriceEntity price : priceList) {
-				System.out.println(price);
-			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -76,14 +74,12 @@ public class PriceService {
 
 			int priceId = priceDAO.findPriceIdByProduct(pdtId);
 
-			System.out.println(priceId);
-
 			priceDAO.delete(priceId);
 
 			priceDAO.update(price, pdtId);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -110,7 +106,7 @@ public class PriceService {
 
 			priceDAO.delete(id);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -126,7 +122,7 @@ public class PriceService {
 			pdtId = priceDAO.findProductByPriceId(id);
 		
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		
@@ -145,7 +141,7 @@ public class PriceService {
 			price = priceDAO.findPriceByPriceId(id);
 		
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		

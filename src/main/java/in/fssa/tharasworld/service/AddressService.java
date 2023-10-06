@@ -9,6 +9,7 @@ import in.fssa.tharasworld.entity.CategoryEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.validator.AddressValidator;
 import in.fssa.tharasworld.validator.CategoryValidator;
 
@@ -39,7 +40,7 @@ public class AddressService {
 			AddressDAO addressDAO = new AddressDAO();
 			addressDAO.create(newAddress);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -76,7 +77,7 @@ public class AddressService {
 			addressDAO.update(id, updatedAddress);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -118,7 +119,7 @@ public class AddressService {
 			addressDAO.setAsDefaultAddress(addressId);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -150,7 +151,7 @@ public class AddressService {
 			addressDAO.delete(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -186,7 +187,7 @@ public class AddressService {
 			address = addressDAO.findByDefault(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -218,13 +219,13 @@ public class AddressService {
 
 		try {
 
-			AddressValidator.validateId(id);
+			AddressValidator.validateAddressId(id);
 
 			AddressDAO addressDAO = new AddressDAO();
 			address = addressDAO.findById(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -264,7 +265,7 @@ public class AddressService {
 			addressList = addressDAO.findByUserId(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 

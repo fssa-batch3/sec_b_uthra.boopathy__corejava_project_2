@@ -109,7 +109,7 @@ public class UserDAO implements UserInterface<UserEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("User has been created successfully");
+			Logger.info("User has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -156,9 +156,9 @@ public class UserDAO implements UserInterface<UserEntity> {
 				values.add(updatedUser.getPassword());
 			}
 
-			if (updatedUser.getEmail() != null) {
-				queryBuilder.append("email = ?, ");
-				values.add(updatedUser.getEmail());
+			if (updatedUser.getAge() >10 ) {
+				queryBuilder.append("age = ?, ");
+				values.add(updatedUser.getAge());
 			}
 
 			queryBuilder.setLength(queryBuilder.length() - 2);
@@ -171,7 +171,7 @@ public class UserDAO implements UserInterface<UserEntity> {
 			}
 			ps.setInt(values.size() + 1, id);
 			ps.executeUpdate();
-			System.out.println("User has been updated successfully");
+			Logger.info("User has been updated successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -210,7 +210,7 @@ public class UserDAO implements UserInterface<UserEntity> {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 
-			System.out.println("User has been deleted successfully");
+			Logger.info("User has been deleted successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);

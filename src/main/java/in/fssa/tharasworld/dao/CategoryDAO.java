@@ -94,7 +94,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("Category has been created successfully");
+			Logger.info("Category has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -140,7 +140,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("Category has been updated successfully");
+			Logger.info("Category has been updated successfully");
 
 		} catch (SQLException e) {
 
@@ -182,7 +182,7 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("Category has been deleted successfully");
+			Logger.info("Category has been deleted successfully");
 
 		} catch (SQLException e) {
 
@@ -215,7 +215,6 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity> {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		// CategoryEntity cate = null;
 
 		try {
 
@@ -266,7 +265,6 @@ public class CategoryDAO implements CategoryInterface<CategoryEntity> {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		// CategoryEntity cate = null;
 
 		try {
 

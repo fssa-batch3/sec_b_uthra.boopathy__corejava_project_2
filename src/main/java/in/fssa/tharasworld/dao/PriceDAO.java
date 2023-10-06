@@ -88,7 +88,7 @@ public class PriceDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Product price has been updated successfully!");
+			Logger.info("Product price has been updated successfully!");
 
 		} catch (SQLException e) {
 			Logger.error(e);

@@ -35,7 +35,7 @@ public class OrderDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Order has been created successfully");
+			Logger.info("Order has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -69,7 +69,7 @@ public class OrderDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Order has been delivered within 3 days");
+			Logger.info("Order has been delivered within 3 days");
 
 		} catch (SQLException e) {
 
@@ -100,7 +100,7 @@ public class OrderDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Order has been cancelled successfully");
+			Logger.info("Order has been cancelled successfully");
 
 		} catch (SQLException e) {
 
@@ -131,7 +131,7 @@ public class OrderDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Order has been delivered successfully");
+			Logger.info("Order has been delivered successfully");
 
 		} catch (SQLException e) {
 

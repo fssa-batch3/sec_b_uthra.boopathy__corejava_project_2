@@ -47,7 +47,7 @@ public class AddressDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Address has been created successfully");
+			Logger.info("Address has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -97,7 +97,7 @@ public class AddressDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Address has been updated successfully");
+			Logger.info("Address has been updated successfully");
 
 		} catch (SQLException e) {
 
@@ -141,7 +141,7 @@ public class AddressDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Address has been set as default successfully");
+			Logger.info("Address has been set as default successfully");
 
 		} catch (SQLException e) {
 
@@ -226,7 +226,7 @@ public class AddressDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Address has been deleted successfully");
+			Logger.info("Address has been deleted successfully");
 
 		} catch (SQLException e) {
 
@@ -318,7 +318,7 @@ public class AddressDAO {
 
 		try {
 
-			String query = "SELECT address_id, name, address, state, pincode FROM address WHERE is_active = 1 AND address_id = ?";
+			String query = "SELECT address_id, name, address, state, pincode FROM address WHERE address_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, id);

@@ -8,6 +8,7 @@ import in.fssa.tharasworld.dto.ProductDetailDTO;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.entity.PriceEntity;
 import in.fssa.tharasworld.entity.ProductEntity;
 import in.fssa.tharasworld.validator.CategoryValidator;
@@ -38,14 +39,14 @@ public class ProductService {
 			PriceDAO priceDAO = new PriceDAO();
 
 			productList = productDAO.findAll();
-
+			
 			for (ProductDetailDTO pdt : productList) {
 				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
-				System.out.println(pdt);
 			}
+
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -82,7 +83,7 @@ public class ProductService {
 				priceDAO.create(newPrice, id);
 			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -117,7 +118,7 @@ public class ProductService {
 
 			productDAO.update(id, updatedProduct);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -146,7 +147,7 @@ public class ProductService {
 
 			productDAO.delete(id);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -186,10 +187,9 @@ public class ProductService {
 			for (ProductDetailDTO pdt : productList) {
 				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
-				System.out.println(pdt);
 			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -235,10 +235,9 @@ public class ProductService {
 			for (ProductDetailDTO pdt : productList) {
 				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
-				System.out.println(pdt);
 			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -280,10 +279,9 @@ public class ProductService {
 			for (ProductDetailDTO pdt : productList) {
 				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
-				System.out.println(pdt);
 			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -330,10 +328,10 @@ public class ProductService {
 			for (ProductDetailDTO pdt : productList) {
 				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
-				System.out.println(pdt);
+				
 			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -375,10 +373,10 @@ public class ProductService {
 
 			List<PriceEntity> prices = priceDAO.findByProductId(id);
 			productList.setListOfPrices(prices);
-			System.out.println(productList);
+			
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -423,17 +421,11 @@ public class ProductService {
 			for (ProductDetailDTO pdt : productList) {
 				List<PriceEntity> prices = priceDAO.findByProductId(pdt.getPdtId());
 				pdt.setListOfPrices(prices);
-				System.out.println(pdt);
-			}
-
-			for (ProductDetailDTO pdt : productList) {
-
-				System.out.println(pdt);
-
+				
 			}
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 

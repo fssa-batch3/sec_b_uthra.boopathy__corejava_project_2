@@ -6,6 +6,7 @@ import in.fssa.tharasworld.dao.UserDAO;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.entity.UserEntity;
 import in.fssa.tharasworld.validator.CategoryValidator;
 import in.fssa.tharasworld.validator.UserValidator;
@@ -35,11 +36,8 @@ public class UserService {
 
 			userList = userDAO.findAll();
 
-			for (UserEntity user : userList) {
-				System.out.println(user);
-			}
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -79,7 +77,7 @@ public class UserService {
 			userDAO.create(newUser);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -115,7 +113,7 @@ public class UserService {
 			UserDAO userDAO = new UserDAO();
 			userDAO.update(id, updatedUser);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -147,7 +145,7 @@ public class UserService {
 			UserDAO userDAO = new UserDAO();
 			userDAO.delete(id);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -183,7 +181,7 @@ public class UserService {
 			user = userDAO.findById(id);
 	
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -220,7 +218,7 @@ public class UserService {
 
 			user = userDAO.checkUserExistsWithPhoneNumberForLogin(phoneNumber);
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 

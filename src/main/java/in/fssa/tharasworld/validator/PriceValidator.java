@@ -36,8 +36,6 @@ public class PriceValidator {
 
 		validateActualPrice(price.getActualPrice());
 
-		validateCurrentPrice(price.getCurrentPrice());
-
 		validateDiscount(price.getDiscount());
 
 	}

@@ -94,7 +94,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("Type has been created successfully");
+			Logger.info("Type has been created successfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -139,7 +139,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("Type has been updated successfully");
+			Logger.info("Type has been updated successfully");
 
 		} catch (SQLException e) {
 
@@ -180,7 +180,7 @@ public class TypeDAO implements CategoryInterface<TypeEntity> {
 
 			ps.executeUpdate();
 
-			System.out.println("Type has been deleted successfully");
+			Logger.info("Type has been deleted successfully");
 
 		} catch (SQLException e) {
 

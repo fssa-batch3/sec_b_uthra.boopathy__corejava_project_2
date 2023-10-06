@@ -57,17 +57,17 @@ public class TestCasesForUser {
 
 	        UserEntity newUser = new UserEntity();
 
-	        newUser.setName("Mathi");
+	        newUser.setName("Uthra");
 
 	        String randomString = generateRandomString(8);
-	        newUser.setEmail("mathi@gmail.com");
+	        newUser.setEmail("uthra@gmail.com");
 
 	        long randomPhoneNumber = generateRandomPhoneNumber(10);
 	        newUser.setPhoneNumber(randomPhoneNumber);
 
-	        newUser.setPassword("Mathi$123");
+	        newUser.setPassword("Uthra@12");
 	        newUser.setRole("Buyer");
-	        newUser.setAge(25);
+	        newUser.setAge(21);
 
 	        assertDoesNotThrow(() -> {
 	            userService.create(newUser);

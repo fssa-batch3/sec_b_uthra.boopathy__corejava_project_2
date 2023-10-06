@@ -8,6 +8,7 @@ import in.fssa.tharasworld.entity.OrderEntity;
 import in.fssa.tharasworld.exception.PersistenceException;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
+import in.fssa.tharasworld.util.Logger;
 import in.fssa.tharasworld.validator.OrderValidator;
 import in.fssa.tharasworld.validator.ProductValidator;
 import in.fssa.tharasworld.validator.UserValidator;
@@ -24,7 +25,7 @@ public class OrderService {
 			orderDAO.create(newOrder);
 		
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -41,7 +42,7 @@ public class OrderService {
 			orderDAO.acceptOrder(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -58,7 +59,7 @@ public class OrderService {
 			orderDAO.cancelOrder(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -74,7 +75,7 @@ public class OrderService {
 			orderDAO.orderDelivered(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -92,7 +93,7 @@ public class OrderService {
 			order = orderDAO.findByOrderId(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -112,7 +113,7 @@ public class OrderService {
 			addressId = orderDAO.findAddressidByOrderId(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -134,7 +135,7 @@ public class OrderService {
 			orderList = orderDAO.findOrdersByUserId(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -155,7 +156,7 @@ public class OrderService {
 			orderList = orderDAO.findOrdersBySellerId(id);
 
 		} catch (PersistenceException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
