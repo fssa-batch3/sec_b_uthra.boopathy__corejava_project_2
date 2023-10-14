@@ -203,7 +203,7 @@ public class UserDAO implements UserInterface<UserEntity> {
 		PreparedStatement ps = null;
 
 		try {
-			String query = "UPDATE users SET is_active = 0 WHERE is_active = 1 AND user_id = ?";
+			String query = "DELETE FROM users WHERE is_active = 1 AND user_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 

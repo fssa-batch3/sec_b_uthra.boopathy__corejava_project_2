@@ -1,5 +1,9 @@
 package in.fssa.tharasworld.util;
 
+import java.util.Set;
+
+import in.fssa.tharasworld.dto.ProductDetailDTO;
+
 public class Logger {
 
 	/**
@@ -25,6 +29,12 @@ public class Logger {
 
 		System.out.println(msg);
 
+	}
+
+	public static void info(Set<ProductDetailDTO> detail) {
+
+		System.out.println(detail);
+		
 	}
 
 }

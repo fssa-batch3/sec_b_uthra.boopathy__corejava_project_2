@@ -57,17 +57,17 @@ public class TestCasesForUser {
 
 	        UserEntity newUser = new UserEntity();
 
-	        newUser.setName("Uthra");
+	        newUser.setName("Mathi");
 
 	        String randomString = generateRandomString(8);
-	        newUser.setEmail("uthra@gmail.com");
+	        newUser.setEmail( randomString + "@gmail.com");
 
 	        long randomPhoneNumber = generateRandomPhoneNumber(10);
 	        newUser.setPhoneNumber(randomPhoneNumber);
 
-	        newUser.setPassword("Uthra@12");
+	        newUser.setPassword("Mathi$123");
 	        newUser.setRole("Buyer");
-	        newUser.setAge(21);
+	        newUser.setAge(20);
 
 	        assertDoesNotThrow(() -> {
 	            userService.create(newUser);
@@ -462,7 +462,7 @@ public class TestCasesForUser {
 	        newUser.setName("Uthra");
 	        String randomString = generateRandomString(8);
 	        newUser.setEmail(randomString + "@gmail.com");
-	        newUser.setPhoneNumber(8956498348l); // Same phone number as existing user
+	        newUser.setPhoneNumber(8499961849l); // Same phone number as existing user
 	        newUser.setPassword("Uthra@12");
 	        newUser.setRole("Buyer");
 	        newUser.setAge(18);
@@ -530,7 +530,6 @@ public class TestCasesForUser {
 		
 		assertDoesNotThrow (() -> {
 			UserEntity userList = userService.findById(2);
-			System.out.println(userList);
 		});
 		
 	}
@@ -543,7 +542,6 @@ public class TestCasesForUser {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			UserEntity userList = userService.findById(0);
-			System.out.println(userList);
 		});
 		String expectedMessage = "Invalid user id";
 		String actualMessage = exception.getMessage();
@@ -627,11 +625,10 @@ public class TestCasesForUser {
 		updateUser.setAge(18);
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.update(5, updateUser);
+			userService.update(100, updateUser);
 		});
 		String expectedMessage = "User does not exist";
 		String actualMessage = exception.getMessage();
-		System.out.println(actualMessage);
 
 		assertEquals(expectedMessage,actualMessage);
 
@@ -645,7 +642,7 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(10);
+			userService.delete(4);
 		});
 		
 	}
@@ -657,11 +654,10 @@ public class TestCasesForUser {
 		
 		
 		assertDoesNotThrow(() -> {
-			UserEntity user  = userService.checkUserExistsWithPhoneNumber(6077721208l);
+			UserEntity user  = userService.checkUserExistsWithPhoneNumber(8499961849l);
 			if(!BCrypt.checkpw("Thamim@12", user.getPassword())) {
 				throw new ValidationException("Incorrect Password");
 			}
-			System.out.println(user);
 			
 					});
 	}

@@ -15,6 +15,7 @@ import in.fssa.tharasworld.entity.*;
 import in.fssa.tharasworld.exception.ServiceException;
 import in.fssa.tharasworld.exception.ValidationException;
 import in.fssa.tharasworld.service.*;
+import in.fssa.tharasworld.util.Logger;
 
 public class TestCasesForProduct {
 	
@@ -691,7 +692,6 @@ public class TestCasesForProduct {
 				ProductService productService = new ProductService();
 				assertDoesNotThrow (() -> {
 					Set<ProductDetailDTO> productList = productService.findAll();
-					System.out.println(productList);
 				});
 				
 			}
@@ -706,7 +706,6 @@ public class TestCasesForProduct {
 				
 				assertDoesNotThrow (() -> {
 					ProductDetailDTO productList = productService.findByProductId(1);
-					System.out.println(productList);
 				});
 				
 			}
@@ -719,7 +718,7 @@ public class TestCasesForProduct {
 					
 					Exception exception = assertThrows(ValidationException.class, () -> {
 						
-						System.out.println(productService.findByProductId(0));
+						productService.findByProductId(0);
 
 			        });
 
@@ -738,7 +737,7 @@ public class TestCasesForProduct {
 					
 					Exception exception = assertThrows(ValidationException.class, () -> {
 						
-						System.out.println(productService.findByProductId(76));
+						productService.findByProductId(76);
 
 			        });
 
@@ -769,7 +768,7 @@ public class TestCasesForProduct {
 		        updateProduct.setTypeId(5);
 				
 				assertDoesNotThrow(() -> {
-					productService.update(4, updateProduct);
+					productService.update(32, updateProduct);
 				});
 				
 			}
@@ -843,7 +842,7 @@ public class TestCasesForProduct {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(37);
+					productService.delete(32);
 				});
 				
 			}
@@ -895,7 +894,6 @@ public class TestCasesForProduct {
 						
 						assertDoesNotThrow (() -> {
 							Set<ProductDetailDTO> productList = productService.findByCategoryName("Cosmetics");
-							System.out.println(productList);
 						});
 						
 					}
@@ -908,7 +906,6 @@ public class TestCasesForProduct {
 						
 						assertDoesNotThrow (() -> {
 							Set<ProductDetailDTO> productList = productService.findByCategoryId(5);
-							System.out.println(productList);
 						});
 						
 					}
@@ -921,7 +918,7 @@ public class TestCasesForProduct {
 							
 							Exception exception = assertThrows(ValidationException.class, () -> {
 								
-								System.out.println(productService.findByCategoryId(0));
+								Logger.info(productService.findByCategoryId(0));
 
 					        });
 
@@ -940,7 +937,7 @@ public class TestCasesForProduct {
 							
 							Exception exception = assertThrows(ValidationException.class, () -> {
 								
-								System.out.println(productService.findByCategoryId(20));
+								Logger.info(productService.findByCategoryId(20));
 
 					        });
 
@@ -960,7 +957,6 @@ public class TestCasesForProduct {
 						
 						assertDoesNotThrow (() -> {
 							Set<ProductDetailDTO> productList = productService.findByTypeName("Earrings");
-							System.out.println(productList);
 						});
 						
 					}
@@ -975,7 +971,6 @@ public class TestCasesForProduct {
 								
 								assertDoesNotThrow (() -> {
 									Set<ProductDetailDTO> productList = productService.findByTypeId(6);
-									System.out.println(productList);
 								});
 								
 							}
@@ -988,7 +983,7 @@ public class TestCasesForProduct {
 									
 									Exception exception = assertThrows(ValidationException.class, () -> {
 										
-										System.out.println(productService.findByTypeId(0));
+										Logger.info(productService.findByTypeId(0));
 
 							        });
 
@@ -1007,7 +1002,7 @@ public class TestCasesForProduct {
 									
 									Exception exception = assertThrows(ValidationException.class, () -> {
 										
-										System.out.println(productService.findByTypeId(200));
+										Logger.info(productService.findByTypeId(200));
 
 							        });
 
@@ -1027,7 +1022,6 @@ public class TestCasesForProduct {
 								
 								assertDoesNotThrow (() -> {
 									Set<ProductDetailDTO> productList = productService.findAllProductsBySellerId(2);
-									System.out.println(productList);
 								});
 								
 							}
@@ -1040,9 +1034,7 @@ public class TestCasesForProduct {
 								
 								Exception exception = assertThrows(ValidationException.class, () -> {
 									
-
 									Set<ProductDetailDTO> productList = productService.findAllProductsBySellerId(0);
-									System.out.println(productList);
 
 						        });
 
@@ -1061,9 +1053,7 @@ public class TestCasesForProduct {
 								
 								Exception exception = assertThrows(ValidationException.class, () -> {
 									
-
 									Set<ProductDetailDTO> productList = productService.findAllProductsBySellerId(1);
-									System.out.println(productList);
 
 						        });
 

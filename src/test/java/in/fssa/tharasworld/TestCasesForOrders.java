@@ -33,12 +33,6 @@ public class TestCasesForOrders {
 		newOrder.setPriceId(5);
 		newOrder.setSellerId(2);
 		
-        LocalDate orderDate = LocalDate.now(); 
-        int daysToAdd = 3; 
-        LocalDate deliveryDate = orderDate.plusDays(daysToAdd);
-        
-		newOrder.setDeliveryDate(deliveryDate);
-		
 		assertDoesNotThrow(()->{
 			orderService.create(newOrder);
 		});
@@ -489,7 +483,7 @@ public class TestCasesForOrders {
 		OrderService orderService = new OrderService();
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			orderService.acceptOrder(10);
+			orderService.acceptOrder(100);
 		});
 		String exceptedMessage = "Order does not exists";
 		String actualMessage = exception.getMessage();
@@ -532,7 +526,7 @@ public class TestCasesForOrders {
 		OrderService orderService = new OrderService();
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			orderService.cancelOrder(2);
+			orderService.cancelOrder(200);
 		});
 		String exceptedMessage = "Order does not exists";
 		String actualMessage = exception.getMessage();

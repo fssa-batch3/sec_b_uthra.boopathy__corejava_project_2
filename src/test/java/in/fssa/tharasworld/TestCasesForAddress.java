@@ -304,7 +304,7 @@ public class TestCasesForAddress {
 		
 		AddressService addressService = new AddressService();
 		assertDoesNotThrow(() -> {
-			addressService.delete(3);
+			addressService.delete(2);
 		});
 		
 	}
@@ -347,7 +347,7 @@ public class TestCasesForAddress {
 		
 		AddressService addressService = new AddressService();
 		assertDoesNotThrow(() -> {
-			addressService.findByAddressId(4);
+			addressService.findByAddressId(1);
 		});
 		
 	}
@@ -388,7 +388,7 @@ public class TestCasesForAddress {
 		
 		AddressService addressService = new AddressService();
 		assertDoesNotThrow(() -> {
-			addressService.findAddressesByUserId(3);
+			addressService.findAddressesByUserId(1);
 		});
 		
 	}
