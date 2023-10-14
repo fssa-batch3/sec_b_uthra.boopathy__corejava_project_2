@@ -515,7 +515,6 @@ public class TestCasesForUser {
 		UserService userService = new UserService();
 		assertDoesNotThrow (() -> {
 			Set<UserEntity> userList = userService.findAll();
-			System.out.println(userList);
 		});
 		
 	}
@@ -584,7 +583,7 @@ public class TestCasesForUser {
 		updateUser.setAge(18);
 		
 		assertDoesNotThrow(() -> {
-			userService.update(2, updateUser);
+			userService.update(5, updateUser);
 		});
 		
 	}
@@ -642,20 +641,21 @@ public class TestCasesForUser {
 		
 		UserService userService = new UserService();
 		assertDoesNotThrow ( () -> {
-			userService.delete(4);
+			userService.delete(5);
 		});
 		
 	}
 	
 
 	@Test
+	@Order(27)
 	public void TestuserLoginWithValidInput() {
 		UserService userService = new UserService();
 		
 		
 		assertDoesNotThrow(() -> {
 			UserEntity user  = userService.checkUserExistsWithPhoneNumber(8499961849l);
-			if(!BCrypt.checkpw("Thamim@12", user.getPassword())) {
+			if(!BCrypt.checkpw("Uthra@12", user.getPassword())) {
 				throw new ValidationException("Incorrect Password");
 			}
 			

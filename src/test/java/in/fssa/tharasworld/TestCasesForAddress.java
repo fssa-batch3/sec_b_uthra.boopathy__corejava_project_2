@@ -27,7 +27,7 @@ public class TestCasesForAddress {
 		newAddress.setAddress("456, Middle street, Tirunelveli");
 		newAddress.setState("Tamil Nadu");
 		newAddress.setPincode(627234);
-		newAddress.setSetAsDefaultStatus(true);
+		newAddress.setSetAsDefaultStatus(false);
 		newAddress.setUserId(1);
 		
 		assertDoesNotThrow(()->{
@@ -294,7 +294,7 @@ public class TestCasesForAddress {
 		updatedAddress.setPincode(627234);
 			
 		assertDoesNotThrow(() -> {
-			addressService.update(2, updatedAddress);
+			addressService.update(3, updatedAddress);
 		});
 	}
 	
@@ -304,7 +304,7 @@ public class TestCasesForAddress {
 		
 		AddressService addressService = new AddressService();
 		assertDoesNotThrow(() -> {
-			addressService.delete(2);
+			addressService.delete(3);
 		});
 		
 	}
@@ -424,7 +424,7 @@ public class TestCasesForAddress {
 	}
 	
 	@Test
-	@Order(22)
+	@Order(11)
 	void testSetAsDefaultAddressWithValidId() {
 		
 		AddressService addressService = new AddressService();

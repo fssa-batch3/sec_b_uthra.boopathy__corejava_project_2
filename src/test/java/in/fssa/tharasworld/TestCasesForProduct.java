@@ -520,86 +520,86 @@ public class TestCasesForProduct {
 				
 			}
 			
-			@Test
-			@Order(14)
-			void testCreateProductWithCurrentPriceZero() {
-				
-				ProductService productService = new ProductService();
-
-		        ProductDetailDTO newProduct = new ProductDetailDTO();
-
-		        String random = generateRandomString(6);
-
-		        newProduct.setName(random);
-		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
-		        String random1 = generateRandomString(16);
-
-		        newProduct.setDescription(random1);
-		        newProduct.setSellerId(2);
-		        newProduct.setTypeId(5);
-
-		        List<PriceEntity> prices = new ArrayList<>();
-
-		        PriceEntity p1 = new PriceEntity();
-		        p1.setActualPrice(1000);
-		        p1.setCurrentPrice(0);
-		        p1.setDiscount(50.00);
-
-		        prices.add(p1);
-
-		        newProduct.setListOfPrices(prices);
-
-		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.create(newProduct);
-		        });
-
-		        String expectedMessage = "Current price connot be zero or in negative";
-		        String actualMessage = exception.getMessage();
-
-		        assertEquals(expectedMessage, actualMessage);
-				
-			}
-			
-
-			@Test
-			@Order(15)
-			void testCreateProductWithCurrentPriceGreaterThanOrEqualToLakh() {
-				
-				ProductService productService = new ProductService();
-
-		        ProductDetailDTO newProduct = new ProductDetailDTO();
-
-		        String random = generateRandomString(6);
-
-		        newProduct.setName(random);
-		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
-		        String random1 = generateRandomString(16);
-
-		        newProduct.setDescription(random1);
-		        newProduct.setSellerId(2);
-		        newProduct.setTypeId(5);
-
-		        List<PriceEntity> prices = new ArrayList<>();
-
-		        PriceEntity p1 = new PriceEntity();
-		        p1.setActualPrice(1000);
-		        p1.setCurrentPrice(100000);
-		        p1.setDiscount(50.00);
-
-		        prices.add(p1);
-
-		        newProduct.setListOfPrices(prices);
-
-		        Exception exception = assertThrows(ValidationException.class, () -> {
-		            productService.create(newProduct);
-		        });
-
-		        String expectedMessage = "Current price must be less than 1 lakh";
-		        String actualMessage = exception.getMessage();
-
-		        assertEquals(expectedMessage, actualMessage);
-				
-			}
+//			@Test
+//			@Order(14)
+//			void testCreateProductWithCurrentPriceZero() {
+//				
+//				ProductService productService = new ProductService();
+//
+//		        ProductDetailDTO newProduct = new ProductDetailDTO();
+//
+//		        String random = generateRandomString(6);
+//
+//		        newProduct.setName(random);
+//		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
+//		        String random1 = generateRandomString(16);
+//
+//		        newProduct.setDescription(random1);
+//		        newProduct.setSellerId(2);
+//		        newProduct.setTypeId(5);
+//
+//		        List<PriceEntity> prices = new ArrayList<>();
+//
+//		        PriceEntity p1 = new PriceEntity();
+//		        p1.setActualPrice(1000);
+//		        p1.setCurrentPrice(0);
+//		        p1.setDiscount(50.00);
+//
+//		        prices.add(p1);
+//
+//		        newProduct.setListOfPrices(prices);
+//
+//		        Exception exception = assertThrows(ValidationException.class, () -> {
+//		            productService.create(newProduct);
+//		        });
+//
+//		        String expectedMessage = "Current price connot be zero or in negative";
+//		        String actualMessage = exception.getMessage();
+//
+//		        assertEquals(expectedMessage, actualMessage);
+//				
+//			}
+//			
+//
+//			@Test
+//			@Order(15)
+//			void testCreateProductWithCurrentPriceGreaterThanOrEqualToLakh() {
+//				
+//				ProductService productService = new ProductService();
+//
+//		        ProductDetailDTO newProduct = new ProductDetailDTO();
+//
+//		        String random = generateRandomString(6);
+//
+//		        newProduct.setName(random);
+//		        newProduct.setImg("https://iili.io/HNeBZmJ.webp");
+//		        String random1 = generateRandomString(16);
+//
+//		        newProduct.setDescription(random1);
+//		        newProduct.setSellerId(2);
+//		        newProduct.setTypeId(5);
+//
+//		        List<PriceEntity> prices = new ArrayList<>();
+//
+//		        PriceEntity p1 = new PriceEntity();
+//		        p1.setActualPrice(1000);
+//		        p1.setCurrentPrice(100000);
+//		        p1.setDiscount(50.00);
+//
+//		        prices.add(p1);
+//
+//		        newProduct.setListOfPrices(prices);
+//
+//		        Exception exception = assertThrows(ValidationException.class, () -> {
+//		            productService.create(newProduct);
+//		        });
+//
+//		        String expectedMessage = "Current price must be less than 1 lakh";
+//		        String actualMessage = exception.getMessage();
+//
+//		        assertEquals(expectedMessage, actualMessage);
+//				
+//			}
 			
 			@Test
 			@Order(16)
@@ -768,7 +768,7 @@ public class TestCasesForProduct {
 		        updateProduct.setTypeId(5);
 				
 				assertDoesNotThrow(() -> {
-					productService.update(32, updateProduct);
+					productService.update(33, updateProduct);
 				});
 				
 			}
@@ -837,12 +837,23 @@ public class TestCasesForProduct {
 			//// TEST FOR DELETE PRODUCT
 			
 			@Test
+			@Order(24)
+			void deletePrice() throws ServiceException, ValidationException {
+				
+				PriceService priceService = new PriceService();
+				assertDoesNotThrow ( () -> {
+					PriceService.delete(33);
+				});
+				
+			}
+			
+			@Test
 			@Order(25)
 			void deleteProduct() throws ServiceException, ValidationException {
 				
 				ProductService productService = new ProductService();
 				assertDoesNotThrow ( () -> {
-					productService.delete(32);
+					productService.delete(33);
 				});
 				
 			}

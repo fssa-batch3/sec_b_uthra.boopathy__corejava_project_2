@@ -264,7 +264,7 @@ public class TestCasesForType {
 					updatedType.setCateId(1);
 					
 					assertDoesNotThrow(() -> {
-						typeService.update(32, updatedType);
+						typeService.update(34, updatedType);
 					});
 					
 				}
@@ -277,7 +277,7 @@ public class TestCasesForType {
 					
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
-						typeService.delete(32);
+						typeService.delete(34);
 					});
 					
 				}
@@ -303,7 +303,6 @@ public class TestCasesForType {
 					TypeService typeService = new TypeService();
 					assertDoesNotThrow(() -> {
 						Set<TypeEntity> typeList = typeService.findAllTypesByCategoryId(5);
-						System.out.println(typeList);
 					});
 					
 				}

@@ -138,8 +138,10 @@ public class AddressValidator {
 
 		if (id <= 0) {
 			throw new ValidationException("Address id cannot be zero or in negative");
+			
 		}
-
+		AddressDAO addressDAO = new AddressDAO();
+		addressDAO.checkAddressExistWithAddressId(id);
 	}
 
 }

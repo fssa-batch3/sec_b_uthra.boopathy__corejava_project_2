@@ -94,16 +94,16 @@ public class TestCasesForPrice {
 	
 	//// TEST FOR DELETE PRICE
 	
-	@Test
-	@Order(4)
-	void deletePrice() throws ServiceException, ValidationException {
-		
-		PriceService priceService = new PriceService();
-		assertDoesNotThrow ( () -> {
-			PriceService.delete(41);
-		});
-		
-	}
+//	@Test
+//	@Order(4)
+//	void deletePrice() throws ServiceException, ValidationException {
+//		
+//		PriceService priceService = new PriceService();
+//		assertDoesNotThrow ( () -> {
+//			PriceService.delete(33);
+//		});
+//		
+//	}
 	
 	@Test
 	@Order(5)
